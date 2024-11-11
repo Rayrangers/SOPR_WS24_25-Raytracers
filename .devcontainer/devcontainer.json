@@ -7,7 +7,6 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
@@ -15,22 +14,25 @@
 			"configureZshAsDefaultShell": true
 		}
 	},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "morphin",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"yzhang.markdown-all-in-one",
 				"DavidAnson.vscode-markdownlint",
-				"vscjava.vscode-java-pack"
-			]
+				"vscjava.vscode-java-pack",
+				"ms-python.python",
+				"ms-python.debugpy",
+				"ms-python.vscode-pylance",
+				"ms-python.black-formatter",
+				"ltex-plus.vscode-ltex-plus"
+			],
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/bin/python"
+			}
 		}
-	}
+	},
+	"remoteUser": "morphin"
 }

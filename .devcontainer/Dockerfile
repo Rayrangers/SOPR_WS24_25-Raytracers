@@ -17,4 +17,6 @@ RUN dnf -y upgrade --refresh && \
 # Install Java OpenJDK 21 and Maven
 RUN dnf -y install java-21-openjdk java-21-openjdk-src maven
 
+RUN dnf -y install python3 python3-pip python-pip-wheel
+
 USER ${USERNAME}
