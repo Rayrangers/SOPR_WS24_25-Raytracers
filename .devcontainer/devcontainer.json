@@ -27,7 +27,9 @@
 				"ms-python.debugpy",
 				"ms-python.vscode-pylance",
 				"ms-python.black-formatter",
-				"ltex-plus.vscode-ltex-plus"
+				"ltex-plus.vscode-ltex-plus",
+				"Gruntfuggly.todo-tree",
+				"dmnsgn.vscode-wavefront"
 			],
 			"settings": {
 				"python.defaultInterpreterPath": "/usr/bin/python"
