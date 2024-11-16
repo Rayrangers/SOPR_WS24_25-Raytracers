@@ -11,7 +11,7 @@ Please include a summary of the change. List any dependencies that are required 
 
 ## 🧪 How Has This Been Tested?
 
-Please describe the tests that you ran to verifiy your changes.
+Please describe the tests that you ran to verify your changes.
 
 ## ✅ Checklist
 

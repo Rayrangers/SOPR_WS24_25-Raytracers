@@ -4,4 +4,4 @@ This is the repository for the software project in winter semester 24/25 at Ulm 
 
 ## Documentation
 
-## License
+## Licence
