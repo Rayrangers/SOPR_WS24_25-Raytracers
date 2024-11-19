@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents an entity (object) described by a Wavefront OBJ file:
- * o <string name>
+ * Represents an entity (object) described by a Wavefront OBJ file.
  */
 public class Entity {
 
     /**
      * Entity name.
+     * OBJ file:
+     * o <string object-name>
      */
     private String name;
 

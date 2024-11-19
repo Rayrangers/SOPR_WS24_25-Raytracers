@@ -42,7 +42,7 @@ public class Vertex3D {
 
     /**
      * Returns the coordinate of the specified dimension.
-     * @param dim   dimension, integer value out of [1,3]
+     * @param dim   dimension, integer value in [1,3]
      * @return      coordinate
      * @throws      IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
      */
@@ -64,7 +64,7 @@ public class Vertex3D {
 
     /**
      * Sets the coordinate of a specified dimension.
-     * @param dim   dimension, integer value out of [1,3]
+     * @param dim   dimension, integer value in [1,3]
      * @param coord coordinate
      * @throws      IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
      */

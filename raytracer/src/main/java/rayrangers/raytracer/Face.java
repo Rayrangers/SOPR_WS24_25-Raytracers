@@ -1,16 +1,18 @@
 package rayrangers.raytracer;
 
 /**
- * Represents a face described by a Wavefront OBJ file:
+ * Represents a face described by a Wavefront OBJ file.
+ * OBJ file:
  * f <integer v> ...
  * f <integer v>/<integer vt> ...
- * f <integer v>/<integer vt>
- * f <integer v>/<integer vt>/<integer vn>
+ * f <integer v>/<integer vt>/<integer vn> ...
  */
 public abstract class Face {
 
     /**
      * Group name the face belongs to.
+     * OBJ file:
+     * g <string group-name>
      */
     private String group;
 
@@ -21,6 +23,8 @@ public abstract class Face {
 
     /**
      * Smoothing group the face belongs to.
+     * OBJ file:
+     * s <integer smoothing-group>
      */
     private int smoothing;
 

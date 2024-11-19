@@ -7,6 +7,8 @@ public class Material {
 
     /**
      * Material name.
+     * OBJ file:
+     * usemtl <material-name>
      */
     private String name;
 
