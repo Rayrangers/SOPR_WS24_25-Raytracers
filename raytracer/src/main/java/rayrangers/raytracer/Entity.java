@@ -2,16 +2,23 @@ package rayrangers.raytracer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
- * Represents an entity (object) described by a Wavefront OBJ file.
+ * Represents an entity (object/mesh) described by a Wavefront OBJ file.
  */
 public class Entity {
 
     /**
+     * Ramdomly generated UUID of the entity.
+     * Used in the JSON file for the specification of the scene view.
+     */
+    private UUID uuid;
+
+    /**
      * Entity name.
      * OBJ file:
-     * o <string object-name>
+     * o <string entity-name>
      */
     private String name;
 
@@ -26,6 +33,7 @@ public class Entity {
      * @param faces face list
      */
     public Entity(String name, List<Face> faces) {
+        uuid = UUID.randomUUID();
         this.name = (name == null) ? "unknown" : name;
         this.faces = new ArrayList<>(faces);
     }
@@ -52,6 +60,14 @@ public class Entity {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns the UUID of the entity.
+     * @return  UUID
+     */
+    public UUID getUuid() {
+        return uuid;
     }
 
     /**
