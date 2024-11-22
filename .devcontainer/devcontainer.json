@@ -29,7 +29,8 @@
 				"ms-python.black-formatter",
 				"ltex-plus.vscode-ltex-plus",
 				"Gruntfuggly.todo-tree",
-				"dmnsgn.vscode-wavefront"
+				"dmnsgn.vscode-wavefront",
+				"MS-vsliveshare.vsliveshare"
 			],
 			"settings": {
 				"python.defaultInterpreterPath": "/usr/bin/python"
