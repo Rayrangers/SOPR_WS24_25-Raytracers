@@ -1,4 +1,4 @@
-package rayrangers.raytracer;
+package rayrangers.raytracer.world;
 
 /**
  * Represents a vertex in 3D space.
@@ -10,6 +10,12 @@ public class Vertex3D {
      */
     private double[] coordinates;
 
+    // TODO: Replace with Vector3D
+    /**
+     * Normal vector of the vertex.
+     */
+    private Object normalVector;
+
     /**
      * Class constructor specifying the coordinates of all dimensions.
      * @param x1    coordinate of x1-dimension
@@ -17,7 +23,19 @@ public class Vertex3D {
      * @param x3    coordinate of x3-dimension
      */
     public Vertex3D(double x1, double x2, double x3) {
+        this(x1, x2, x3, null);
+    }
+
+    /**
+     * Class constructor specifying the coordinates of all dimensions and the normal vector.
+     * @param x1    coordinate of x1-dimension
+     * @param x2    coordinate of x2-dimension
+     * @param x3    coordinate of x3-dimension
+     * @param vec   normal vector
+     */
+    public Vertex3D(double x1, double x2, double x3, Object vec) {
         coordinates = new double[] {x1, x2, x3};
+        normalVector = vec;
     }
 
     /**
@@ -60,6 +78,14 @@ public class Vertex3D {
      */
     public void setAllCoord(double x1, double x2, double x3) {
         coordinates = new double[] {x1, x2, x3};
+    }
+
+    /**
+     * Returns the normal vector of the vertex.
+     * @return  normal vector
+     */
+    public Object getNormalVector() {
+        return normalVector;
     }
 
     /**

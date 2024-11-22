@@ -1,4 +1,4 @@
-package rayrangers.raytracer;
+package rayrangers.raytracer.world;
 
 /**
  * Represents some kind of material described by a Wavefront MTL file.
@@ -130,13 +130,5 @@ public class Material {
      */
     public double getSpecularExp() {
         return ns;
-    }
-
-    /**
-     * Sets the material name.
-     * @param name  material name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 }
