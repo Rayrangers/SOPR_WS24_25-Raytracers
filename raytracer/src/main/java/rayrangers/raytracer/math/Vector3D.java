@@ -1,4 +1,4 @@
-package rayrangers.raytracer;
+package rayrangers.raytracer.math;
 
 /**
  * Represents a vector in 3D space.
