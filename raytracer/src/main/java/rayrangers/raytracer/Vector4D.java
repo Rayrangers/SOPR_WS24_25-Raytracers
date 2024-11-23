@@ -38,7 +38,11 @@ public class Vector4D {
      * @return A new vector representing the sum.
      */
     public Vector4D add(Vector4D vec) {
-        return null;
+        double x1 = this.vertices[0] + vec.vertices[0];
+        double x2 = this.vertices[1] + vec.vertices[1];
+        double x3 = this.vertices[2] + vec.vertices[2];
+        double x4 = this.vertices[3] + vec.vertices[3];
+        return new Vector4D(x1, x2, x3, x4);
     }
 
     /**
@@ -47,7 +51,12 @@ public class Vector4D {
      * @return A new vector representing the difference.
      */
     public Vector4D sub(Vector4D vec) {
-        return null;
+        double x1 = this.vertices[0] - vec.vertices[0];
+        double x2 = this.vertices[1] - vec.vertices[1];
+        double x3 = this.vertices[2] - vec.vertices[2];
+        double x4 = this.vertices[3] - vec.vertices[3];
+        return new Vector4D(x1, x2, x3, x4);
+
     }
 
     /**
@@ -60,8 +69,7 @@ public class Vector4D {
         double x2 = this.vertices[1] * scalar;
         double x3 = this.vertices[2] * scalar;
         double x4 = this.vertices[3] * scalar;
-
-        return new Vector4D(x1, x2, x3, x4); // Returns a new vector with scaled components
+        return new Vector4D(x1, x2, x3, x4);
     }
 
     /**
@@ -70,7 +78,10 @@ public class Vector4D {
      * @return The scalar product as a double.
      */
     public double scalar(Vector4D vec) {
-        return 0;
+        return this.vertices[0] * vec.vertices[0] +
+                this.vertices[1] * vec.vertices[1] +
+                this.vertices[2] * vec.vertices[2] +
+                this.vertices[3] * vec.vertices[3];
     }
 
     /**
@@ -78,6 +89,9 @@ public class Vector4D {
      * @return The length as a double.
      */
     public double length() {
-        return 0;
+        return Math.sqrt(this.vertices[0] * this.vertices[0] +
+                this.vertices[1] * this.vertices[1] +
+                this.vertices[2] * this.vertices[2] +
+                this.vertices[3] * this.vertices[3]);
     }
 }
