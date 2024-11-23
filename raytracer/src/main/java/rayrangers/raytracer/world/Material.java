@@ -58,6 +58,7 @@ public class Material {
 
     /**
      * Class constructor specifying the name and characteristics of the material.
+     * 
      * @param name  material name 
      * @param ka    ambient color (RGB)
      * @param kd    diffuse color (RGB)
@@ -78,6 +79,7 @@ public class Material {
 
     /**
      * Returns the transparency (dissolve) coefficient.
+     * 
      * @return  transparency coefficient
      */
     public double getTransparency() {
@@ -86,6 +88,7 @@ public class Material {
 
     /**
      * Returns the index of the illumination model.
+     * 
      * @return  illumination model index
      */
     public int getIllum() {
@@ -94,6 +97,7 @@ public class Material {
 
     /**
      * Returns the ambient color.
+     * 
      * @return  array of RGB values
      */
     public double[] getAmbient() {
@@ -102,6 +106,7 @@ public class Material {
 
     /**
      * Returns the diffuse color.
+     * 
      * @return  array of RGB values
      */
     public double[] getDiffuse() {
@@ -110,6 +115,7 @@ public class Material {
 
     /**
      * Returns the specular color.
+     * 
      * @return  array of RGB values
      */
     public double[] getSpecular() {
@@ -118,6 +124,7 @@ public class Material {
 
     /**
      * Returns the material name.
+     * 
      * @return  material name
      */
     public String getName() {
@@ -126,6 +133,7 @@ public class Material {
 
     /**
      * Returns the specular exponent.
+     * 
      * @return  specular exponent
      */
     public double getSpecularExp() {

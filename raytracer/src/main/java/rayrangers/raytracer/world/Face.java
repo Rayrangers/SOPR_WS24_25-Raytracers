@@ -23,6 +23,7 @@ public abstract class Face {
 
     /**
      * Class constructor specifying the material and smoothing group of the face.
+     * 
      * @param material  material
      * @param smoothing smoothing group, Integer.MIN_VALUE if not specified
      */
@@ -33,6 +34,7 @@ public abstract class Face {
 
     /**
      * Returns the material of the face.
+     * 
      * @return  material
      */
     public Material getMaterial() {
@@ -41,6 +43,7 @@ public abstract class Face {
 
     /**
      * Returns the smoothing group of the face.
+     * 
      * @return  smoothing group
      */
     public int getSmoothing() {

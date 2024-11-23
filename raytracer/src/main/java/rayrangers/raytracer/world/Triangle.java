@@ -12,6 +12,7 @@ public class Triangle extends Face {
 
     /**
      * Class constructor specifying the material and the vertices of the triangle.
+     * 
      * @param material  material
      * @param v1        vertex 1     
      * @param v2        vertex 2
@@ -24,6 +25,7 @@ public class Triangle extends Face {
 
     /**
      * Class constructor specifying the material, smoothing group and the vertices of the triangle.
+     * 
      * @param material  material
      * @param smoothing smoothing group
      * @param v1        vertex 1
@@ -38,6 +40,7 @@ public class Triangle extends Face {
     
     /**
      * Returns all vertices of the triangle in an array.
+     * 
      * @return  vertices
      */
     public Vertex3D[] getAllVert() {

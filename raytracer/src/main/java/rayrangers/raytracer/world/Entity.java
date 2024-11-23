@@ -3,6 +3,7 @@ package rayrangers.raytracer.world;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import rayrangers.raytracer.math.Vector3D;
 
 /**
  * Represents an entity (object/mesh) described by a Wavefront OBJ file.
@@ -10,7 +11,7 @@ import java.util.UUID;
 public class Entity {
 
     /**
-     * Ramdomly generated UUID of the entity.
+     * Randomly generated UUID of the entity.
      * Used in the JSON file for the specification of the scene view.
      */
     private UUID uuid;
@@ -93,8 +94,9 @@ public class Entity {
     }
 
     /**
-     * Returns the position of the entity in the world coordinate system.3D
-     * @return  world position 
+     * Returns the position of the entity in the world coordinate system.
+     * 
+     * @return world position
      */
     public Vertex3D getWorldPosition() {
         return worldPosition;
@@ -109,7 +111,6 @@ public class Entity {
         this.name = name;
     }
 
-    // TODO 
     /**
      * Places the entity in the world coordinate system.
      * 
@@ -119,9 +120,8 @@ public class Entity {
      * @param sx2           scaling factor in x2-direction
      * @param sx3           scaling factor in x3-direction
      */
-    /*
-     * public Entity placeInWorld(Vertex3D worldPosition, Vector3D rotation, double sx1, double sx2, double sx3) {
-     *  return null;
-     * }
-     */
+    public Entity placeInWorld(Vertex3D worldPosition, Vector3D rotation, double sx1, double sx2, double sx3) {
+        // TODO
+        return null;
+    }
 }
