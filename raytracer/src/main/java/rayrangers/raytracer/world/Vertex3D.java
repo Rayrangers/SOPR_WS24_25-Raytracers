@@ -108,4 +108,13 @@ public class Vertex3D {
             throw new IndexOutOfBoundsException("Specified dimension out of 3D space.");
         locationVector.getCoordinates()[dim-1] = coord;
     }
+
+    /**
+     * Sets the normal vector of the vertex.
+     * 
+     * @param normalVector  normal vector
+     */
+    public void setNormalVector(Vector3D normalVector) {
+        this.normalVector = normalVector;
+    }
 }

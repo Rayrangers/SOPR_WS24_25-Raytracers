@@ -19,17 +19,17 @@ public abstract class Face {
      * OBJ file:
      * s <integer smoothing-group>
      */
-    private int smoothing;
+    private int smoothingGroup;
 
     /**
      * Class constructor specifying the material and smoothing group of the face.
      * 
      * @param material  material
-     * @param smoothing smoothing group, Integer.MIN_VALUE if not specified
+     * @param smoothing smoothing group, parser will pass Integer.MIN_VALUE if not specified
      */
-    public Face(Material material, int smoothing) {
+    public Face(Material material, int smoothingGroup) {
         this.material = material;
-        this.smoothing = smoothing;
+        this.smoothingGroup = smoothingGroup;
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class Face {
      * 
      * @return  smoothing group
      */
-    public int getSmoothing() {
-        return smoothing;
+    public int getSmoothingGroup() {
+        return smoothingGroup;
     }
 }

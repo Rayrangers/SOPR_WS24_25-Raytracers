@@ -1,6 +1,5 @@
 package rayrangers.raytracer.world;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import rayrangers.raytracer.math.Vector3D;
@@ -9,6 +8,8 @@ import rayrangers.raytracer.math.Vector3D;
  * Represents an entity (object/mesh) described by a Wavefront OBJ file.
  */
 public class Entity {
+
+    // TODO: Sphere / Interface Hittable?
 
     /**
      * Randomly generated UUID of the entity.
@@ -29,41 +30,28 @@ public class Entity {
     private List<Face> faces;
 
     /**
+     * List containing all unique vertices of the entity.
+     */
+    private List<Vertex3D> vertices;
+
+    // TODO: Extend by Rotation and Scaling?
+    /**
      * Position of the entity in the world coordinate system.
      */
     private Vertex3D worldPosition;
 
     /**
-     * Class constructor specifying the faces.
-     * 
-     * @param faces face list
-     */
-    public Entity(List<Face> faces) {
-        this(null, faces);
-    }
-
-    /**
-     * Class constructor specifying the name and the faces.
-     * 
-     * @param name  entity name, null if {@code name == null}
-     * @param faces face list
-     */
-    public Entity(String name, List<Face> faces) {
-        this(name, faces, null);
-    }
-
-    /**
      * Class constructor specifying the name, the faces and the world position.
      * 
-     * @param name          entity name, null if {@code name == null}
-     * @param faces         face list
-     * @param worldPosition position in the world coordinate system
+     * @param name     entity name, null if {@code name == null}
+     * @param faces    face list
+     * @param vertices vertices
      */
-    public Entity(String name, List<Face> faces, Vertex3D worldPosition) {
+    public Entity(String name, List<Face> faces, List<Vertex3D> vertices) {
         uuid = UUID.randomUUID();
         this.name = name;
-        this.faces = new ArrayList<>(faces);
-        this.worldPosition = worldPosition;
+        this.faces = faces;
+        this.vertices = vertices;
     }
 
     /**
@@ -71,8 +59,17 @@ public class Entity {
      * 
      * @return face list
      */
-    public List<Face> getAllFaces() {
+    public List<Face> getFaces() {
         return faces;
+    }
+
+    /**
+     * Returns a list of all unique vertices of the entity.
+     * 
+     * @return vertex list
+     */
+    public List<Vertex3D> getVertices() {
+        return vertices;
     }
 
     /**
