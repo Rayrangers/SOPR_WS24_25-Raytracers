@@ -19,15 +19,16 @@ public abstract class Face {
      * OBJ file:
      * s <integer smoothing-group>
      */
-    private int smoothingGroup;
+    private String smoothingGroup;
 
     /**
      * Class constructor specifying the material and smoothing group of the face.
      * 
      * @param material  material
-     * @param smoothing smoothing group, parser will pass Integer.MIN_VALUE if not specified
+     * @param smoothing smoothing group, parser will pass Integer.MIN_VALUE if not
+     *                  specified
      */
-    public Face(Material material, int smoothingGroup) {
+    public Face(Material material, String smoothingGroup) {
         this.material = material;
         this.smoothingGroup = smoothingGroup;
     }
@@ -35,7 +36,7 @@ public abstract class Face {
     /**
      * Returns the material of the face.
      * 
-     * @return  material
+     * @return material
      */
     public Material getMaterial() {
         return material;
@@ -44,9 +45,19 @@ public abstract class Face {
     /**
      * Returns the smoothing group of the face.
      * 
-     * @return  smoothing group
+     * @return smoothing group
      */
-    public int getSmoothingGroup() {
+    public String getSmoothingGroup() {
         return smoothingGroup;
+    }
+
+    /**
+     * Checks if another Face is in the same smoothing group.
+     * 
+     * @param otherFace Face to compare
+     * @return result
+     */
+    public boolean isInSameSmoothinggroup(Face otherFace) {
+        return smoothingGroup.equals(otherFace.getSmoothingGroup());
     }
 }

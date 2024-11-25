@@ -1,5 +1,7 @@
 package rayrangers.raytracer.world;
 
+import java.awt.*;
+
 /**
  * Represents some kind of material described by a Wavefront MTL file.
  */
@@ -19,21 +21,21 @@ public class Material {
      * MTL file:
      * Ka <double R> <double G> <double B>
      */
-    private double[] ka;
+    private Color ka;
 
     /**
      * Diffuse color definition with RGB values.
      * MTL file:
      * Kd <double R> <double G> <double B>
      */
-    private double[] kd;
+    private Color kd;
 
     /**
      * Specular color definition with RGB values.
      * MTL file:
      * Ks <double R> <double G> <double B>
      */
-    private double[] ks;
+    private Color ks;
     
     /**
      * Specular exponent.
@@ -67,7 +69,7 @@ public class Material {
      * @param d     transparency coefficient
      * @param illum illumination model index
      */
-    public Material(String name, double[] ka, double[] kd, double[] ks, double ns, double d, int illum) {
+    public Material(String name, Color ka, Color kd, Color ks, double ns, double d, int illum) {
         this.name = name;
         this.ka = ka;
         this.kd = kd;
@@ -100,7 +102,7 @@ public class Material {
      * 
      * @return  array of RGB values
      */
-    public double[] getAmbient() {
+    public Color getAmbient() {
         return ka;
     }
 
@@ -109,7 +111,7 @@ public class Material {
      * 
      * @return  array of RGB values
      */
-    public double[] getDiffuse() {
+    public Color getDiffuse() {
         return kd;
     }
 
@@ -118,7 +120,7 @@ public class Material {
      * 
      * @return  array of RGB values
      */
-    public double[] getSpecular() {
+    public Color getSpecular() {
         return ks;
     }
 

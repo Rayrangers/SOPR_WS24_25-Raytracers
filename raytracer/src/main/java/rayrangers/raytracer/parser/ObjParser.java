@@ -32,21 +32,18 @@ public class ObjParser {
     private static List<Vector3D> normalVectors;
     private static List<Face> faces;
     private static Material currentMaterial;
-    private static int currentSmoothingGroup;
+    private static String currentSmoothingGroup;
 
     // TODO: Maybe default material?
     /**
      * Parses a Wavefront OBJ file at the given location.$
      * 
-     * @param filePath  path to the OBJ file
+     * @param filePath path to the OBJ file
      * @return Entity
-     * @throws FileNotFoundException Thrown if OBJ file is not present
-     * @throws IOException Thrown if there is any error while reading the file
+     * @throws FileNotFoundException if OBJ file is not present
+     * @throws IOException           if there is any error while reading the file
      */
     public static Entity parseObjFile(String filePath) throws FileNotFoundException, IOException {
-        File file = new File(filePath);
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String line = br.readLine();
 
         // Reset temporary parsing data structures
         entityName = null;
@@ -55,43 +52,47 @@ public class ObjParser {
         normalVectors = new ArrayList<>();
         faces = new ArrayList<>();
         currentMaterial = null;
-        currentSmoothingGroup = Integer.MIN_VALUE;
+        currentSmoothingGroup = null;
 
+        File file = new File(filePath);
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line = br.readLine();
         while (line != null) {
-            line = br.readLine();
-            if (line != null) {
-                line = line.split("#", 2)[0]; // Sanitize any comments (also at end of line)
-                if (line.length() > 0) { // Full line comments will result in empty string
-                    String[] data = line.split("\\s+"); // Split by any number of whitespace chars
-                    switch (data[0]) { // Analyze first identifier value
-                        case "o": // Given entity name (optional)
-                            entityName = data[1];
-                            break;
-                        case "mtllib": // Reference to external material definition
-                            String mtlFilePath = filePath.substring(0, filePath.lastIndexOf(File.separator) + 1)
-                                    + data[1]; // Build mtl path from obj path and mtl file name
-                            materials = MtlParser.parseMaterialFile(mtlFilePath); // Call mtl parser
-                            break;
-                        case "usemtl": // Material name
-                            currentMaterial = materials.get(data[1]);
-                            break;
-                        case "v": // Vertex
-                            vertices.add(parseVertex(data));
-                            break;
-                        case "vn": // Normal vector
-                            normalVectors.add(parseVertexNormals(data));
-                            break;
-                        case "s": // Smoothing group
-                            currentSmoothingGroup = Integer.parseInt(data[1]);
-                            break;
-                        case "f": // Face
-                            faces.add(parseFace(data));
-                            break;
-                        default: // Ignore unused params, e.g.: groups ('g')
-                            break;
-                    }
+            line = line.split("#", 2)[0]; // Sanitize any comments (also at end of line)
+            if (line.length() > 0) { // Full line comments will result in empty string
+                String[] data = line.split("\\s+"); // Split by any number of whitespace chars
+                switch (data[0]) { // Analyze first identifier value
+                    case "o": // Given entity name (optional)
+                        entityName = data[1];
+                        break;
+                    case "mtllib": // Reference to external material definition
+                        String mtlFilePath = filePath.substring(0, filePath.lastIndexOf(File.separator) + 1)
+                                + data[1]; // Build mtl path from obj path and mtl file name
+                        materials = MtlParser.parseMaterialFile(mtlFilePath); // Call mtl parser
+                        break;
+                    case "usemtl": // Material name
+                        currentMaterial = materials.get(data[1]);
+                        break;
+                    case "v": // Vertex
+                        vertices.add(parseVertex(data));
+                        break;
+                    case "vn": // Normal vector
+                        normalVectors.add(parseVertexNormals(data));
+                        break;
+                    case "s": // Smoothing group
+                        if (data[1].equalsIgnoreCase("off")) {
+                            currentSmoothingGroup = null;
+                        }
+                        currentSmoothingGroup = data[1];
+                        break;
+                    case "f": // Face
+                        faces.add(parseFace(data));
+                        break;
+                    default: // Ignore unused params, e.g.: groups ('g')
+                        break;
                 }
             }
+            line = br.readLine(); // Read next line in file
         }
         br.close();
         return new Entity(entityName, faces, vertices);
@@ -142,18 +143,6 @@ public class ObjParser {
                 }
             }
             return new Triangle(currentMaterial, currentSmoothingGroup, faceVertList);
-        }
-    }
-
-    // TODO: Remove main method
-    public static void main(String[] args) {
-        try {
-            Entity e1 = parseObjFile("examples/3d-cubes/cube-tex.obj");
-            Entity e2 = parseObjFile("examples/3d-cubes/cube.obj");
-            Entity e3 = parseObjFile("examples/teapot/Teapot.obj");
-            System.out.println(e1.getName() + e2.getName() + e3.getName());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

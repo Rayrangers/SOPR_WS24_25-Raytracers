@@ -118,7 +118,7 @@ public class Entity {
      * @param sx3           scaling factor in x3-direction
      */
     public Entity placeInWorld(Vertex3D worldPosition, Vector3D rotation, double sx1, double sx2, double sx3) {
-        // TODO
+        // TODO: Transformation from object into world coordinates 
         return null;
     }
 }

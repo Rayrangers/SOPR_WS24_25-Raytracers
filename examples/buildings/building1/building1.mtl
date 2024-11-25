@@ -1,0 +1,63 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+# Multi/Sub Material__35 (7) to come 
+#
+newmtl bankhaus-blanco
+Ka  0.9 0.9 0.9
+Kd  0.9 0.9 0.9
+Ks  1.0 1.0 1.0
+d  1.0
+Ns  0.5
+illum 2
+#
+newmtl bankhaus-gris
+Ka  0.3 0.3 0.2
+Kd  0.3 0.3 0.2
+Ks  1.0 1.0 1.0
+d  1.0
+Ns  0.5
+illum 2
+#
+newmtl bankhaus-mclaro
+Ka  0.8 0.7 0.6
+Kd  0.8 0.7 0.6
+Ks  0.5 0.5 0.5
+d  1.0
+Ns  0.5
+illum 2
+#
+newmtl bankhaus-cristal
+Ka  0.1 0.2 0.0
+Kd  0.1 0.2 0.0
+Ks  1.0 1.0 1.0
+d  0.4
+Ns  0.5
+illum 2
+#
+newmtl bankhaus-moscuro
+Ka  0.4 0.3 0.3
+Kd  0.4 0.3 0.3
+Ks  1.0 1.0 1.0
+d  1.0
+Ns  0.5
+illum 2
+#
+newmtl toldo
+Ka  0.8 0.5 0.4
+Kd  0.8 0.5 0.4
+Ks  1.0 1.0 1.0
+d  1.0
+Ns  0.5
+illum 2
+#
+newmtl bankhaus-fachada
+Ka  0.8 0.8 0.7
+Kd  0.8 0.8 0.7
+Ks  1.0 1.0 1.0
+d  1.0
+Ns  0.5
+illum 2
+#
+# Multi/Sub Material__35 done 
+#
+# EOF
