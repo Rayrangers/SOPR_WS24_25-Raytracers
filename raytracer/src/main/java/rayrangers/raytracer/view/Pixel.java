@@ -1,5 +1,7 @@
 package rayrangers.raytracer.view;
 
+import java.awt.Color;
+
 public class Pixel {
 
     private Color color;
