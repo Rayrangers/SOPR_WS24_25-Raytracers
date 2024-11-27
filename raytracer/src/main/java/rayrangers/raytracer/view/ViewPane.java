@@ -59,8 +59,8 @@ public class ViewPane {
     /**
      * Returns the aspect ratio of the viewpane.
      * 
-     * @return Aspect ratio as decimal, e.g. 1920px / 1080px = 16/9 =
-     *         1,777777777777778
+     * @return Aspect ratio as decimal, 
+     *         e.g. 1920px / 1080px = 16/9 = 1,777777777777778
      */
     public double getAspectRatio() {
         return resX / resY;

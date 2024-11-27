@@ -2,6 +2,8 @@ package rayrangers.raytracer.world;
 
 import java.util.List;
 
+import rayrangers.raytracer.math.Vertex3D;
+
 /**
  * Represents a triangle as a special face.
  */

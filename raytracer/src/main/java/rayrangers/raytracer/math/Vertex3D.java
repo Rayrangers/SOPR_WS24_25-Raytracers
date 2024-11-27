@@ -1,6 +1,4 @@
-package rayrangers.raytracer.world;
-
-import rayrangers.raytracer.math.Vector3D;
+package rayrangers.raytracer.math;
 
 /**
  * Represents a vertex in 3D space.

@@ -3,6 +3,7 @@ package rayrangers.raytracer.world;
 import java.util.List;
 import java.util.UUID;
 import rayrangers.raytracer.math.Vector3D;
+import rayrangers.raytracer.math.Vertex3D;
 
 /**
  * Represents an entity (object/mesh) described by a Wavefront OBJ file.

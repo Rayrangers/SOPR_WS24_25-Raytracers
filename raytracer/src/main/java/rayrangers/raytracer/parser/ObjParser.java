@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 import rayrangers.raytracer.math.Vector3D;
+import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.world.Entity;
 import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.world.Material;
 import rayrangers.raytracer.world.Triangle;
-import rayrangers.raytracer.world.Vertex3D;
 
 /**
  * Parser for a Wavefront OBJ file.
