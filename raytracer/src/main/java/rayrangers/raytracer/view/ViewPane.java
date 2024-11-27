@@ -29,6 +29,16 @@ public class ViewPane {
     private double paneHeight;
 
     /**
+     * Distance between two pixels in u-direction (up).
+     */
+    private double deltaU;
+
+    /**
+     * Distance between two pixels in v-direction (righthand).
+     */
+    private double deltaV;
+
+    /**
      * Array of pixels.
      */
     private Pixel[] pixels;
@@ -54,6 +64,22 @@ public class ViewPane {
      */
     private void updatePaneHeight() {
         paneHeight = paneWidth / getAspectRatio();
+        calculateDeltas(); // Update deltas for new pane dimensions
+        calculatePixelCenters(); // Update pixels with new centers
+    }
+
+    /**
+     * Calculates deltaU and deltaV.
+     */
+    private void calculateDeltas() {
+        // TODO: Implement
+    }
+
+    /**
+     * Calculates the centers of all pixels.
+     */
+    private void calculatePixelCenters() {
+        // TODO: Implement
     }
 
     /**

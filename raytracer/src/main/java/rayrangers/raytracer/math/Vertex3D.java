@@ -18,21 +18,32 @@ public class Vertex3D {
     /**
      * Class constructor specifying the coordinates of all dimensions.
      * 
-     * @param x1    coordinate of x1-dimension
-     * @param x2    coordinate of x2-dimension
-     * @param x3    coordinate of x3-dimension
+     * @param x1 coordinate of x1-dimension
+     * @param x2 coordinate of x2-dimension
+     * @param x3 coordinate of x3-dimension
      */
     public Vertex3D(double x1, double x2, double x3) {
         this(x1, x2, x3, null);
     }
 
     /**
-     * Class constructor specifying the coordinates of all dimensions and the normal vector.
+     * Class constructor for a vertex with a given location vector.
      * 
-     * @param x1    coordinate of x1-dimension
-     * @param x2    coordinate of x2-dimension
-     * @param x3    coordinate of x3-dimension
-     * @param vec   normal vector
+     * @param locationVector Location vector of vertex
+     */
+    public Vertex3D(Vector3D locationVector) {
+        this.locationVector = locationVector;
+        this.normalVector = null;
+    }
+
+    /**
+     * Class constructor specifying the coordinates of all dimensions and the normal
+     * vector.
+     * 
+     * @param x1  coordinate of x1-dimension
+     * @param x2  coordinate of x2-dimension
+     * @param x3  coordinate of x3-dimension
+     * @param vec normal vector
      */
     public Vertex3D(double x1, double x2, double x3, Vector3D vec) {
         locationVector = new Vector3D(x1, x2, x3);
@@ -42,20 +53,20 @@ public class Vertex3D {
     /**
      * Returns the Euclidean distance to a target vertex.
      * 
-     * @param vert  target vertex
-     * @return      distance
+     * @param vert target vertex
+     * @return distance
      */
     public double distance(Vertex3D vert) {
         double sum = 0.0;
-        for(int i = 0; i <=2; i++)
-            sum += Math.pow(locationVector.getCoordinates()[i]-locationVector.getCoordinates()[i],2);
+        for (int i = 0; i <= 2; i++)
+            sum += Math.pow(locationVector.getCoordinates()[i] - locationVector.getCoordinates()[i], 2);
         return Math.sqrt(sum);
     }
 
     /**
      * Returns the coordinates of the vertex in an array.
      * 
-     * @return  coordinates array
+     * @return coordinates array
      */
     public Vector3D getlocationVector() {
         return locationVector;
@@ -64,22 +75,22 @@ public class Vertex3D {
     /**
      * Returns the coordinate of the specified dimension.
      * 
-     * @param dim   dimension, integer value in [1,3]
-     * @return      coordinate
-     * @throws      IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
+     * @param dim dimension, integer value in [1,3]
+     * @return coordinate
+     * @throws IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
      */
     public double getCoord(int dim) {
-        if(dim < 1 || dim > 3)
+        if (dim < 1 || dim > 3)
             throw new IndexOutOfBoundsException("Specified dimension out of 3D space.");
-        return locationVector.getCoordinates()[dim-1];
+        return locationVector.getCoordinates()[dim - 1];
     }
 
     /**
      * Sets the coordinates of all dimensions.
      * 
-     * @param x1    coordinate of x1-dimension
-     * @param x2    coordinate of x2-dimension
-     * @param x3    coordinate of x3-dimension
+     * @param x1 coordinate of x1-dimension
+     * @param x2 coordinate of x2-dimension
+     * @param x3 coordinate of x3-dimension
      */
     public void setAllCoord(double x1, double x2, double x3) {
         locationVector = new Vector3D(x1, x2, x3);
@@ -88,7 +99,7 @@ public class Vertex3D {
     /**
      * Returns the normal vector of the vertex.
      * 
-     * @return  normal vector
+     * @return normal vector
      */
     public Vector3D getNormalVector() {
         return normalVector;
@@ -99,18 +110,18 @@ public class Vertex3D {
      * 
      * @param dim   dimension, integer value in [1,3]
      * @param coord coordinate
-     * @throws      IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
+     * @throws IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
      */
     public void setCoord(int dim, double coord) {
-        if(dim < 1 || dim > 3)
+        if (dim < 1 || dim > 3)
             throw new IndexOutOfBoundsException("Specified dimension out of 3D space.");
-        locationVector.getCoordinates()[dim-1] = coord;
+        locationVector.getCoordinates()[dim - 1] = coord;
     }
 
     /**
      * Sets the normal vector of the vertex.
      * 
-     * @param normalVector  normal vector
+     * @param normalVector normal vector
      */
     public void setNormalVector(Vector3D normalVector) {
         this.normalVector = normalVector;
