@@ -11,37 +11,38 @@ public class ViewPane {
     /**
      * Resolution in x-direction.
      */
-    private int resX;
+    private final int resX;
 
     /**
      * Resolution in y-direction.
      */
-    private int resY;
+    private final int resY;
 
     /**
      * Physical width of the viewpane.
      */
-    private double paneWidth;
+    private final double paneWidth;
 
     /**
      * Physical height of the viewpane.
      */
-    private double paneHeight;
+    private final double paneHeight;
 
     /**
-     * Distance between two pixels in u-direction (up).
+     * One-dimensional array of pixels
+     * representing a two-dimensional grid with i columns and j rows.
      */
-    private double deltaU;
+    private final Pixel[] pixels;
 
     /**
-     * Distance between two pixels in v-direction (righthand).
+     * U-Coordinate of the upper (or bottom) left edge of the image.
      */
-    private double deltaV;
+    private final double left;
 
     /**
-     * Array of pixels.
+     * V-coordinate of the upper left (or right) edge of the image.
      */
-    private Pixel[] pixels;
+    private final double bottom;
 
     /**
      * Class constructor specifying the resolution and the pane width.
@@ -55,37 +56,43 @@ public class ViewPane {
         this.resX = resX;
         this.resY = resY;
         this.paneWidth = paneWidth;
-        // Calculate the viewpane height
-        updatePaneHeight();
+        // Fill pixel array
+        pixels = new Pixel[resX * resY];
+        for (int i = 0; i < resX; i++) {
+            for (int j = 0; j < resY; j++) {
+                // Create Pixel at position (i,j) and set u and v accordingly
+                pixels[i * resX + j] = new Pixel(calculateU(i, j), calculateV(i, j));
+            }
+        }
+        paneHeight = paneWidth / getAspectRatio(); // Calculate pane height to ensure pixels are squared
+        left = -paneWidth / 2;
+        bottom = -paneHeight / 2;
     }
 
     /**
-     * Calculates the value of the pane height to ensure pixels are squared.
+     * Calculates the coordinate in u-direction
+     * of the pixel at position (i,j).
+     * 
+     * @return pixel coordinate in u-direction
      */
-    private void updatePaneHeight() {
-        paneHeight = paneWidth / getAspectRatio();
-        calculateDeltas(); // Update deltas for new pane dimensions
-        calculatePixelCenters(); // Update pixels with new centers
+    private double calculateU(int i, int j) {
+        return left + paneWidth * (i + 0.5) / resX;
     }
 
     /**
-     * Calculates deltaU and deltaV.
+     * Calculates the coordinate in v-direction
+     * of the pixel at position (i,j).
+     * 
+     * @return pixel coordinate in v-direction
      */
-    private void calculateDeltas() {
-        // TODO: Implement
-    }
-
-    /**
-     * Calculates the centers of all pixels.
-     */
-    private void calculatePixelCenters() {
-        // TODO: Implement
+    private double calculateV(int i, int j) {
+        return bottom + paneHeight * (j + 0.5) / resY;
     }
 
     /**
      * Returns the aspect ratio of the viewpane.
      * 
-     * @return Aspect ratio as decimal, 
+     * @return Aspect ratio as decimal,
      *         e.g. 1920px / 1080px = 16/9 = 1,777777777777778
      */
     public double getAspectRatio() {
@@ -93,35 +100,58 @@ public class ViewPane {
     }
 
     /**
-     * Sets a new resolution of the pane and adjusts the height accordingly.
+     * Returns horizontal resolution of pane in pixels.
      * 
-     * @param x New resolution in x-direction
-     * @param y New resolution in y-direction
+     * @return Horizontal resolution of pane in pixels
      */
-    public void setResolution(int x, int y) {
-        resX = x;
-        resY = y;
-        updatePaneHeight(); // Ensure pixels are not "streched"/"squished"
-    }
-
     public int getResX() {
         return resX;
     }
 
+    /**
+     * Returns vertical resolution of pane in pixels.
+     * 
+     * @return Vertical resolution of pane in pixels
+     */
     public int getResY() {
         return resY;
     }
 
+    /**
+     * Returns the width of the viewpane.
+     * 
+     * @return pane width
+     */
     public double getPaneWidth() {
         return paneWidth;
     }
 
+    /**
+     * Returns the height of the viewpane.
+     * 
+     * @return pane height
+     */
     public double getPaneHeight() {
         return paneHeight;
     }
 
+    /**
+     * Returns the pixels of the viewpane as array..1080px
+     * 
+     * @return pixel array
+     */
     public Pixel[] getPixels() {
         return pixels;
     }
 
+    /**
+     * Returns a Pixel at the specified position on the two-dimensional ViewPane.
+     * 
+     * @param i Horizontal index of Pixel on ViewPane
+     * @param j Vertical index of Pixel on ViewPane
+     * @return Pixel
+     */
+    public Pixel getPixelAt(int i, int j) {
+        return pixels[i * resX + j];
+    }
 }

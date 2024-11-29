@@ -2,8 +2,6 @@ package rayrangers.raytracer.view;
 
 import java.awt.Color;
 
-import rayrangers.raytracer.math.Vertex3D;
-
 /**
  * Represents a pixel in the viewpane.
  */
@@ -15,43 +13,31 @@ public class Pixel {
     private Color color;
 
     /**
-     * Center point of the pixel.
+     * Coordinate of the pixel in u-direction (righthand).
      */
-    private Vertex3D center;
+    private final double u;
 
     /**
-     * Class constructor specifying the color and the centerof the pixel.
-     * 
-     * @param color  color of the pixel
-     * @param center center of the pixel
+     * Coordinate of the pixel in v-direction (up).
      */
-    public Pixel(Color color, Vertex3D center) {
-        this.color = color;
-        this.center = center;
-    }
+    private final double v;
 
     /**
-     * Returns the center of the pixel as a vertex.
+     * Class constructor specifying the pixel coordinates in u- and v-direction.
      * 
-     * @return center of the pixel as vertex
+     * @param u pixel coordinate in u-direction
+     * @param v pixel coordinate in v-direction
      */
-    public Vertex3D getCenter() {
-        return center;
-    }
-
-    /**
-     * Sets the center of the pixel.
-     * 
-     * @param center center to set pixel to
-     */
-    public void setCenter(Vertex3D center) {
-        this.center = center;
+    public Pixel(double u, double v) {
+        this.color = null;
+        this.u = u;
+        this.v = v;
     }
 
     /**
      * Sets the color of the pixel.
      * 
-     * @param color Color to set pixel to
+     * @param color color to set the pixel to
      */
     public void setColor(Color color) {
         this.color = color;
@@ -60,9 +46,27 @@ public class Pixel {
     /**
      * Gets the color of the pixel.
      * 
-     * @return Color of the pixel
+     * @return color of the pixel
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * Returns the pixel coordinate in u-direction.
+     * 
+     * @return pixel coordinate in u-direction
+     */
+    public double getU() {
+        return u;
+    }
+
+    /**
+     * Returns the pixel coordinate in v-direction.1080px
+     * 
+     * @return pixel coordinate in v-direction
+     */
+    public double getV() {
+        return v;
     }
 }
