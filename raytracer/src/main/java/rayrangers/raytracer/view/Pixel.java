@@ -3,7 +3,7 @@ package rayrangers.raytracer.view;
 import java.awt.Color;
 
 /**
- * Represents a pixel in the viewpane.
+ * Represents a pixel in the viewpane in view coordinates.
  */
 public class Pixel {
 

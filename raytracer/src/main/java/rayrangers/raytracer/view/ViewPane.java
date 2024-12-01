@@ -35,12 +35,14 @@ public class ViewPane {
     private final Pixel[] pixels;
 
     /**
-     * U-Coordinate of the upper (or bottom) left edge of the image.
+     * U-coordinate of the upper (or bottom) left edge of the image
+     * in the view coordinate system.
      */
     private final double left;
 
     /**
-     * V-coordinate of the upper left (or right) edge of the image.
+     * V-coordinate of the upper left (or right) edge of the image
+     * in the view coordinate system.
      */
     private final double bottom;
 
