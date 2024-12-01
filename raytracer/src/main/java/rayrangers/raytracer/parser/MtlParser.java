@@ -29,7 +29,6 @@ public class MtlParser {
      * @throws IOException           if there is any error while reading the file
      */
     public static Map<String, Material> parseMaterialFile(String mtlPath) throws FileNotFoundException, IOException {
-        System.out.println(mtlPath);
         // Temporary parsing data structures
         Map<String, Material> materials = new HashMap<>();
         String currentMaterialName = null;
