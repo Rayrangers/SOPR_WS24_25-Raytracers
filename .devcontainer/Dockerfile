@@ -17,6 +17,9 @@ RUN dnf -y upgrade --refresh && \
 # Install Java OpenJDK 21 and Maven
 RUN dnf -y install java-21-openjdk java-21-openjdk-src maven
 
-RUN dnf -y install python3 python3-pip python-pip-wheel
+# Install Python3 and gcc for PyQt6
+RUN dnf -y install python3 python3-pip python3-devel python-pip-wheel gcc
 
 USER ${USERNAME}
+
+RUN pip install PyQt6
