@@ -77,4 +77,14 @@ public class Scene {
     public Map<UUID, Camera> getCameras() {
         return cameras;
     }
+
+    /**
+     * Adds a camera with a unique identifier if it has not been
+     * 
+     * @param camera Camera to add
+     * @return Returns true if camera has not been added yet, else false.
+     */
+    public boolean addCamera(Camera camera) {
+        return cameras.putIfAbsent(camera.getUuid(), camera) == null;
+    }
 }
