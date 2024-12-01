@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 
 public class Prototype {
     public static void main(String[] args) {
+
         Scene scene = new Scene(Color.BLACK);
         Camera camera = new Camera(new Vertex3D(0, 10, 50), 0, 0, 0, 25, 100, 100, 100);
         ViewPane viewPane = camera.getViewPane();
@@ -27,7 +28,6 @@ public class Prototype {
         renderer.render();
 
         BufferedImage bufferedImage = new BufferedImage(viewPane.getResX(), viewPane.getResY(), BufferedImage.TYPE_INT_RGB);
-
         for (int i = 0; i < viewPane.getResX(); i++) {
             for (int j = 0; j < viewPane.getResY(); j++) {
                 if (j < 10) {

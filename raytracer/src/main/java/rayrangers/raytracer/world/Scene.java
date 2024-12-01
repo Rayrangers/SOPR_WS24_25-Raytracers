@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import rayrangers.raytracer.algorithm.HitRecord;
+import rayrangers.raytracer.algorithm.Ray;
+
 /**
  * Represents a scene to be rendered.
  */
-public class Scene {
+public class Scene implements Hittable {
 
     /**
      * Background color of the scene.
@@ -19,17 +22,20 @@ public class Scene {
      * Collection of entities
      */
 
-    private Map<UUID, Entity> entities;
+    private Map<UUID, Entity> entities = new HashMap<>();;
 
     /**
      * Collection of cameras to capture the scene.
      */
-    private Map<UUID, Camera> cameras;
+    private Map<UUID, Camera> cameras = new HashMap<>();;
+
+    /**
+     * 
+     */
+    private Map<UUID, LightSource> lightSources = new HashMap<>();;
 
     public Scene(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
-        entities = new HashMap<>();
-        cameras = new HashMap<>();
     }
 
     /**
@@ -79,12 +85,37 @@ public class Scene {
     }
 
     /**
-     * Adds a camera with a unique identifier if it has not been
+     * Adds a camera with a unique identifier if it has not been added yet.
      * 
      * @param camera Camera to add
      * @return Returns true if camera has not been added yet, else false.
      */
     public boolean addCamera(Camera camera) {
         return cameras.putIfAbsent(camera.getUuid(), camera) == null;
+    }
+
+    /**
+     * @see Hittable
+     */
+    @Override
+    public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
+        boolean hit = false;
+        // Iterate over entities
+        for (Entity entity : entities.values()) {
+            // Check if the ray hits the entity and if t lies within interval [t0,t1]
+            if (entity.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
+                hit = true;
+                t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
+            }
+        }
+        // Iterate over lightsources
+        for (LightSource lightSource : lightSources.values()) {
+            // Check if the ray hits the lightsource and if t lies within interval [t0,t1]
+            if (lightSource.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
+                hit = true;
+                t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
+            }
+        }
+        return hit;
     }
 }

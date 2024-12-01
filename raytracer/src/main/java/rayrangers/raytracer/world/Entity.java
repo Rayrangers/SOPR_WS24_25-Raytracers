@@ -2,18 +2,23 @@ package rayrangers.raytracer.world;
 
 import java.util.List;
 import java.util.UUID;
+
+import rayrangers.raytracer.algorithm.HitRecord;
+import rayrangers.raytracer.algorithm.Ray;
 import rayrangers.raytracer.math.Vertex3D;
 
 /**
  * Represents an entity (object/mesh) described by a Wavefront OBJ file.
  */
-public class Entity {
+public class Entity implements Hittable {
 
-    // TODO: Maybe class TemplateEntity <|---- Entity -------> Hittable, Placeable/Adjustable(?)
+    // TODO: Maybe class TemplateEntity <|---- Entity -------> Hittable,
+    // Placeable/Adjustable(?)
     // TODO: Interface Hittable?
     // TODO: Interface Placeable/Adjustable?
     // TODO: Sphere as Entity?
-    // TODO: Take a look at how UUIDs are handled (e.g. for template entities, clones etc.)
+    // TODO: Take a look at how UUIDs are handled (e.g. for template entities,
+    // clones etc.)
 
     /**
      * Randomly generated UUID of the entity.
@@ -47,25 +52,25 @@ public class Entity {
     /**
      * Class constructor with a given UUID.
      * 
-     * @param uuid      UUID of the entity
-     * @param name      entity name, null if {@code name == null}
-     * @param faces     face list
-     * @param vertices  vertices
+     * @param uuid     UUID of the entity
+     * @param name     entity name, null if {@code name == null}
+     * @param faces    face list
+     * @param vertices vertices
      */
     public Entity(UUID uuid, String name, List<Face> faces, List<Vertex3D> vertices) {
         this.uuid = uuid;
         this.name = name;
         this.faces = faces;
-        this.vertices = vertices; 
+        this.vertices = vertices;
     }
 
     /**
      * Class constructor without a given UUID.
      * Generates a random UUID for the entity.
      * 
-     * @param name      entity name, null if {@code name == null}
-     * @param faces     face list
-     * @param vertices  vertices
+     * @param name     entity name, null if {@code name == null}
+     * @param faces    face list
+     * @param vertices vertices
      */
     public Entity(String name, List<Face> faces, List<Vertex3D> vertices) {
         this(UUID.randomUUID(), name, faces, vertices);
@@ -136,8 +141,25 @@ public class Entity {
      * @param scalingX2     scaling factor in x2-direction
      * @param scalingX3     scaling factor in x3-direction
      */
-    public Entity placeInWorld(Vertex3D worldPosition, double angleX1, double angleX2, double angleX3, double scalingX1, double sx2, double sx3) {
-        // TODO: Transformation from object into world coordinates 
+    public Entity placeInWorld(Vertex3D worldPosition, double angleX1, double angleX2, double angleX3, double scalingX1,
+            double sx2, double sx3) {
+        // TODO: Transformation from object into world coordinates
         return null;
+    }
+
+    /**
+     * @see Hittable
+     */
+    @Override
+    public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
+        boolean hit = false;
+        for (Face face : faces) {
+            // Check if the ray hits the face and if t lies within interval [t0,t1]
+            if (face.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
+                hit = true;
+                t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
+            }
+        }
+        return hit;
     }
 }

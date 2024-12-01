@@ -7,7 +7,7 @@ package rayrangers.raytracer.world;
  * f <integer v>/<integer vt> ...
  * f <integer v>/<integer vt>/<integer vn> ...
  */
-public abstract class Face {
+public abstract class Face implements Hittable {
 
     /**
      * Material of the face.

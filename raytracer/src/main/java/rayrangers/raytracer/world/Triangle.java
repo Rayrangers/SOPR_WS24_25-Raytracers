@@ -2,6 +2,8 @@ package rayrangers.raytracer.world;
 
 import java.util.List;
 
+import rayrangers.raytracer.algorithm.HitRecord;
+import rayrangers.raytracer.algorithm.Ray;
 import rayrangers.raytracer.math.Vertex3D;
 
 /**
@@ -18,11 +20,11 @@ public class Triangle extends Face {
      * Class constructor specifying the material, smoothing group and the vertices
      * of the triangle.
      * 
-     * @param material material
+     * @param material       material
      * @param smoothingGroup smoothing group
-     * @param v1 vertex 1
-     * @param v2 vertex 2
-     * @param v3 vertex 3
+     * @param v1             vertex 1
+     * @param v2             vertex 2
+     * @param v3             vertex 3
      * @see Face
      */
     public Triangle(Material material, String smoothingGroup, Vertex3D v1, Vertex3D v2, Vertex3D v3) {
@@ -33,9 +35,9 @@ public class Triangle extends Face {
     /**
      * Class constructor called by ObjParser.
      * 
-     * @param material material
+     * @param material       material
      * @param smoothingGroup smoothing group
-     * @param vertices vertex list
+     * @param vertices       vertex list
      */
     public Triangle(Material material, String smoothingGroup, List<Vertex3D> vertices) {
         super(material, smoothingGroup);
@@ -49,5 +51,14 @@ public class Triangle extends Face {
      */
     public Vertex3D[] getAllVert() {
         return vertices;
+    }
+
+    /**
+     * 
+     */
+    @Override
+    public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
+        // TODO: Implement
+        return false;
     }
 }
