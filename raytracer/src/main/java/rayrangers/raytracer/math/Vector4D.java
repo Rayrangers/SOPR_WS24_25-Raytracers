@@ -28,7 +28,7 @@ public class Vector4D {
     /**
      * Setter for the vertices array.
      */
-    public void setVertices(double x1, double x2, double x3, double x4) {
+    public void setCoordinates(double x1, double x2, double x3, double x4) {
         this.coordinates = new double[]{x1, x2, x3, x4};
     }
 
@@ -93,5 +93,20 @@ public class Vector4D {
                 this.coordinates[1] * this.coordinates[1] +
                 this.coordinates[2] * this.coordinates[2] +
                 this.coordinates[3] * this.coordinates[3]);
+    }
+
+    /**
+     * Normalizes this vector, returning a new vector with the same direction
+     * but a length (magnitude) of 1.
+     *
+     * @return A new Vector4D instance representing the normalized vector.
+     * @throws ArithmeticException If the vector has a length of 0, as normalization is undefined.
+     */
+    public Vector4D normalize() {
+        double len = this.length();
+        if (len == 0) {
+            throw new ArithmeticException("Denominator can't be zero.");
+        }
+        return new Vector4D(this.coordinates[0] / len, this.coordinates[1] / len, this.coordinates[2] / len, this.coordinates[3] / len);
     }
 }
