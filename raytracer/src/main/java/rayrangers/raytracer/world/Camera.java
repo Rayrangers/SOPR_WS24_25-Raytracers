@@ -12,7 +12,6 @@ import rayrangers.raytracer.view.ViewPane;
  */
 public class Camera {
 
-    // TODO: Interface Hittable?
     // TODO: Interface Placeable/Adjustable?
 
     /**

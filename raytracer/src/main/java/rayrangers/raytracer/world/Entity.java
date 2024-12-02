@@ -12,13 +12,10 @@ import rayrangers.raytracer.math.Vertex3D;
  */
 public class Entity implements Hittable {
 
-    // TODO: Maybe class TemplateEntity <|---- Entity -------> Hittable,
-    // Placeable/Adjustable(?)
-    // TODO: Interface Hittable?
+    // TODO: Maybe class TemplateEntity <|---- Entity -------> Hittable, Placeable/Adjustable(?)
     // TODO: Interface Placeable/Adjustable?
     // TODO: Sphere as Entity?
-    // TODO: Take a look at how UUIDs are handled (e.g. for template entities,
-    // clones etc.)
+    // TODO: Take a look at how UUIDs are handled (e.g. for template entities, clones etc.)
 
     /**
      * Randomly generated UUID of the entity.

@@ -10,32 +10,35 @@ import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Scene;
 
 /**
- * 
+ * Represents a renderer using the raytracing algorithm.
  */
 public class Renderer {
 
     /**
-     * 
+     * Scene to be rendered.
      */
     private Scene scene;
 
     /**
-     * 
+     * Camera the scene is rendered from.
      */
     private Camera camera;
 
     /**
-     * 
+     * Viewpane the scene is rendered to.
      */
     private ViewPane viewpane;
 
     /**
-     * 
+     * Shader used to render the scene.
      */
     private Shader shader = new Shader();
 
     /**
+     * Class constructor specifiying the scene and the UUID of the camera.
      * 
+     * @param scene scene to be rendered 
+     * @param cameraUUId UUId of the camera the scene is rendered from
      */
     public Renderer(Scene scene, UUID cameraUUID) {
         this.scene = scene;
@@ -44,7 +47,7 @@ public class Renderer {
     }
 
     /**
-     * 
+     * Renders the scene.
      */
     public void render() {
         for (int j = 0; j < viewpane.getResY(); j++) {
@@ -57,7 +60,10 @@ public class Renderer {
     }
 
     /**
+     * Traces a specified ray and returns the color of the related pixel.
      * 
+     * @param viewRay ray to be traced 
+     * @return color of the related pixel 
      */
     private Color traceRay(Ray viewRay) {
         HitRecord record = new HitRecord();
@@ -69,7 +75,10 @@ public class Renderer {
     }
 
     /**
+     * Computes the direction of a ray going through a specified pixel.
      * 
+     * @param pixel pixel the ray is going through
+     * @return ray direction as a vector
      */
     private Vector3D computeRayDirection(Pixel pixel) {
         Vector3D u = camera.getU();

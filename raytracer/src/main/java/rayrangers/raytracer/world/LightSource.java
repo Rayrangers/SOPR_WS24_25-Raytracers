@@ -4,11 +4,11 @@ import rayrangers.raytracer.algorithm.HitRecord;
 import rayrangers.raytracer.algorithm.Ray;
 
 /**
- * 
+ * Represents a lightsource in the scene.
  */
 public class LightSource implements Hittable {
 
-    // TODO: Implement LightSource
+    // TODO: Implement
 
     /**
      * @see Hittable

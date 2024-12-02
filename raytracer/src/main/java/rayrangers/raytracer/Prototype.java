@@ -3,19 +3,20 @@ package rayrangers.raytracer;
 import java.awt.Color;
 
 import rayrangers.raytracer.world.Scene;
-import rayrangers.raytracer.world.Triangle;
+// import rayrangers.raytracer.world.Triangle;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
-import rayrangers.raytracer.world.Face;
+// import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.Vertex3D;
+import rayrangers.raytracer.parser.ObjParser;
 import rayrangers.raytracer.view.ViewPane;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -23,24 +24,26 @@ public class Prototype {
     public static void main(String[] args) throws Exception {
 
         Scene scene = new Scene(Color.BLACK);
-        Camera camera = new Camera(new Vertex3D(0, 25, 1000), 0, 0, 0, 25, 100, 1000, 1000);
+        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 50, 100, 1000, 1000);
         ViewPane viewPane = camera.getViewPane();
         
         scene.addCamera(camera);
         // TODO: Add entity
-        // Entity cube = ObjParser.parseObjFile("examples/3d-cubes/cube.obj");
-        List<Vertex3D> vlist = new ArrayList<>();
-        vlist.add(new Vertex3D(100, 0, 0));
-        vlist.add(new Vertex3D(0, 100, 0));
-        vlist.add(new Vertex3D(0, 0, 0));
+        Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
+        // List<Vertex3D> vlist = new ArrayList<>();
+        // vlist.add(new Vertex3D(100, 0, 0));
+        // vlist.add(new Vertex3D(0, 100, 0));
+        // vlist.add(new Vertex3D(0, 0, 0));
 
-        Face f = new Triangle(null, null, vlist);
+        // Face f = new Triangle(null, null, vlist);
 
-        List<Face> faces = new ArrayList<>();
-        faces.add(f);
+        // List<Face> faces = new ArrayList<>();
+        // faces.add(f);
 
-        Entity triangleEnt = new Entity(null, faces, vlist);
-        scene.addEntity(triangleEnt);
+        // Entity triangleEnt = new Entity(null, faces, vlist);
+        // scene.addEntity(triangleEnt);
+
+        scene.addEntity(teapot);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         renderer.render();
