@@ -61,21 +61,18 @@ public class Triangle extends Face {
     public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
         // Triangle ABC with vertices A, B, C
         // E = origin of the ray (camera eye)
-        Vector3D vecAB = vertices[1].getlocationVector().sub(vertices[0].getlocationVector()); // Vector AB = (a, b,
-                                                                                               // c)^T
-        Vector3D vecAC = vertices[2].getlocationVector().sub(vertices[0].getlocationVector()); // Vector AC = (d, e,
-                                                                                               // f)^T
-        Vector3D vecEA = vertices[0].getlocationVector().sub(ray.getOrigin().getlocationVector()); // Vector AE = (g, h,
-                                                                                                   // i)^T
+        Vector3D vecBA = vertices[0].getlocationVector().sub(vertices[1].getlocationVector()); // Vector BA = (a,b,c)^T
+        Vector3D vecCA = vertices[0].getlocationVector().sub(vertices[2].getlocationVector()); // Vector CA = (d,e,f)^T
+        Vector3D vecEA = vertices[0].getlocationVector().sub(ray.getOrigin().getlocationVector()); // Vector EA = (g,h,i)^T
         Vector3D rayDir = ray.getDirection();
 
-        // Components of Matrix A = [AB AC rayDir]
-        double a = vecAB.getCoord(1);
-        double b = vecAB.getCoord(2);
-        double c = vecAB.getCoord(3);
-        double d = vecAC.getCoord(1);
-        double e = vecAC.getCoord(2);
-        double f = vecAC.getCoord(3);
+        // Components of Matrix A = [BA CA rayDir]
+        double a = vecBA.getCoord(1);
+        double b = vecBA.getCoord(2);
+        double c = vecBA.getCoord(3);
+        double d = vecCA.getCoord(1);
+        double e = vecCA.getCoord(2);
+        double f = vecCA.getCoord(3);
         double g = rayDir.getCoord(1);
         double h = rayDir.getCoord(2);
         double i = rayDir.getCoord(3);
