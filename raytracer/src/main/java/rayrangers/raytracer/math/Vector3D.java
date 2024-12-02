@@ -138,4 +138,129 @@ public class Vector3D {
         }
         return new Vector3D(this.coordinates[0] / len, this.coordinates[1] / len, this.coordinates[2] / len);
     }
+
+    /**
+     * Scales the vector by the given scaling factors (sx, sy, sz).
+     *
+     * @param sx Scaling factor for the x-coordinate.
+     * @param sy Scaling factor for the y-coordinate.
+     * @param sz Scaling factor for the z-coordinate.
+     */
+    public void scale(double sx, double sy, double sz) {
+        // Scaling matrix (4x4)
+        // [ sx  0   0   0 ]
+        // [  0  sy  0   0 ]
+        // [  0   0  sz  0 ]
+        // [  0   0   0   1 ]
+
+        // Extend the vector to homogeneous coordinates (x1, x2, x3, 1)
+        double[] v = this.coordinates;
+        double[] scaleMatrix = new double[]{
+                sx * v[0], sy * v[1], sz * v[2], 1
+        };
+
+        // Assign the scaled coordinates back to the vector
+        this.coordinates = new double[]{scaleMatrix[0], scaleMatrix[1], scaleMatrix[2]};
+    }
+
+    /**
+     * Rotates the vector around the X-axis by the given angle.
+     *
+     * @param angle Rotation angle in degrees.
+     */
+    public void rotateX(double angle) {
+        // Rotation matrix around the X-axis (4x4)
+        // [ 1    0           0          0 ]
+        // [ 0    cos(θ)     -sin(θ)     0 ]
+        // [ 0    sin(θ)     cos(θ)      0 ]
+        // [ 0    0           0          1 ]
+
+        double angleRad = Math.toRadians(angle); // Convert angle to radians
+        double cosAngle = Math.cos(angleRad);
+        double sinAngle = Math.sin(angleRad);
+
+        // Apply the rotation to the coordinates (homogeneous coordinates)
+        double x1 = this.coordinates[0];
+        double y1 = this.coordinates[1];
+        double z1 = this.coordinates[2];
+
+        this.coordinates[0] = x1;
+        this.coordinates[1] = cosAngle * y1 - sinAngle * z1;
+        this.coordinates[2] = sinAngle * y1 + cosAngle * z1;
+    }
+
+    /**
+     * Rotates the vector around the Y-axis by the given angle.
+     *
+     * @param angle Rotation angle in degrees.
+     */
+    public void rotateY(double angle) {
+        // Rotation matrix around the Y-axis (4x4)
+        // [ cos(θ)   0    sin(θ)   0 ]
+        // [ 0        1    0        0 ]
+        // [ -sin(θ)  0    cos(θ)   0 ]
+        // [ 0        0    0        1 ]
+
+        double angleRad = Math.toRadians(angle); // Convert angle to radians
+        double cosAngle = Math.cos(angleRad);
+        double sinAngle = Math.sin(angleRad);
+
+        // Apply the rotation to the coordinates (homogeneous coordinates)
+        double x1 = this.coordinates[0];
+        double y1 = this.coordinates[1];
+        double z1 = this.coordinates[2];
+
+        this.coordinates[0] = cosAngle * x1 + sinAngle * z1;
+        this.coordinates[1] = y1;
+        this.coordinates[2] = -sinAngle * x1 + cosAngle * z1;
+    }
+
+    /**
+     * Rotates the vector around the Z-axis by the given angle.
+     *
+     * @param angle Rotation angle in degrees.
+     */
+    public void rotateZ(double angle) {
+        // Rotation matrix around the Z-axis (4x4)
+        // [ cos(θ)  -sin(θ)   0   0 ]
+        // [ sin(θ)   cos(θ)   0   0 ]
+        // [  0        0      1   0 ]
+        // [  0        0      0   1 ]
+
+        double angleRad = Math.toRadians(angle); // Convert angle to radians
+        double cosAngle = Math.cos(angleRad);
+        double sinAngle = Math.sin(angleRad);
+
+        // Apply the rotation to the coordinates (homogeneous coordinates)
+        double x1 = this.coordinates[0];
+        double y1 = this.coordinates[1];
+
+        this.coordinates[0] = cosAngle * x1 - sinAngle * y1;
+        this.coordinates[1] = sinAngle * x1 + cosAngle * y1;
+    }
+
+    /**
+     * Translates the vector by the given translation factors (tx, ty, tz).
+     *
+     * @param tx Translation factor for the x-coordinate.
+     * @param ty Translation factor for the y-coordinate.
+     * @param tz Translation factor for the z-coordinate.
+     */
+    public void translate(double tx, double ty, double tz) {
+        // Translation matrix (4x4)
+        // [ 1  0  0  tx ]
+        // [ 0  1  0  ty ]
+        // [ 0  0  1  tz ]
+        // [ 0  0  0  1 ]
+
+        // Apply the translation to the coordinates (homogeneous coordinates)
+        double x1 = this.coordinates[0];
+        double y1 = this.coordinates[1];
+        double z1 = this.coordinates[2];
+
+        this.coordinates[0] = x1 + tx;
+        this.coordinates[1] = y1 + ty;
+        this.coordinates[2] = z1 + tz;
+    }
+
 }
