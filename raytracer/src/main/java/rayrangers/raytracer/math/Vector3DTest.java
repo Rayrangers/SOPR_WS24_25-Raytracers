@@ -156,24 +156,47 @@ public class Vector3DTest {
     }
 
     /**
-     * Tests the transl method.
+     * Tests the translate method.
      */
     @Test
-    public void testTransl() {
+    public void testTranslate() {
         Vector3D vector = new Vector3D(1.0, 2.0, 3.0);
-        Vector3D translation = new Vector3D(4.0, 5.0, 6.0);
-        Vector3D result = vector.transl(translation);
-        assertArrayEquals(new double[]{5.0, 7.0, 9.0}, result.getCoordinates(), "transl failed.");
+        vector.translate(4.0, 5.0, 6.0);  // Translate by (4, 5, 6)
+
+        assertArrayEquals(new double[]{5.0, 7.0, 9.0}, vector.getCoordinates(), "Translation failed.");
     }
 
     /**
-     * Tests the rotate method.
+     * Tests the rotateX method.
      */
     @Test
-    public void testRotate() {
+    public void testRotateX() {
         Vector3D vector = new Vector3D(1.0, 0.0, 0.0);
-        Vector3D rotated = vector.rotate(0, Math.PI / 2, 0); // 90 degrees around Y
-        assertArrayEquals(new double[]{0.0, 0.0, -1.0}, rotated.getCoordinates(), 1e-9, "rotate failed.");
+        vector.rotateX(90);  // Rotate 90° around X-axis
+
+        assertArrayEquals(new double[]{1.0, 0.0, 0.0}, vector.getCoordinates(), 1e-9, "Rotation around X failed.");
+    }
+
+    /**
+     * Tests the rotateY method.
+     */
+    @Test
+    public void testRotateY() {
+        Vector3D vector = new Vector3D(1.0, 0.0, 0.0);
+        vector.rotateY(90);  // Rotate 90° around Y-axis
+
+        assertArrayEquals(new double[]{0.0, 0.0, -1.0}, vector.getCoordinates(), 1e-9, "Rotation around Y failed.");
+    }
+
+    /**
+     * Tests the rotateZ method.
+     */
+    @Test
+    public void testRotateZ() {
+        Vector3D vector = new Vector3D(1.0, 0.0, 0.0);
+        vector.rotateZ(90);  // Rotate 90° around Z-axis
+
+        assertArrayEquals(new double[]{0.0, 1.0, 0.0}, vector.getCoordinates(), 1e-9, "Rotation around Z failed.");
     }
 
     /**
@@ -182,40 +205,8 @@ public class Vector3DTest {
     @Test
     public void testScale() {
         Vector3D vector = new Vector3D(1.0, 2.0, 3.0);
-        Vector3D scaled = vector.scale(2.0, 3.0, 4.0);
-        assertArrayEquals(new double[]{2.0, 6.0, 12.0}, scaled.getCoordinates(), "scale failed.");
-    }
+        vector.scale(2.0, 3.0, 4.0);  // Scale by (2, 3, 4)
 
-    /**
-     * Tests the homogenousTransl method.
-     */
-    @Test
-    public void testHomogenousTransl() {
-        Vector3D vector = new Vector3D(1.0, 2.0, 3.0);
-        Vector3D result = vector.homogenousTransl(4.0, 5.0, 6.0);
-
-        assertArrayEquals(new double[]{5.0, 7.0, 9.0}, result.getCoordinates(), "homogenousTransl failed.");
-    }
-
-    /**
-     * Tests the homogenousRotate method.
-     */
-    @Test
-    public void testHomogenousRotate() {
-        Vector3D vector = new Vector3D(1.0, 0.0, 0.0);
-        Vector3D result = vector.homogenousRotate(0, Math.PI / 2, 0); // Rotate 90° around Y-axis
-
-        assertArrayEquals(new double[]{0.0, 0.0, -1.0}, result.getCoordinates(), 1e-9, "homogenousRotate failed.");
-    }
-
-    /**
-     * Tests the homogenousScale method.
-     */
-    @Test
-    public void testHomogenousScale() {
-        Vector3D vector = new Vector3D(1.0, 2.0, 3.0);
-        Vector3D result = vector.homogenousScale(2.0, 3.0, 4.0);
-
-        assertArrayEquals(new double[]{2.0, 6.0, 12.0}, result.getCoordinates(), "homogenousScale failed.");
+        assertArrayEquals(new double[]{2.0, 6.0, 12.0}, vector.getCoordinates(), "Scaling failed.");
     }
 }
