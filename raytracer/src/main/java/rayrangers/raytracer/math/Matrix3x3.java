@@ -233,6 +233,10 @@ public class Matrix3x3 {
         return new Matrix3x3(mat);
     }
 
+    public double[][] getElements() {
+        return this.elements;
+    }
+
 //    REDUNDANT?
 //    // --- Cartesian Transformations ---
 //    /**
