@@ -18,7 +18,7 @@ public class Vector3D {
      * @param x3 coordinate of x3-dimension
      */
     public Vector3D(double x1, double x2, double x3) {
-        this.coordinates = new double[]{x1, x2, x3};
+        this.coordinates = new double[] { x1, x2, x3 };
     }
 
     /**
@@ -29,10 +29,23 @@ public class Vector3D {
     }
 
     /**
+     * Returns the coordinate of the specified dimension.
+     * 
+     * @param dim dimension, integer value in [1,3]
+     * @return coordinate
+     * @throws IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
+     */
+    public double getCoord(int dim) {
+        if (dim < 1 || dim > 3)
+            throw new IndexOutOfBoundsException("Specified dimension out of 3D space.");
+        return coordinates[dim - 1];
+    }
+
+    /**
      * Setter for the vertices array.
      */
     public void setVertices(double x1, double x2, double x3) {
-        this.coordinates = new double[]{x1, x2, x3};
+        this.coordinates = new double[] { x1, x2, x3 };
     }
 
     /**
@@ -94,7 +107,8 @@ public class Vector3D {
      * @return The scalar triple product as a double.
      */
     public double scalarTriple(Vector3D vec1, Vector3D vec2) {
-        // Scalar triple product is the dot product of this vector and the cross product of the other two
+        // Scalar triple product is the dot product of this vector and the cross product
+        // of the other two
         Vector3D crossProduct = this.cross(vec1).cross(vec2);
         return this.scalar(crossProduct);
     }

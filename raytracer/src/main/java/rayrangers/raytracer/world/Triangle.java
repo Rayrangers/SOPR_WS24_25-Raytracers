@@ -4,6 +4,7 @@ import java.util.List;
 
 import rayrangers.raytracer.algorithm.HitRecord;
 import rayrangers.raytracer.algorithm.Ray;
+import rayrangers.raytracer.math.Vector3D;
 import rayrangers.raytracer.math.Vertex3D;
 
 /**
@@ -54,11 +55,64 @@ public class Triangle extends Face {
     }
 
     /**
-     * 
+     * @see Hittable
      */
     @Override
     public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
-        // TODO: Implement
-        return false;
+        // Triangle ABC with vertices A, B, C
+        // E = origin of the ray (camera eye)
+        Vector3D vecAB = vertices[1].getlocationVector().sub(vertices[0].getlocationVector()); // Vector AB = (a, b,
+                                                                                               // c)^T
+        Vector3D vecAC = vertices[2].getlocationVector().sub(vertices[0].getlocationVector()); // Vector AC = (d, e,
+                                                                                               // f)^T
+        Vector3D vecEA = vertices[0].getlocationVector().sub(ray.getOrigin().getlocationVector()); // Vector AE = (g, h,
+                                                                                                   // i)^T
+        Vector3D rayDir = ray.getDirection();
+
+        // Components of Matrix A = [AB AC rayDir]
+        double a = vecAB.getCoord(1);
+        double b = vecAB.getCoord(2);
+        double c = vecAB.getCoord(3);
+        double d = vecAC.getCoord(1);
+        double e = vecAC.getCoord(2);
+        double f = vecAC.getCoord(3);
+        double g = rayDir.getCoord(1);
+        double h = rayDir.getCoord(2);
+        double i = rayDir.getCoord(3);
+        double j = vecEA.getCoord(1);
+        double k = vecEA.getCoord(2);
+        double l = vecEA.getCoord(3);
+
+        // Compute determinant |A| = a(ei - hf) + b(gf - di) + c(dh - eg)
+        double det = a * (e * i - h * f) + b * (g * f - d * i) + c * (d * h - e * g);
+
+        // Compute ray parameter t = (f(ak - jb) + e(jc - al) + d(bl - kc)) / |A|
+        double t = (f * (a * k - j * b) + e * (j * c - a * l) + d * (b * l - k * c)) / det;
+        // Check if t lies within current interval [t0,t1]
+        if (t > t1 || t < t0) {
+            return false; // Ray parameter is outside current interval [t0,t1]
+        }
+
+        // Compute gamma y = (i(ak - jb) + h(jc - al) + g(bl - kc)) / |A|
+        double gamma = (i * (a * k - j * b) + h * (j * c - a * l) + g * (b * l - k * c)) / det;
+        // Check if the ray intersects the plane within the triangle
+        if (gamma < 0 || gamma > 1) {
+            return false; // Ray intersects the plane outside the triangle
+        }
+
+        // Compute beta = (j(ei - hf ) + k(gf - di) + l(dh - eg)) / |A|
+        double beta = (j * (e * i - h * f) + k * (g * f - d * i) + l * (d * h - e * g)) / det;
+        // Check if the ray intersects the plane within the triangle
+        if (beta < 0 || beta > 1 - gamma) {
+            return false; // Ray intersects the plane outside the triangle
+        }
+        
+        // Update hitrecord with triangle data
+        record.setHitObject(this); // Set this triangle as hit object in hitrecord
+        record.setT(t); // Set ray parameter of intersection
+        record.setHitPoint(ray.pointAt(t)); // Calculate intersection point
+        record.setMaterial(material); // Set triangle material
+        
+        return true;
     }
 }
