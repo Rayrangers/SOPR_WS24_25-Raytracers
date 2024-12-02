@@ -23,6 +23,26 @@ public class Matrix3x3 {
     }
 
     /**
+     * Default constructor initializes the matrix as an identity matrix.
+     */
+    public Matrix3x3() {
+        this.elements = new double[][]{
+                {1, 0, 0},
+                {0, 1, 0},
+                {0, 0, 1}
+        };
+    }
+
+    /**
+     * Returns the identity matrix (3x3).
+     *
+     * @return A new instance of Matrix3x3 representing the identity matrix.
+     */
+    public static Matrix3x3 getIdentity() {
+        return new Matrix3x3();
+    }
+
+    /**
      * Adds another matrix to this matrix.
      *
      * @param m The matrix to add.
@@ -155,25 +175,205 @@ public class Matrix3x3 {
                 elements[0][2] * (elements[1][0] * elements[2][1] - elements[1][1] * elements[2][0]);
     }
 
+    // --- Rotation Matrices ---
     /**
-     * Returns the identity matrix (3x3).
+     * Rotation around the x3-axis (z-axis).
+     * Matrix:
+     * [ cos(φ) -sin(φ)  0 ]
+     * [ sin(φ)  cos(φ)  0 ]
+     * [   0       0     1 ]
      *
-     * @return The identity matrix.
+     * @param phi The rotation angle in radians.
+     * @return A new Matrix3x3 instance representing the rotation.
      */
-    public static Matrix3x3 getIdentity() {
-        return new Matrix3x3(new double[][]{
-                {1, 0, 0},
-                {0, 1, 0},
+    public static Matrix3x3 rotationZ(double phi) {
+        double[][] mat = {
+                {Math.cos(phi), -Math.sin(phi), 0},
+                {Math.sin(phi), Math.cos(phi), 0},
                 {0, 0, 1}
-        });
+        };
+        return new Matrix3x3(mat);
     }
 
     /**
-     * Prints the matrix for debugging purposes.
+     * Rotation around the x1-axis (x-axis).
+     * Matrix:
+     * [ 1      0       0    ]
+     * [ 0   cos(φ) -sin(φ)  ]
+     * [ 0   sin(φ)  cos(φ)  ]
+     *
+     * @param phi The rotation angle in radians.
+     * @return A new Matrix3x3 instance representing the rotation.
      */
-    public void print() {
-        for (int i = 0; i < 3; i++) {
-            System.out.println(elements[i][0] + " " + elements[i][1] + " " + elements[i][2]);
-        }
+    public static Matrix3x3 rotationX(double phi) {
+        double[][] mat = {
+                {1, 0, 0},
+                {0, Math.cos(phi), -Math.sin(phi)},
+                {0, Math.sin(phi), Math.cos(phi)}
+        };
+        return new Matrix3x3(mat);
     }
+
+    /**
+     * Rotation around the x2-axis (y-axis).
+     * Matrix:
+     * [  cos(φ)   0  sin(φ)  ]
+     * [    0      1    0     ]
+     * [ -sin(φ)   0  cos(φ)  ]
+     *
+     * @param phi The rotation angle in radians.
+     * @return A new Matrix3x3 instance representing the rotation.
+     */
+    public static Matrix3x3 rotationY(double phi) {
+        double[][] mat = {
+                {Math.cos(phi), 0, Math.sin(phi)},
+                {0, 1, 0},
+                {-Math.sin(phi), 0, Math.cos(phi)}
+        };
+        return new Matrix3x3(mat);
+    }
+
+//    REDUNDANT?
+//    // --- Cartesian Transformations ---
+//    /**
+//     * Cartesian translation matrix.
+//     * For vector addition:
+//     *
+//     * @param tx Translation along the x1-axis.
+//     * @param ty Translation along the x2-axis.
+//     * @param tz Translation along the x3-axis.
+//     * @return A 4x4 matrix for translation.
+//     *//*
+//    public static double[][] cartesianTranslation(double tx, double ty, double tz) {
+//        // Returning null instead of an actual matrix
+//        return null;
+//    }
+//
+//    /**
+//     * Cartesian scaling matrix.
+//     * [ sx  0   0   0 ]
+//     * [ 0   sy  0   0 ]
+//     * [ 0   0   sz  0 ]
+//     *
+//     * @param sx Scaling factor along the x1-axis.
+//     * @param sy Scaling factor along the x2-axis.
+//     * @param sz Scaling factor along the x3-axis.
+//     * @return A 3x3 matrix for scaling.
+//     *//*
+//    public static double[][] cartesianScaling(double sx, double sy, double sz) {
+//        return new double[][]{
+//                {sx, 0, 0, 0},
+//                {0, sy, 0, 0},
+//                {0, 0, sz, 0},
+//        };
+//    }
+//
+//    // --- Homogeneous Transformations ---
+//
+//    /**
+//     * Homogenous translation matrix.
+//     * For vector addition:
+//     * [ 1  0  0  tx ]
+//     * [ 0  1  0  ty ]
+//     * [ 0  0  1  tz ]
+//     * [ 0  0  0   1 ]
+//     *
+//     * @param tx Translation along the x1-axis.
+//     * @param ty Translation along the x2-axis.
+//     * @param tz Translation along the x3-axis.
+//     * @return A 4x4 matrix for translation.
+//     */
+//    public static double[][] homogenousTranslation(double tx, double ty, double tz) {
+//        return new double[][]{
+//                {1, 0, 0, tx},
+//                {0, 1, 0, ty},
+//                {0, 0, 1, tz},
+//                {0, 0, 0, 1}
+//        };
+//    }
+//    /**
+//     * Homogeneous scaling matrix.
+//     * Similar to the cartesian scaling matrix but used in a 4x4 context.
+//     * [ sx  0   0   0 ]
+//     * [ 0   sy  0   0 ]
+//     * [ 0   0   sz  0 ]
+//     * [ 0   0   0   1 ]
+//     *
+//     * @param sx Scaling factor along the x1-axis.
+//     * @param sy Scaling factor along the x2-axis.
+//     * @param sz Scaling factor along the x3-axis.
+//     * @return A 4x4 matrix for scaling.
+//     */
+//    public static double[][] homogeneousScaling(double sx, double sy, double sz) {
+//        return new double[][]{
+//                {sx, 0, 0, 0},
+//                {0, sy, 0, 0},
+//                {0, 0, sz, 0},
+//                {0, 0, 0, 1}
+//        };
+//    }
+//
+//    /**
+//     * Homogeneous rotation matrix for x3-axis (z-axis).
+//     * ***Use this as standard rotation method.***
+//     * Matrix:
+//     * [ cos(φ) -sin(φ)  0   0 ]
+//     * [ sin(φ)  cos(φ)  0   0 ]
+//     * [   0       0     1   0 ]
+//     * [   0       0     0   1 ]
+//     *
+//     * @param phi Rotation angle in radians.
+//     * @return A 4x4 matrix for rotation around the z-axis.
+//     */
+//    public static double[][] homogeneousRotationZ(double phi) {
+//        return new double[][]{
+//                {Math.cos(phi), -Math.sin(phi), 0, 0},
+//                {Math.sin(phi), Math.cos(phi), 0, 0},
+//                {0, 0, 1, 0},
+//                {0, 0, 0, 1}
+//        };
+//    }
+//
+//    /**
+//     * Homogeneous rotation matrix for x1-axis (x-axis).
+//     *
+//     * @param phi The rotation angle in radians.
+//     * @return A 4x4 matrix for homogeneous rotation around the x-axis.
+//     */
+//    public static double[][] homogeneousRotationX(double phi) {
+//        return new double[][]{
+//                {1, 0, 0, 0},
+//                {0, Math.cos(phi), -Math.sin(phi), 0},
+//                {0, Math.sin(phi), Math.cos(phi), 0},
+//                {0, 0, 0, 1}
+//        };
+//    }
+//
+//    /**
+//     * Homogeneous rotation matrix for x2-axis (y-axis).
+//     *
+//     * @param phi The rotation angle in radians.
+//     * @return A 4x4 matrix for homogeneous rotation around the y-axis.
+//     */
+//    public static double[][] homogeneousRotationY(double phi) {
+//        return new double[][]{
+//                {Math.cos(phi), 0, Math.sin(phi), 0},
+//                {0, 1, 0, 0},
+//                {-Math.sin(phi), 0, Math.cos(phi), 0},
+//                {0, 0, 0, 1}
+//        };
+//    }
+//
+//    /**
+//     * Prints the matrix for debugging purposes.
+//     */
+//    public void print() {
+//        for (double[] row : elements) {
+//            for (double value : row) {
+//                System.out.printf("%.2f ", value);
+//            }
+//            System.out.println();
+//        }
+//    }
+
 }
