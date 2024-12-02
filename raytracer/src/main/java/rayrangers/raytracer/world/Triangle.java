@@ -87,7 +87,7 @@ public class Triangle extends Face {
         double det = a * (e * i - h * f) + b * (g * f - d * i) + c * (d * h - e * g);
 
         // Compute ray parameter t = (f(ak - jb) + e(jc - al) + d(bl - kc)) / |A|
-        double t = (f * (a * k - j * b) + e * (j * c - a * l) + d * (b * l - k * c)) / det;
+        double t = -(f * (a * k - j * b) + e * (j * c - a * l) + d * (b * l - k * c)) / det;
         // Check if t lies within current interval [t0,t1]
         if (t > t1 || t < t0) {
             return false; // Ray parameter is outside current interval [t0,t1]

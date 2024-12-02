@@ -47,8 +47,8 @@ public class Renderer {
      * 
      */
     public void render() {
-        for (int i = 0; i < viewpane.getResX(); i++) {
-            for (int j = 0; j < viewpane.getResY(); j++) {
+        for (int j = 0; j < viewpane.getResY(); j++) {
+            for (int i = 0; i < viewpane.getResY(); i++) {
                 Pixel p = viewpane.getPixelAt(i, j);
                 Ray viewRay = new Ray(camera.getWorldPosition(), computeRayDirection(p));
                 p.setColor(traceRay(viewRay));
@@ -62,8 +62,8 @@ public class Renderer {
     private Color traceRay(Ray viewRay) {
         HitRecord record = new HitRecord();
         // Initial values for interval [t0,t1]: 
-        // t0 = 0, t1 = +infinity
-        if(scene.hit(viewRay, 0, Integer.MAX_VALUE, record))
+        // t0 = 0, t1 = infinity
+        if (scene.hit(viewRay, 0, Double.MAX_VALUE, record))
             return shader.calculatePixelColor(record);
         return scene.getBackgroundColor();
     }

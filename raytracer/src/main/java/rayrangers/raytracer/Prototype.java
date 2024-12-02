@@ -3,7 +3,10 @@ package rayrangers.raytracer;
 import java.awt.Color;
 
 import rayrangers.raytracer.world.Scene;
+import rayrangers.raytracer.world.Triangle;
 import rayrangers.raytracer.world.Camera;
+import rayrangers.raytracer.world.Entity;
+import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.view.ViewPane;
@@ -11,28 +14,40 @@ import rayrangers.raytracer.view.ViewPane;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 public class Prototype {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scene scene = new Scene(Color.BLACK);
-        Camera camera = new Camera(new Vertex3D(0, 10, 50), 0, 0, 0, 25, 100, 100, 100);
+        Camera camera = new Camera(new Vertex3D(0, 25, 1000), 0, 0, 0, 25, 100, 1000, 1000);
         ViewPane viewPane = camera.getViewPane();
         
         scene.addCamera(camera);
         // TODO: Add entity
+        // Entity cube = ObjParser.parseObjFile("examples/3d-cubes/cube.obj");
+        List<Vertex3D> vlist = new ArrayList<>();
+        vlist.add(new Vertex3D(100, 0, 0));
+        vlist.add(new Vertex3D(0, 100, 0));
+        vlist.add(new Vertex3D(0, 0, 0));
+
+        Face f = new Triangle(null, null, vlist);
+
+        List<Face> faces = new ArrayList<>();
+        faces.add(f);
+
+        Entity triangleEnt = new Entity(null, faces, vlist);
+        scene.addEntity(triangleEnt);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         renderer.render();
 
         BufferedImage bufferedImage = new BufferedImage(viewPane.getResX(), viewPane.getResY(), BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < viewPane.getResX(); i++) {
-            for (int j = 0; j < viewPane.getResY(); j++) {
-                if (j < 10) {
-                    viewPane.getPixelAt(i, j).setColor(Color.RED);
-                }
+        for (int j = 0; j < viewPane.getResY(); j++) {
+            for (int i = 0; i < viewPane.getResX(); i++) {
                 bufferedImage.setRGB(i, j, viewPane.getPixelAt(i, j).getColor().getRGB());
             }
         }

@@ -62,7 +62,7 @@ public class Pixel {
     }
 
     /**
-     * Returns the pixel coordinate in v-direction.1080px
+     * Returns the pixel coordinate in v-direction.
      * 
      * @return pixel coordinate in v-direction
      */
