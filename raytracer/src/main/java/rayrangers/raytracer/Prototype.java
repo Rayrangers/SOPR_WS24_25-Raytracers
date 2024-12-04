@@ -3,10 +3,10 @@ package rayrangers.raytracer;
 import java.awt.Color;
 
 import rayrangers.raytracer.world.Scene;
-// import rayrangers.raytracer.world.Triangle;
+import rayrangers.raytracer.world.Triangle;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
-// import rayrangers.raytracer.world.Face;
+import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.parser.ObjParser;
@@ -15,8 +15,8 @@ import rayrangers.raytracer.view.ViewPane;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-// import java.util.ArrayList;
-// import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -29,21 +29,22 @@ public class Prototype {
         
         scene.addCamera(camera);
         // TODO: Add entity
-        Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
-        // List<Vertex3D> vlist = new ArrayList<>();
-        // vlist.add(new Vertex3D(100, 0, 0));
-        // vlist.add(new Vertex3D(0, 100, 0));
-        // vlist.add(new Vertex3D(0, 0, 0));
 
-        // Face f = new Triangle(null, null, vlist);
+        // Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
+        // scene.addEntity(teapot);
+        
+        List<Vertex3D> vlist = new ArrayList<>();
+        vlist.add(new Vertex3D(100, 0, 0));
+        vlist.add(new Vertex3D(0, 100, 0));
+        vlist.add(new Vertex3D(0, 0, 0));
 
-        // List<Face> faces = new ArrayList<>();
-        // faces.add(f);
+        Face f = new Triangle(null, null, vlist);
 
-        // Entity triangleEnt = new Entity(null, faces, vlist);
-        // scene.addEntity(triangleEnt);
+        List<Face> faces = new ArrayList<>();
+        faces.add(f);
 
-        scene.addEntity(teapot);
+        Entity triangleEnt = new Entity(null, faces, vlist);
+        scene.addEntity(triangleEnt);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         renderer.render();
