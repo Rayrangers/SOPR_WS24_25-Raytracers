@@ -110,7 +110,7 @@ public class Vector3D {
         // Scalar triple product is the dot product of this vector and the cross product
         // of the other two
         // Compute a · (b × c)
-        Vector3D crossProduct = this.cross(vec1).cross(vec2);
+        Vector3D crossProduct = vec1.cross(vec2);
         return this.scalar(crossProduct);
     }
 

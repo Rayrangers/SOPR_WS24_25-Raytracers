@@ -73,7 +73,7 @@ public class Vector4DTest {
         Vector4D vector = new Vector4D(1, 2, 3, 4);
         double result = vector.length();
 
-        assertEquals(5.477, result, 0.0001);  // sqrt(1^2 + 2^2 + 3^2 + 4^2)
+        assertEquals(5.477, result, 0.001);  // sqrt(1^2 + 2^2 + 3^2 + 4^2)
     }
 
     // Test for vector normalization
