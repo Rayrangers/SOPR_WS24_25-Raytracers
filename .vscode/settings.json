@@ -1,0 +1,18 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "ltex.enabled": [
+        "bibtex",
+        "context",
+        "context.tex",
+        "html",
+        "latex",
+        "markdown",
+        "mdx",
+        "typst",
+        "org",
+        "quarto",
+        "restructuredtext",
+        "rsweave",
+        "java"
+    ]
+}
