@@ -32,7 +32,7 @@ public class Renderer {
     /**
      * Shader used to render the scene.
      */
-    private Shader shader = new Shader();
+    private Shader shader;
 
     /**
      * Class constructor specifiying the scene and the UUID of the camera.
@@ -44,6 +44,7 @@ public class Renderer {
         this.scene = scene;
         camera = scene.getCameras().get(cameraUUID);
         viewpane = camera.getViewPane();
+        shader = new Shader(scene);
     }
 
     /**

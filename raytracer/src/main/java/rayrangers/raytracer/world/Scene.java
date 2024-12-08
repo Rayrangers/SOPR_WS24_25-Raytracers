@@ -85,6 +85,15 @@ public class Scene implements Hittable {
     }
 
     /**
+     * Returns the hash map of all light sources in the scene.
+     * 
+     * @return Light sources hash map
+     */
+    public Map<UUID, LightSource> getLightSources() {
+        return lightSources;
+    }
+
+    /**
      * Adds a camera with a unique identifier if it has not been added yet.
      * 
      * @param camera Camera to add
@@ -92,6 +101,16 @@ public class Scene implements Hittable {
      */
     public boolean addCamera(Camera camera) {
         return cameras.putIfAbsent(camera.getUuid(), camera) == null;
+    }
+
+    /**
+     * Adds a light source with a unique identifier if it has not been added yet.
+     * 
+     * @param lightSource Light source to add
+     * @return Returns true if light source has not been added yet, else false.
+     */
+    public boolean addLightSource(LightSource lightSource) {
+        return lightSources.putIfAbsent(lightSource.getUuid(), lightSource) == null;
     }
 
     /**
@@ -104,14 +123,6 @@ public class Scene implements Hittable {
         for (Entity entity : entities.values()) {
             // Check if the ray hits the entity and if t lies within interval [t0,t1]
             if (entity.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
-                hit = true;
-                t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
-            }
-        }
-        // Iterate over lightsources
-        for (LightSource lightSource : lightSources.values()) {
-            // Check if the ray hits the lightsource and if t lies within interval [t0,t1]
-            if (lightSource.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
                 hit = true;
                 t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
             }

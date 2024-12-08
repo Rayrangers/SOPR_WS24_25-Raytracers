@@ -6,6 +6,7 @@ import rayrangers.raytracer.world.Scene;
 // import rayrangers.raytracer.world.Triangle;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
+import rayrangers.raytracer.world.LightSource;
 // import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.Vertex3D;
@@ -26,9 +27,8 @@ public class Prototype {
         Scene scene = new Scene(Color.BLACK);
         Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 50, 100, 1000, 1000);
         ViewPane viewPane = camera.getViewPane();
-        
+
         scene.addCamera(camera);
-        // TODO: Add entity
         Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
         // List<Vertex3D> vlist = new ArrayList<>();
         // vlist.add(new Vertex3D(100, 0, 0));
@@ -45,20 +45,24 @@ public class Prototype {
 
         scene.addEntity(teapot);
 
+        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(0, 50, 200), Color.WHITE);
+        scene.addLightSource(lightSource1);
+
         Renderer renderer = new Renderer(scene, camera.getUuid());
         renderer.render();
 
-        BufferedImage bufferedImage = new BufferedImage(viewPane.getResX(), viewPane.getResY(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = new BufferedImage(viewPane.getResX(), viewPane.getResY(),
+                BufferedImage.TYPE_INT_RGB);
         for (int j = 0; j < viewPane.getResY(); j++) {
             for (int i = 0; i < viewPane.getResX(); i++) {
                 bufferedImage.setRGB(i, j, viewPane.getPixelAt(i, j).getColor().getRGB());
             }
         }
-        
+
         try {
             File output = new File("artifacts/prototype.png");
             ImageIO.write(bufferedImage, "png", output);
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println();

@@ -28,13 +28,17 @@ public class HitRecord {
     /**
      * Reference to material of the hittable object.
      */
-    // TODO: Color instead of Material? (because of Lightsource)
     private Material material;
 
     /**
      * Normal vector of hitObject (optional)
      */
     private Vector3D normalVector;
+
+    /**
+     * Direction vector of ray for this hit record.
+     */
+    private Vector3D viewRayDirection;
 
     /**
      * Returns the point where the hit occurred.
@@ -106,6 +110,24 @@ public class HitRecord {
      */
     public void setNormalVector(Vector3D normalVector) {
         this.normalVector = normalVector;
+    }
+
+    /**
+     * Returns the direction of the view ray associated with this record.
+     * 
+     * @return View ray direction
+     */
+    public Vector3D getViewRayDirection() {
+        return viewRayDirection;
+    }
+
+    /**
+     * Sets the direction of the view ray associated with this record.
+     * 
+     * @param viewRayDirection View ray direction
+     */
+    public void setViewRayDirection(Vector3D viewRayDirection) {
+        this.viewRayDirection = viewRayDirection;
     }
 
     /**
