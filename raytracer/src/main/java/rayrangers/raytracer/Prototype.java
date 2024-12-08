@@ -25,7 +25,8 @@ public class Prototype {
     public static void main(String[] args) throws Exception {
 
         Scene scene = new Scene(Color.BLACK);
-        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 50, 100, 1000, 1000);
+        // Camera camera = new Camera(new Vertex3D(0, 25, 400), 20, 20, 180, 50, 100, 1000, 1000);
+        Camera camera = new Camera(new Vertex3D(0, 300, 0), -90, 180, 0, 50, 100, 1000, 1000);
         ViewPane viewPane = camera.getViewPane();
 
         scene.addCamera(camera);
