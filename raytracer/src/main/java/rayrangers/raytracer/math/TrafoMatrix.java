@@ -64,12 +64,12 @@ public class TrafoMatrix {
     /**
      * Returns the value of an element at the specified position.
      * 
-     * @param i Column position
-     * @param j Row position
+     * @param i row position
+     * @param j column position
      * @return Value of element
      */
     public double getElement(int i, int j) {
-        return elements[j * 4 + i];
+        return elements[i * 4 + j];
     }
 
     /**
@@ -82,7 +82,7 @@ public class TrafoMatrix {
         double[] result = new double[16];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                result[j * 4 + i] = this.getElement(i, 0) * m.getElement(0, j)
+                result[i * 4 + j] = this.getElement(i, 0) * m.getElement(0, j)
                         + this.getElement(i, 1) * m.getElement(1, j)
                         + this.getElement(i, 2) * m.getElement(2, j);
             }
