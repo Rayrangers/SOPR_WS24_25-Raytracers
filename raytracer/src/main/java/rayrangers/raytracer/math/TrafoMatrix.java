@@ -12,7 +12,7 @@ public class TrafoMatrix {
     /**
      * Class constructor specifying the translation parameters, rotation angles and
      * scaling factors.
-     * Creates the corresponding cumulated tansformation matrix:
+     * Creates the corresponding cumulated transformation matrix:
      * CTM = RMX3 * RMX2 * RMX1 * SM * TM
      * (CTM = cumulated transformation matrix,
      * RM = rotation matrix, SM = scaling matrix, TM = translation matrix)

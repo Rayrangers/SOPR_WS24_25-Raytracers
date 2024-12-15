@@ -9,6 +9,7 @@ import rayrangers.raytracer.world.Entity;
 import rayrangers.raytracer.world.LightSource;
 // import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.algorithm.Renderer;
+import rayrangers.raytracer.math.TrafoMatrix;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.parser.ObjParser;
 import rayrangers.raytracer.view.ViewPane;
@@ -25,12 +26,15 @@ public class Prototype {
     public static void main(String[] args) throws Exception {
 
         Scene scene = new Scene(Color.BLACK);
-        // Camera camera = new Camera(new Vertex3D(0, 25, 400), 20, 20, 180, 50, 100, 1000, 1000);
-        Camera camera = new Camera(new Vertex3D(0, 300, 0), -90, 180, 0, 50, 100, 1000, 1000);
+        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 50, 100, 1000, 1000);
+        // Camera camera = new Camera(new Vertex3D(0, 300, 0), -90, 180, 0, 50, 100, 1000, 1000);
         ViewPane viewPane = camera.getViewPane();
 
         scene.addCamera(camera);
         Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
+
+        TrafoMatrix tm = new TrafoMatrix(0, 50, 0, 0, 0, 0, 1, 1, 1);
+        teapot.transform(tm);
         // List<Vertex3D> vlist = new ArrayList<>();
         // vlist.add(new Vertex3D(100, 0, 0));
         // vlist.add(new Vertex3D(0, 100, 0));

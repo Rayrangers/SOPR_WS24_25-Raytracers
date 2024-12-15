@@ -1,9 +1,11 @@
 package rayrangers.raytracer.math;
 
+import rayrangers.raytracer.world.Transformable;
+
 /**
  * Represents a vector in 3D space.
  */
-public class Vector3D {
+public class Vector3D implements Transformable {
 
     /**
      * Array containing the coordinates of the vector (x1/x2/x3-dimension).
@@ -277,4 +279,18 @@ public class Vector3D {
         this.coordinates[2] = z1 + tz;
     }
 
+    /**
+     * @see Transformable
+     */
+    @Override
+    public void transform(TrafoMatrix tm) {
+        double[] result = new double[3];
+        for (int i = 0; i < 3; i++) {
+            result[i] = tm.getElement(i,0) * coordinates[0] 
+                    + tm.getElement(i,1) * coordinates[1]
+                    + tm.getElement(i,2) * coordinates[2]
+                    + tm.getElement(i,3);
+        }     
+        coordinates = result;
+    }   
 }
