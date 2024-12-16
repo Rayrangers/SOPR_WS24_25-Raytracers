@@ -7,19 +7,19 @@ package rayrangers.raytracer.world;
  * f <integer v>/<integer vt> ...
  * f <integer v>/<integer vt>/<integer vn> ...
  */
-public abstract class Face {
+public abstract class Face implements Hittable {
 
     /**
      * Material of the face.
      */
-    private Material material;
+    protected Material material;
 
     /**
      * Smoothing group the face belongs to.
      * OBJ file:
      * s <integer smoothing-group>
      */
-    private String smoothingGroup;
+    protected String smoothingGroup;
 
     /**
      * Class constructor specifying the material and smoothing group of the face.

@@ -236,6 +236,7 @@ public class Matrix3x3 {
     public double[][] getElements() {
         return this.elements;
     }
+<<<<<<< HEAD
 
 //    REDUNDANT?
 //    // --- Cartesian Transformations ---
@@ -380,4 +381,6 @@ public class Matrix3x3 {
 //        }
 //    }
 
+=======
+>>>>>>> origin/main
 }

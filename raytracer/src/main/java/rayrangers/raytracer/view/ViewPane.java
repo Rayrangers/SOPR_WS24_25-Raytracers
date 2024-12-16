@@ -44,7 +44,7 @@ public class ViewPane {
      * V-coordinate of the upper left (or right) edge of the image
      * in the view coordinate system.
      */
-    private final double bottom;
+    private final double top;
 
     /**
      * Class constructor specifying the resolution and the pane width.
@@ -58,17 +58,17 @@ public class ViewPane {
         this.resX = resX;
         this.resY = resY;
         this.paneWidth = paneWidth;
-        // Fill pixel array
-        pixels = new Pixel[resX * resY];
-        for (int i = 0; i < resX; i++) {
-            for (int j = 0; j < resY; j++) {
-                // Create Pixel at position (i,j) and set u and v accordingly
-                pixels[i * resX + j] = new Pixel(calculateU(i, j), calculateV(i, j));
-            }
-        }
         paneHeight = paneWidth / getAspectRatio(); // Calculate pane height to ensure pixels are squared
         left = -paneWidth / 2;
-        bottom = -paneHeight / 2;
+        top = paneHeight / 2;
+        // Fill pixel array
+        pixels = new Pixel[resX * resY];
+        for (int j = 0; j < resY; j++) {
+            for (int i = 0; i < resX; i++) {
+                // Create Pixel at position (i,j) and set u and v accordingly
+                pixels[j * resX + i] = new Pixel(calculateU(i), calculateV(j));
+            }
+        }
     }
 
     /**
@@ -77,7 +77,7 @@ public class ViewPane {
      * 
      * @return pixel coordinate in u-direction
      */
-    private double calculateU(int i, int j) {
+    private double calculateU(int i) {
         return left + paneWidth * (i + 0.5) / resX;
     }
 
@@ -87,8 +87,8 @@ public class ViewPane {
      * 
      * @return pixel coordinate in v-direction
      */
-    private double calculateV(int i, int j) {
-        return bottom + paneHeight * (j + 0.5) / resY;
+    private double calculateV(int j) {
+        return top - paneHeight * (j + 0.5) / resY;
     }
 
     /**
@@ -154,6 +154,6 @@ public class ViewPane {
      * @return Pixel
      */
     public Pixel getPixelAt(int i, int j) {
-        return pixels[i * resX + j];
+        return pixels[j * resX + i];
     }
 }
