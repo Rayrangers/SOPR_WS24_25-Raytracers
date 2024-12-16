@@ -7,12 +7,12 @@ package rayrangers.raytracer.parser.quicktype;
  * https://quicktype.io/
  **/
 
-import java.io.IOException;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
@@ -50,13 +50,22 @@ public class SceneParser {
     public static OffsetTime parseTimeString(String str) {
         return ZonedDateTime.from(SceneParser.TIME_FORMATTER.parse(str)).toOffsetDateTime().toOffsetTime();
     }
-    // Serialize/deserialize helpers
 
-    public static SampleQuicktype fromJsonString(String json) throws IOException {
+//    // Serialize/deserialize helpers for SampleQuicktype class:
+//    public static SampleQuicktype fromJsonString(String json) throws IOException {
+//        return getObjectReader().readValue(json);
+//    }
+//
+//    public static String toJsonString(SampleQuicktype obj) throws JsonProcessingException {
+//        return getObjectWriter().writeValueAsString(obj);
+//    }
+
+    // Serialize/deserialize helpers
+    public static SceneData fromJsonString(String json) throws IOException {
         return getObjectReader().readValue(json);
     }
 
-    public static String toJsonString(SampleQuicktype obj) throws JsonProcessingException {
+    public static String toJsonString(SceneData obj) throws JsonProcessingException {
         return getObjectWriter().writeValueAsString(obj);
     }
 
@@ -77,8 +86,12 @@ public class SceneParser {
             }
         });
         mapper.registerModule(module);
-        reader = mapper.readerFor(SampleQuicktype.class);
-        writer = mapper.writerFor(SampleQuicktype.class);
+        // Reader and writer for SampleQuicktype class:
+        //reader = mapper.readerFor(SampleQuicktype.class);
+        //writer = mapper.writerFor(SampleQuicktype.class);
+
+        reader = mapper.readerFor(SceneData.class);
+        writer = mapper.writerFor(SceneData.class);
     }
 
     private static ObjectReader getObjectReader() {
