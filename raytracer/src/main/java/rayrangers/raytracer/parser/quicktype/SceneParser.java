@@ -1,8 +1,10 @@
 package rayrangers.raytracer.parser.quicktype;
 
 /**
- * @author Paulina Pyczot
- * @date 16.12.2024
+ * Parser for a JSON file.
+ *
+ * Inspired by
+ * https://quicktype.io/
  **/
 
 public class SceneParser {
