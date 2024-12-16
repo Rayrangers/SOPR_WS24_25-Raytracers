@@ -1,4 +1,4 @@
-package rayrangers.raytracer.parser.quicktype;
+package rayrangers.raytracer.parser;
 
 /**
  * Parser for a JSON file.
@@ -60,14 +60,14 @@ public class SceneParser {
 //        return getObjectWriter().writeValueAsString(obj);
 //    }
 
-    // Serialize/deserialize helpers
-    public static SceneData fromJsonString(String json) throws IOException {
-        return getObjectReader().readValue(json);
-    }
-
-    public static String toJsonString(SceneData obj) throws JsonProcessingException {
-        return getObjectWriter().writeValueAsString(obj);
-    }
+//    // Serialize/deserialize helpers
+//    public static SceneData fromJsonString(String json) throws IOException {
+//        return getObjectReader().readValue(json);
+//    }
+//
+//    public static String toJsonString(SceneData obj) throws JsonProcessingException {
+//        return getObjectWriter().writeValueAsString(obj);
+//    }
 
     private static ObjectReader reader;
     private static ObjectWriter writer;
@@ -90,8 +90,8 @@ public class SceneParser {
         //reader = mapper.readerFor(SampleQuicktype.class);
         //writer = mapper.writerFor(SampleQuicktype.class);
 
-        reader = mapper.readerFor(SceneData.class);
-        writer = mapper.writerFor(SceneData.class);
+//        reader = mapper.readerFor(SceneData.class);
+//        writer = mapper.writerFor(SceneData.class);
     }
 
     private static ObjectReader getObjectReader() {
