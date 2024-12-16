@@ -33,20 +33,22 @@ public class TrafoMatrix {
             double scalingX1, double scalingX2, double scalingX3) {
         TrafoMatrix scTr = createTranslationScalingTrafoMatrix(translX1, translX2, translX3,
                 scalingX1, scalingX2, scalingX3);
-
-        if (angleX1 != 0) {
-            TrafoMatrix rotX1 = getRotationX1(angleX1);
-            scTr = rotX1.matrMult(scTr);
-        }
-
-        if (angleX2 != 0) {
-            TrafoMatrix rotX2 = getRotationX2(angleX2);
-            scTr = rotX2.matrMult(scTr);
-        }
+        
+        // vec' = RMX3 * RMX2 * RMX1 * SM * TM * vec
 
         if (angleX3 != 0) {
             TrafoMatrix rotX3 = getRotationX3(angleX3);
-            scTr = rotX3.matrMult(scTr);
+            scTr = scTr.matrMult(rotX3);
+        }
+        
+        if (angleX2 != 0) {
+            TrafoMatrix rotX2 = getRotationX2(angleX2);
+            scTr = scTr.matrMult(rotX2);
+        }
+        
+        if (angleX1 != 0) {
+            TrafoMatrix rotX1 = getRotationX1(angleX1);
+            scTr = scTr.matrMult(rotX1);
         }
 
         this.elements = scTr.elements;
@@ -84,7 +86,8 @@ public class TrafoMatrix {
             for (int j = 0; j < 4; j++) {
                 result[i * 4 + j] = this.getElement(i, 0) * m.getElement(0, j)
                         + this.getElement(i, 1) * m.getElement(1, j)
-                        + this.getElement(i, 2) * m.getElement(2, j);
+                        + this.getElement(i, 2) * m.getElement(2, j)
+                        + this.getElement(i, 3) * m.getElement(3, j);
             }
         }
         return new TrafoMatrix(result);
@@ -184,9 +187,9 @@ public class TrafoMatrix {
         phi = Math.toRadians(phi);
         return new TrafoMatrix(
                 new double[] {
-                        1, 0, 0, 0,
-                        0, Math.cos(phi), -Math.sin(phi), 0,
-                        0, Math.sin(phi), Math.cos(phi), 0,
+                        Math.cos(phi), -Math.sin(phi), 0, 0,
+                        Math.sin(phi), Math.cos(phi), 0, 0,
+                        0, 0, 1, 0,
                         0, 0, 0, 1 });
     }
 }

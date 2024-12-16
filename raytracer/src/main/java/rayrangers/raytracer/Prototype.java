@@ -33,7 +33,7 @@ public class Prototype {
         scene.addCamera(camera);
         Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
 
-        TrafoMatrix tm = new TrafoMatrix(100, 0, 0, -90, 0, 0, 1, 1, 1);
+        TrafoMatrix tm = new TrafoMatrix(-50, -50, 10, -90, 45, -33, 1, 1, 1);
         teapot.transform(tm);
         // List<Vertex3D> vlist = new ArrayList<>();
         // vlist.add(new Vertex3D(100, 0, 0));
