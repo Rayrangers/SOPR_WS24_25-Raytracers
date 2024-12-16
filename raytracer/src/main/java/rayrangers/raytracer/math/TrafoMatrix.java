@@ -16,7 +16,7 @@ public class TrafoMatrix {
      * CTM = RMX3 * RMX2 * RMX1 * SM * TM
      * (CTM = cumulated transformation matrix,
      * RM = rotation matrix, SM = scaling matrix, TM = translation matrix)
-     * 
+     *
      * @param translX1  translation in x1-direction
      * @param translX2  translation in x2-direction
      * @param translX3  translation in x3-direction
@@ -33,19 +33,19 @@ public class TrafoMatrix {
             double scalingX1, double scalingX2, double scalingX3) {
         TrafoMatrix scTr = createTranslationScalingTrafoMatrix(translX1, translX2, translX3,
                 scalingX1, scalingX2, scalingX3);
-        
+
         // vec' = RMX3 * RMX2 * RMX1 * SM * TM * vec
 
         if (angleX3 != 0) {
             TrafoMatrix rotX3 = getRotationX3(angleX3);
             scTr = scTr.matrMult(rotX3);
         }
-        
+
         if (angleX2 != 0) {
             TrafoMatrix rotX2 = getRotationX2(angleX2);
             scTr = scTr.matrMult(rotX2);
         }
-        
+
         if (angleX1 != 0) {
             TrafoMatrix rotX1 = getRotationX1(angleX1);
             scTr = scTr.matrMult(rotX1);
@@ -56,7 +56,7 @@ public class TrafoMatrix {
 
     /**
      * Private constructor only used internally for Rotation matrices.
-     * 
+     *
      * @param elements
      */
     private TrafoMatrix(double[] elements) {
@@ -65,7 +65,7 @@ public class TrafoMatrix {
 
     /**
      * Returns the value of an element at the specified position.
-     * 
+     *
      * @param i row position
      * @param j column position
      * @return Value of element
@@ -95,13 +95,13 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     * 
+     *
      * Returns a translation and scaling matrix.
      * <!-- @formatter:off -->
-     * [ sX1 0 0 tX1 ]
-     * [ 0 sX2 0 tX2 ]
-     * [ 0 0 sX3 tX3 ]
-     * [ 0 0 0 1 ]
+     * [ sX1 0  0  tX1 ]
+     * [ 0  sX2 0  tX2 ]
+     * [ 0   0 sX3 tX3 ]
+     * [ 0   0  0   1  ]
      * <!-- @formatter:on -->
      *
      * @param translX1
@@ -123,13 +123,13 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     * 
+     *
      * Returns a rotation matrix around the x1-axis (x-axis).
      * <!-- @formatter:off -->
-     * [ 1 0 0 0 ]
+     * [ 1   0       0    0 ]
      * [ 0 cos(φ) -sin(φ) 0 ]
-     * [ 0 sin(φ) cos(φ) 0 ]
-     * [ 0 0 0 1 ]
+     * [ 0 sin(φ)  cos(φ) 0 ]
+     * [ 0   0       0    1 ]
      * <!-- @formatter:on -->
      *
      * @param phi The rotation angle in radians.
@@ -147,15 +147,15 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     * 
+     *
      * Returns a rotation matrix around the x2-axis (y-axis).
      * * <!-- @formatter:on -->
      * [  cos(φ)  0  sin(φ)  0 ]
-     * [   0     1     0    0 ]
-     * [ -sin(φ) 0 cos(φ) 0 ]
-     * [ 0 0 0 1 ]
+     * [    0     1    0     0 ]
+     * [ -sin(φ)  0  cos(φ)  0 ]
+     * [    0     0    0     1 ]
      * * <!-- @formatter:off -->
-     * 
+     *
      * @param phi The rotation angle in radians.
      * @return A new TrafoMatrix instance representing the rotation.
      */
@@ -171,7 +171,7 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     * 
+     *
      * Returns a rotation matrix around the x3-axis (z-axis).
      * <!-- @formatter:off -->
      * [ cos(φ) -sin(φ)  0  0 ]
@@ -179,7 +179,7 @@ public class TrafoMatrix {
      * [   0       0     1  0 ]
      * [   0       0     0  1 ]
      * <!-- @formatter:on -->
-     * 
+     *
      * @param phi The rotation angle in radians.
      * @return A new TrafoMatrix instance representing the rotation.
      */
