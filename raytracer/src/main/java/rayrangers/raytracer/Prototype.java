@@ -26,23 +26,20 @@ public class Prototype {
     public static void main(String[] args) throws Exception {
 
         Scene scene = new Scene(Color.BLACK);
-<<<<<<< HEAD
-        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 50, 100, 1000, 1000);
+        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 75, 100, 2000, 2000);
         // Camera camera = new Camera(new Vertex3D(0, 300, 0), -90, 180, 0, 50, 100, 1000, 1000);
-=======
-        Camera camera = new Camera(new Vertex3D(0, 25, 400), 90, 90, 90, 50, 100, 1000, 1000);
->>>>>>> dde6e31 (feat: add diffuse and specular phong shading part(wip))
         ViewPane viewPane = camera.getViewPane();
 
         scene.addCamera(camera);
         Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
-<<<<<<< HEAD
+        Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
 
-        TrafoMatrix tm = new TrafoMatrix(-50, -50, 10, -90, 45, -33, 1, 1, 1);
-        teapot.transform(tm);
-=======
-        //Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
->>>>>>> dde6e31 (feat: add diffuse and specular phong shading part(wip))
+        TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
+        teapot.transform(tmTea);
+
+        TrafoMatrix tmTuna = new TrafoMatrix(0, 150, 0, -90, 0, 0, 1, 1, 1);
+        tuna.transform(tmTuna);
+
         // List<Vertex3D> vlist = new ArrayList<>();
         // vlist.add(new Vertex3D(100, 0, 0));
         // vlist.add(new Vertex3D(0, 100, 0));
@@ -58,6 +55,7 @@ public class Prototype {
 
         //scene.addEntity(tuna);
         scene.addEntity(teapot);
+        scene.addEntity(tuna);
 
         LightSource lightSource1 = new LightSource(0.15, new Vertex3D(0, 50, 200), Color.WHITE);
         scene.addLightSource(lightSource1);
