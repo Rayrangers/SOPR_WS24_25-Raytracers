@@ -26,23 +26,16 @@ public class Prototype {
     public static void main(String[] args) throws Exception {
 
         Scene scene = new Scene(Color.BLACK);
-<<<<<<< HEAD
-        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 50, 100, 1000, 1000);
+        Camera camera = new Camera(new Vertex3D(0, 25, 500), 0, 0, 0, 50, 100, 1000, 1000);
         // Camera camera = new Camera(new Vertex3D(0, 300, 0), -90, 180, 0, 50, 100, 1000, 1000);
-=======
-        Camera camera = new Camera(new Vertex3D(0, 25, 400), 90, 90, 90, 50, 100, 1000, 1000);
->>>>>>> dde6e31 (feat: add diffuse and specular phong shading part(wip))
         ViewPane viewPane = camera.getViewPane();
 
         scene.addCamera(camera);
         Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
-<<<<<<< HEAD
-
-        TrafoMatrix tm = new TrafoMatrix(-50, -50, 10, -90, 45, -33, 1, 1, 1);
-        teapot.transform(tm);
-=======
         //Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
->>>>>>> dde6e31 (feat: add diffuse and specular phong shading part(wip))
+
+        TrafoMatrix tm = new TrafoMatrix(0, 0, 0, -90, -180, 0, 1, 1, 1);
+        teapot.transform(tm);
         // List<Vertex3D> vlist = new ArrayList<>();
         // vlist.add(new Vertex3D(100, 0, 0));
         // vlist.add(new Vertex3D(0, 100, 0));
