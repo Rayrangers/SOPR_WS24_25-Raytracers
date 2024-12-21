@@ -16,7 +16,7 @@ public class Shader {
     /**
      * Ambient color of the scene.
      */
-    private static final Color AMBIENT_COLOR = new Color(15,15,15);
+    private static final Color AMBIENT_COLOR = new Color(30,30,30);
 
     /**
      * Hash map of all light sources of the scene.
@@ -40,26 +40,33 @@ public class Shader {
      * @return calculated color of the pixel
      */
     public Color calculatePixelColor(HitRecord record) {
-
+        
         // get material, normal vector, view ray direction and hit point from hit record
         Material material = record.getMaterial();
         Vector3D normalVector = record.getNormalVector();
-        Vector3D viewRayDirection = record.getViewRayDirection();
         Vertex3D hitPoint = record.getHitPoint();
+
+        // get  all Vertices from the current hit record
+        Vertex3D[] vertices = record.getAllVert();
+        Vector3D normal0 = vertices[0].getlocationVector().normalize();
+        Vector3D normal1 = vertices[1].getlocationVector().normalize();
+        Vector3D normal2 = vertices[2].getlocationVector().normalize();
+
+        double[] barycentric = calculateBarycentric(hitPoint, vertices[0], vertices[1], vertices[2]);
+        Vector3D interpolatedNormal = normal0.mult(barycentric[0]).add(normal1.mult(barycentric[1])).add(normal2.mult(barycentric[2])).normalize();
+
+
 
         // get ambient coefficients from material
         Color ambientCoefficients = material.getAmbient();
-
         // calculate ambient color
         Color ambientColor = new Color((int) (AMBIENT_COLOR.getRed() * (ambientCoefficients.getRed() / 255.0)),
         (int) (AMBIENT_COLOR.getGreen() * (ambientCoefficients.getGreen() / 255.0)),
         (int) (AMBIENT_COLOR.getBlue() * (ambientCoefficients.getBlue() / 255.0)));
 
         Color finalColor = new Color(0,0,0); 
-
-
-        //Start with ambient color if illum == 1  
         Color color = new Color(ambientColor.getRed(), ambientColor.getGreen(), ambientColor.getBlue());
+
          
         // iterate over all light sources
         for (LightSource lightSource : lightSources.values()) {
@@ -71,8 +78,7 @@ public class Shader {
             // calculate light vector
             Vector3D lightVector = lightSource.getPosition().getlocationVector().sub(hitPoint.getlocationVector()).normalize();
 
-
-            // get diffuse/specular coefficients from material
+            // get coefficients from material
             Color diffuseColor = material.getDiffuse();
             Color specularColor = material.getSpecular();
             double specularExponent = material.getSpecularExp();
@@ -82,7 +88,7 @@ public class Shader {
 
             if(illuminationModel >= 2){
             //calculate diffuse color
-                double diffuseIntensity = Math.max(0, normalVector.scalar(lightVector));
+                double diffuseIntensity = Math.max(0, interpolatedNormal.scalar(lightVector));
                 Color diffuse = new Color((int) (lightColor.getRed() * (diffuseColor.getRed() / 255.0) * diffuseIntensity),
                     (int) (lightColor.getGreen() * (diffuseColor.getGreen() / 255.0) * diffuseIntensity),
                     (int) (lightColor.getBlue() * (diffuseColor.getBlue() / 255.0) * diffuseIntensity));
@@ -94,11 +100,13 @@ public class Shader {
             }
 
 
-
+            
             if(illuminationModel >= 3){
             //calculate specular color
-                Vector3D reflectionVector = normalVector.mult(2 * lightVector.scalar(normalVector)).sub(lightVector).normalize();
-                double specularIntensity = Math.pow(Math.max(0, reflectionVector.scalar(reflectionVector)), specularExponent);
+                Vector3D reflectionVector = interpolatedNormal.mult(2 * lightVector.scalar(interpolatedNormal)).sub(lightVector).normalize();
+                Vector3D viewVector = record.getViewRayDirection().normalize(); // Richtung der Kamera
+                System.out.println("viewVector: " + viewVector);
+                double specularIntensity = Math.pow(Math.max(0, reflectionVector.scalar(viewVector)), specularExponent);
                 Color specular = new Color((int) (lightColor.getRed() * (specularColor.getRed() / 255.0) * specularIntensity),
                     (int) (lightColor.getGreen() * (specularColor.getGreen() / 255.0) * specularIntensity),
                     (int) (lightColor.getBlue() * (specularColor.getBlue() / 255.0) * specularIntensity));
@@ -111,21 +119,12 @@ public class Shader {
             }
 
 
-
-
-           /*  finalColor = new Color(
-                Math.min(255, ambientColor.getRed() + diffuse.getRed() + specular.getRed()),
-                Math.min(255, ambientColor.getGreen() + diffuse.getGreen() + specular.getGreen()),
-                Math.min(255, ambientColor.getBlue() + diffuse.getBlue() + specular.getBlue())
-            ); */
-            
-            
-
+            //Dissolve 
             if(dissolve < 1){
                 Color backgroundColor = new Color(0,0,0);
                 color = mixColors(color, backgroundColor, dissolve);
             }
-
+            
             finalColor = new Color(
                 Math.min(255, ambientColor.getRed() + color.getRed()),
                 Math.min(255, ambientColor.getGreen() + color.getGreen()),
@@ -138,11 +137,47 @@ public class Shader {
         return finalColor;
     }
 
-
+    /**
+     * Mixes two colors based on a dissolve factor.
+     * 
+     * @param color1 first color
+     * @param color2 second color
+     * @param dissolve dissolve factor
+     * @return mixed color
+     */
     private Color mixColors(Color color1, Color color2, double dissolve){
         int red = (int) (color1.getRed() * dissolve + color2.getRed() * (1 - dissolve));
         int green = (int) (color1.getGreen() * dissolve + color2.getGreen() * (1 - dissolve));
         int blue = (int) (color1.getBlue() * dissolve + color2.getBlue() * (1 - dissolve));
         return new Color(red, green, blue);
     }
+
+    /**
+     * Calculates the barycentric coordinates of a point in a triangle.
+     * 
+     * @param p point
+     * @param v0 vertex 0
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     * @return barycentric coordinates
+     */
+    private double[] calculateBarycentric(Vertex3D p, Vertex3D v0, Vertex3D v1, Vertex3D v2) {
+        Vector3D v0v1 = v1.getlocationVector().sub(v0.getlocationVector());
+        Vector3D v0v2 = v2.getlocationVector().sub(v0.getlocationVector());
+        Vector3D v0p = p.getlocationVector().sub(v0.getlocationVector());
+    
+        double d00 = v0v1.scalar(v0v1);
+        double d01 = v0v1.scalar(v0v2);
+        double d11 = v0v2.scalar(v0v2);
+        double d20 = v0p.scalar(v0v1);
+        double d21 = v0p.scalar(v0v2);
+    
+        double denom = d00 * d11 - d01 * d01;
+        double v = (d11 * d20 - d01 * d21) / denom;
+        double w = (d00 * d21 - d01 * d20) / denom;
+        double u = 1.0 - v - w;
+    
+        return new double[]{u, v, w};
+    }
+    
 }
