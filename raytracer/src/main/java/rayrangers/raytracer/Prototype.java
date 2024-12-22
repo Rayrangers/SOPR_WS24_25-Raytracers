@@ -53,11 +53,10 @@ public class Prototype {
         // Entity triangleEnt = new Entity(null, faces, vlist);
         // scene.addEntity(triangleEnt);
 
-        //scene.addEntity(tuna);
         scene.addEntity(teapot);
         scene.addEntity(tuna);
 
-        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(0, 50, 200), Color.WHITE);
+        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
         scene.addLightSource(lightSource1);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
