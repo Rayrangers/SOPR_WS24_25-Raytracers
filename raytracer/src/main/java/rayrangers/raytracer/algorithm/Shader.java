@@ -24,12 +24,18 @@ public class Shader {
     private Map<UUID, LightSource> lightSources;
 
     /**
+     * Background color of the scene.
+     */
+    private Color backgroundColor;
+
+    /**
      * Class constructor specifying the scene to be rendered.
      * 
      * @param scene scene to be rendered
      */
     public Shader(Scene scene) {
         lightSources = scene.getLightSources();
+        backgroundColor = scene.getBackgroundColor();
     }
 
     
@@ -54,7 +60,6 @@ public class Shader {
 
         double[] barycentric = calculateBarycentric(hitPoint, vertices[0], vertices[1], vertices[2]);
         Vector3D interpolatedNormal = normal0.mult(barycentric[0]).add(normal1.mult(barycentric[1])).add(normal2.mult(barycentric[2])).normalize();
-
 
 
         // get ambient coefficients from material
@@ -82,11 +87,10 @@ public class Shader {
             Color diffuseColor = material.getDiffuse();
             Color specularColor = material.getSpecular();
             double specularExponent = material.getSpecularExp();
-            int illuminationModel = material.getIllum();
             double dissolve = material.getTransparency();
 
 
-            if(illuminationModel >= 2){
+            
             //calculate diffuse color
                 double diffuseIntensity = Math.max(0, interpolatedNormal.scalar(lightVector));
                 Color diffuse = new Color((int) (lightColor.getRed() * (diffuseColor.getRed() / 255.0) * diffuseIntensity),
@@ -97,16 +101,13 @@ public class Shader {
                     Math.min(255, color.getGreen() + diffuse.getGreen()),
                     Math.min(255, color.getBlue() + diffuse.getBlue())
             );
-            }
-
-
             
-            if(illuminationModel >= 3){
+
+ 
             //calculate specular color
                 Vector3D reflectionVector = interpolatedNormal.mult(2 * lightVector.scalar(interpolatedNormal)).sub(lightVector).normalize();
-                Vector3D viewVector = record.getViewRayDirection().normalize(); // Richtung der Kamera
-                System.out.println("viewVector: " + viewVector);
-                double specularIntensity = Math.pow(Math.max(0, reflectionVector.scalar(viewVector)), specularExponent);
+                Vector3D viewVector = record.getViewRayDirection().mult(-1).normalize();
+                double specularIntensity = specularExponent > 0 ? Math.pow(Math.max(0, reflectionVector.scalar(viewVector)), specularExponent): 0.0;
                 Color specular = new Color((int) (lightColor.getRed() * (specularColor.getRed() / 255.0) * specularIntensity),
                     (int) (lightColor.getGreen() * (specularColor.getGreen() / 255.0) * specularIntensity),
                     (int) (lightColor.getBlue() * (specularColor.getBlue() / 255.0) * specularIntensity));
@@ -116,7 +117,7 @@ public class Shader {
                     Math.min(255, color.getGreen() + specular.getGreen()),
                     Math.min(255, color.getBlue() + specular.getBlue())
                     );       
-            }
+            
 
 
             //Dissolve 

@@ -112,6 +112,8 @@ public class Triangle extends Face {
         Vector3D vecHA =  vertices[0].getlocationVector().sub(ray.pointAt(t).getlocationVector());
         Vector3D vecHB =  vertices[1].getlocationVector().sub(ray.pointAt(t).getlocationVector());
         Vector3D normalVec = vecHA.cross(vecHB).normalize();
+        Vector3D viewDirection = ray.getDirection();
+        record.setViewRayDirection(viewDirection);
         Vertex3D[] verticesAll  = getAllVert();
         record.setAllVert(verticesAll);
         record.setNormalVector(normalVec);

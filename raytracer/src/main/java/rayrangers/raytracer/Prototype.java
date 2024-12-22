@@ -34,7 +34,7 @@ public class Prototype {
         Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
         //Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
 
-        TrafoMatrix tm = new TrafoMatrix(0, 0, 0, -90, -180, 0, 1, 1, 1);
+        TrafoMatrix tm = new TrafoMatrix(0, 0, 0, -130, -180, 0, 1, 1, 1);
         teapot.transform(tm);
         // List<Vertex3D> vlist = new ArrayList<>();
         // vlist.add(new Vertex3D(100, 0, 0));
@@ -49,10 +49,10 @@ public class Prototype {
         // Entity triangleEnt = new Entity(null, faces, vlist);
         // scene.addEntity(triangleEnt);
 
-        //scene.addEntity(tuna);
         scene.addEntity(teapot);
+        //scene.addEntity(teapot);
 
-        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(0, 50, 200), Color.WHITE);
+        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
         scene.addLightSource(lightSource1);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
