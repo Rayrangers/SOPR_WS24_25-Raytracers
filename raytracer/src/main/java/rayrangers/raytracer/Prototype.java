@@ -25,9 +25,11 @@ import javax.imageio.ImageIO;
 public class Prototype {
     public static void main(String[] args) throws Exception {
 
+        long start = System.currentTimeMillis();
+
         Scene scene = new Scene(Color.BLACK);
         Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 75, 100, 2000, 2000);
-        // Camera camera = new Camera(new Vertex3D(0, 300, 0), -90, 180, 0, 50, 100, 1000, 1000);
+        // Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
         ViewPane viewPane = camera.getViewPane();
 
         scene.addCamera(camera);
@@ -61,6 +63,9 @@ public class Prototype {
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         renderer.render();
+
+        long end = System.currentTimeMillis();
+        System.out.printf("Total runtime for rendering: %f s%n", (end - start) / 1000.0);
 
         BufferedImage bufferedImage = new BufferedImage(viewPane.getResX(), viewPane.getResY(),
                 BufferedImage.TYPE_INT_RGB);

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import rayrangers.raytracer.algorithm.HitRecord;
 import rayrangers.raytracer.algorithm.Ray;
+import rayrangers.raytracer.algorithm.bounding.BoundingBox;
 import rayrangers.raytracer.math.TrafoMatrix;
 import rayrangers.raytracer.math.Vertex3D;
 
@@ -46,6 +47,9 @@ public class Entity implements Hittable, Transformable {
      */
     private Vertex3D worldPosition;
 
+    // TODO: Shift to BVH tree structure
+    private BoundingBox testBoundingBox;
+    
     /**
      * Class constructor with a given UUID.
      * 
@@ -133,6 +137,10 @@ public class Entity implements Hittable, Transformable {
     @Override
     public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
         boolean hit = false;
+        // TODO: Deal with entities without transformations
+        if (testBoundingBox != null && !testBoundingBox.hit(ray, t0, t1, record)) {
+            return false;
+        }
         for (Face face : faces) {
             // Check if the ray hits the face and if t lies within interval [t0,t1]
             if (face.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
@@ -148,8 +156,42 @@ public class Entity implements Hittable, Transformable {
      */
     @Override
     public void transform(TrafoMatrix tm) {
+        // Set initial minimum and maximum values for the axis aligned bounding box
+        double x1min = Double.MAX_VALUE;
+        double x1max = Double.MIN_VALUE;
+        double x2min = Double.MAX_VALUE;
+        double x2max = Double.MIN_VALUE;
+        double x3min = Double.MAX_VALUE;
+        double x3max = Double.MIN_VALUE;
+
         for (Vertex3D vertex : vertices) {
+            // Transform the vertex first
             vertex.transform(tm);
+            
+            // Calculate new axis-aligned bounding box
+            double vertX1 = vertex.getCoord(1);
+            double vertX2 = vertex.getCoord(2);
+            double vertX3 = vertex.getCoord(3);
+
+            if (vertX1 < x1min) {
+                x1min = vertX1;
+            }
+            if (vertX1 > x1max) {
+                x1max = vertX1;
+            }
+            if (vertX2 < x2min) {
+                x2min = vertX2;
+            }
+            if (vertX2 > x2max) {
+                x2max = vertX2;
+            }
+            if (vertX3 < x3min) {
+                x3min = vertX1;
+            }
+            if (vertX3 > x3max) {
+                x3max = vertX3;
+            }
         }
+        testBoundingBox = new BoundingBox(x1min, x1max, x2min, x2max, x3min, x3max);
     }
 }
