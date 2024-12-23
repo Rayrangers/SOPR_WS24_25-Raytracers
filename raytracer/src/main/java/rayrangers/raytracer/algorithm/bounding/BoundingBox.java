@@ -18,9 +18,25 @@ public class BoundingBox implements Hittable {
      * 
      */
     private final double x1max;
+
+    /**
+     * 
+     */
     private final double x2min;
+
+    /**
+     * 
+     */
     private final double x2max;
+
+    /**
+     * 
+     */
     private final double x3min;
+
+    /**
+     * 
+     */
     private final double x3max;
 
     /**

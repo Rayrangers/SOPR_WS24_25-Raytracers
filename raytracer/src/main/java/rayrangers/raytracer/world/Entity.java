@@ -173,6 +173,7 @@ public class Entity implements Hittable, Transformable {
             double vertX2 = vertex.getCoord(2);
             double vertX3 = vertex.getCoord(3);
 
+            // TODO: Move to BoundingBox
             if (vertX1 < x1min) {
                 x1min = vertX1;
             }
