@@ -21,6 +21,9 @@ RUN groupadd --gid ${USER_GID} ${USERNAME} && \
 RUN dnf -y upgrade --refresh && \
     dnf -y install git zsh curl wget vim openssh
 
+# Fix errors for developers attempting to use Qt xcb (X11 session)
+RUN dnf -y install "xcb-util-*" libxkbcommon-x11
+
 # Install Java OpenJDK 21 and Maven
 RUN dnf -y install java-21-openjdk java-21-openjdk-src maven
 
