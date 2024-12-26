@@ -24,7 +24,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_5">
@@ -55,14 +55,14 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Szene</string>
+                 <string>Scene</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="resultButton">
                 <property name="text">
-                 <string>Ergebnis</string>
+                 <string>Result</string>
                 </property>
                </widget>
               </item>
@@ -150,7 +150,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Kamera</string>
+                 <string>Camera</string>
                 </property>
                </widget>
               </item>
@@ -212,7 +212,7 @@
                 <item>
                  <widget class="QLabel" name="angle_label">
                   <property name="text">
-                   <string>Winkel</string>
+                   <string>Angle</string>
                   </property>
                  </widget>
                 </item>
@@ -261,29 +261,11 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_12">
-                <item>
-                 <widget class="QLabel" name="rotationLabel">
-                  <property name="text">
-                   <string>Drehung</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSlider" name="rotationHorizontalSlider">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
                <layout class="QHBoxLayout" name="horizontalLayout_9">
                 <item>
                  <widget class="QLabel" name="focusLabel">
                   <property name="text">
-                   <string>Fokus</string>
+                   <string>Distance</string>
                   </property>
                  </widget>
                 </item>
@@ -331,7 +313,7 @@
                 <item>
                  <widget class="QLabel" name="resolutionLabel">
                   <property name="text">
-                   <string>Auflösung</string>
+                   <string>Resolution</string>
                   </property>
                  </widget>
                 </item>
@@ -346,7 +328,7 @@
                      </sizepolicy>
                     </property>
                     <property name="text">
-                     <string>Breite</string>
+                     <string>Width</string>
                     </property>
                    </widget>
                   </item>
@@ -367,7 +349,7 @@
                   <item>
                    <widget class="QLabel" name="res_height_label">
                     <property name="text">
-                     <string>Höhe</string>
+                     <string>Height</string>
                     </property>
                    </widget>
                   </item>
@@ -390,7 +372,7 @@
                 <item>
                  <widget class="QLabel" name="qualityLabel">
                   <property name="text">
-                   <string>Qualität</string>
+                   <string>Pane Width</string>
                   </property>
                  </widget>
                 </item>
@@ -404,16 +386,12 @@
                 <item>
                  <widget class="QLabel" name="samplesLabel">
                   <property name="text">
-                   <string>Samples pro Pixel</string>
+                   <string>Anti-Aliasing</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSlider" name="samplesHorizontalSlider">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
+                 <widget class="QComboBox" name="comboBox_3"/>
                 </item>
                </layout>
               </item>
@@ -422,7 +400,7 @@
                 <item>
                  <widget class="QLabel" name="fileLabel">
                   <property name="text">
-                   <string>Dateiformat</string>
+                   <string>Shading</string>
                   </property>
                  </widget>
                 </item>
@@ -450,7 +428,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Objekte</string>
+                 <string>Objects</string>
                 </property>
                </widget>
               </item>
@@ -490,7 +468,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Lichtquellen</string>
+                 <string>Light Sources</string>
                 </property>
                </widget>
               </item>
@@ -536,7 +514,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Objekte</string>
+                 <string>Objects</string>
                 </property>
                </widget>
               </item>
@@ -568,7 +546,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Lichtquellen</string>
+                   <string>Light Sources</string>
                   </property>
                  </widget>
                 </item>
@@ -603,7 +581,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Szene</string>
+                 <string>Scene</string>
                 </property>
                </widget>
               </item>
@@ -613,7 +591,7 @@
                  <bool>true</bool>
                 </property>
                 <property name="text">
-                 <string>Ergebnis</string>
+                 <string>Result</string>
                 </property>
                </widget>
               </item>
@@ -666,62 +644,70 @@
                </font>
               </property>
               <property name="text">
-               <string>Konfiguration</string>
+               <string>Configuration</string>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_18">
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
               <item>
-               <widget class="QLabel" name="posLabel_conf">
+               <widget class="QLabel" name="label_10">
                 <property name="text">
                  <string>Position</string>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <layout class="QVBoxLayout" name="verticalLayout_19">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_19">
-                  <item>
-                   <widget class="QLabel" name="pos_x_label_conf">
-                    <property name="text">
-                     <string>x</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="pos_x_spinBox_conf"/>
-                  </item>
-                 </layout>
+                 <widget class="QLabel" name="pos_x_label_conf">
+                  <property name="text">
+                   <string>x</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_20">
-                  <item>
-                   <widget class="QLabel" name="pos_y_label_conf">
-                    <property name="text">
-                     <string>y</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="pos_y_spinBox_conf"/>
-                  </item>
-                 </layout>
+                 <widget class="QSpinBox" name="pos_x_spinBox_conf">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_20">
+                <item>
+                 <widget class="QLabel" name="pos_y_label_conf">
+                  <property name="text">
+                   <string>y</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_21">
-                  <item>
-                   <widget class="QLabel" name="pos_z_label_conf">
-                    <property name="text">
-                     <string>z</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="pos_z_spinBox_conf"/>
-                  </item>
-                 </layout>
+                 <widget class="QSpinBox" name="pos_y_spinBox_conf">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_21">
+                <item>
+                 <widget class="QLabel" name="pos_z_label_conf">
+                  <property name="text">
+                   <string>z</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="pos_z_spinBox_conf">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -730,21 +716,137 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_22">
               <item>
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="posLabel_conf">
                 <property name="text">
-                 <string>Farbe</string>
+                 <string>Scaling</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox"/>
+               <layout class="QVBoxLayout" name="verticalLayout_37">
+                <item>
+                 <widget class="QLabel" name="pos_x_label_conf_3">
+                  <property name="text">
+                   <string>x</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="scal_x_spinBox">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_38">
+                <item>
+                 <widget class="QLabel" name="pos_y_label_conf_3">
+                  <property name="text">
+                   <string>y</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="scal_y_spinBox">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_39">
+                <item>
+                 <widget class="QLabel" name="pos_z_label_conf_3">
+                  <property name="text">
+                   <string>z</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="scal_z_spinBox">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QLabel" name="posLabel_conf_3">
+                <property name="text">
+                 <string>Rotation</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_34">
+                <item>
+                 <widget class="QLabel" name="pos_x_label_conf_4">
+                  <property name="text">
+                   <string>x</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="rot_x_spinBox">
+                  <property name="maximum">
+                   <number>360</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_35">
+                <item>
+                 <widget class="QLabel" name="pos_y_label_conf_4">
+                  <property name="text">
+                   <string>y</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="rot_y_spinBox">
+                  <property name="maximum">
+                   <number>360</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_36">
+                <item>
+                 <widget class="QLabel" name="pos_z_label_conf_4">
+                  <property name="text">
+                   <string>z</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="rot_z_spinBox">
+                  <property name="maximum">
+                   <number>360</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
             <item>
              <widget class="QPushButton" name="saveButton_conf">
               <property name="text">
-               <string>Fertig</string>
+               <string>Done</string>
               </property>
              </widget>
             </item>
@@ -773,7 +875,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Objekte</string>
+                 <string>Objects</string>
                 </property>
                </widget>
               </item>
@@ -805,7 +907,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Lichtquellen</string>
+                   <string>Light Sources</string>
                   </property>
                  </widget>
                 </item>
@@ -840,7 +942,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Szene</string>
+                 <string>Scene</string>
                 </property>
                </widget>
               </item>
@@ -850,7 +952,7 @@
                  <bool>true</bool>
                 </property>
                 <property name="text">
-                 <string>Ergebnis</string>
+                 <string>Result</string>
                 </property>
                </widget>
               </item>
@@ -903,62 +1005,70 @@
                </font>
               </property>
               <property name="text">
-               <string>Konfiguration</string>
+               <string>Configuration</string>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_30">
+             <layout class="QHBoxLayout" name="horizontalLayout_24">
               <item>
-               <widget class="QLabel" name="posLabel_conf_2">
+               <widget class="QLabel" name="label_11">
                 <property name="text">
                  <string>Position</string>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_20">
+               <layout class="QVBoxLayout" name="verticalLayout_40">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_31">
-                  <item>
-                   <widget class="QLabel" name="pos_x_label_conf_2">
-                    <property name="text">
-                     <string>x</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="pos_x_spinBox_conf_2"/>
-                  </item>
-                 </layout>
+                 <widget class="QLabel" name="pos_x_label_conf_5">
+                  <property name="text">
+                   <string>x</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_32">
-                  <item>
-                   <widget class="QLabel" name="pos_y_label_conf_2">
-                    <property name="text">
-                     <string>y</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="pos_y_spinBox_conf_2"/>
-                  </item>
-                 </layout>
+                 <widget class="QSpinBox" name="pos_x_spinBox_conf_light">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_41">
+                <item>
+                 <widget class="QLabel" name="pos_y_label_conf_5">
+                  <property name="text">
+                   <string>y</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_33">
-                  <item>
-                   <widget class="QLabel" name="pos_z_label_conf_2">
-                    <property name="text">
-                     <string>z</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="pos_z_spinBox_conf_2"/>
-                  </item>
-                 </layout>
+                 <widget class="QSpinBox" name="pos_y_spinBox_conf_light">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_42">
+                <item>
+                 <widget class="QLabel" name="pos_z_label_conf_5">
+                  <property name="text">
+                   <string>z</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="pos_z_spinBox_conf_light">
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -969,7 +1079,7 @@
               <item>
                <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>Lichtintensität</string>
+                 <string>Light Intensity</string>
                 </property>
                </widget>
               </item>
@@ -990,7 +1100,7 @@
               <item>
                <widget class="QLabel" name="label_7">
                 <property name="text">
-                 <string>Farbe</string>
+                 <string>Color</string>
                 </property>
                </widget>
               </item>
@@ -1002,7 +1112,7 @@
             <item>
              <widget class="QPushButton" name="saveButton_conf_2">
               <property name="text">
-               <string>Fertig</string>
+               <string>Done</string>
               </property>
              </widget>
             </item>
@@ -1023,7 +1133,7 @@
               <item>
                <widget class="QPushButton" name="sceneButton_result">
                 <property name="text">
-                 <string>Szene</string>
+                 <string>Scene</string>
                 </property>
                </widget>
               </item>
@@ -1033,7 +1143,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Ergebnis</string>
+                 <string>Result</string>
                 </property>
                </widget>
               </item>
@@ -1049,7 +1159,7 @@
             <item>
              <widget class="QLabel" name="infoLabel">
               <property name="text">
-               <string>Informationen über Rendering</string>
+               <string>Informationen about Rendering</string>
               </property>
              </widget>
             </item>
@@ -1058,7 +1168,7 @@
               <item>
                <widget class="QLabel" name="raysLabel_info">
                 <property name="text">
-                 <string>Anzahl Rays:</string>
+                 <string>Number of Rays:</string>
                 </property>
                </widget>
               </item>
@@ -1079,7 +1189,7 @@
               <item>
                <widget class="QLabel" name="objectsLabel_info">
                 <property name="text">
-                 <string>Anzahl Objekte:</string>
+                 <string>Number of Objects:</string>
                 </property>
                </widget>
               </item>
@@ -1100,7 +1210,7 @@
               <item>
                <widget class="QLabel" name="label_3">
                 <property name="text">
-                 <string>Anzahl Lichtquellen:</string>
+                 <string>Number of Light Sources:</string>
                 </property>
                </widget>
               </item>
@@ -1118,7 +1228,7 @@
               <item>
                <widget class="QLabel" name="renderDurationLabel_info">
                 <property name="text">
-                 <string>Renderdauer:</string>
+                 <string>Render time:</string>
                 </property>
                </widget>
               </item>
@@ -1135,47 +1245,11 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Startzeit:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit">
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_16">
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>Endzeit:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_2">
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
              <layout class="QHBoxLayout" name="horizontalLayout_17">
               <item>
                <widget class="QLabel" name="label_4">
                 <property name="text">
-                 <string>Qualität:</string>
+                 <string>Quality:</string>
                 </property>
                </widget>
               </item>
@@ -1191,14 +1265,14 @@
             <item>
              <widget class="QToolButton" name="deleteButton">
               <property name="text">
-               <string>Löschen</string>
+               <string>Delete</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="exportButton_result">
               <property name="text">
-               <string>Exportieren</string>
+               <string>Export</string>
               </property>
              </widget>
             </item>
@@ -1223,7 +1297,7 @@
    </property>
    <widget class="QMenu" name="menuDatei">
     <property name="title">
-     <string>Datei</string>
+     <string>File</string>
     </property>
     <addaction name="actionNeue_Szene"/>
     <addaction name="actionSzene_importieren"/>
@@ -1233,13 +1307,13 @@
    </widget>
    <widget class="QMenu" name="menuBearbeiten">
     <property name="title">
-     <string>Bearbeiten</string>
+     <string>Edit</string>
     </property>
     <addaction name="actionRueckgaenig"/>
    </widget>
    <widget class="QMenu" name="menuHilfe">
     <property name="title">
-     <string>Hilfe</string>
+     <string>Help</string>
     </property>
    </widget>
    <addaction name="menuDatei"/>
@@ -1249,27 +1323,27 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNeue_Szene">
    <property name="text">
-    <string>Neue Szene</string>
+    <string>New Scene</string>
    </property>
   </action>
   <action name="actionSzene_importieren">
    <property name="text">
-    <string>Szene importieren</string>
+    <string>Import Scene</string>
    </property>
   </action>
   <action name="actionSzene_speichern">
    <property name="text">
-    <string>Szene speichern</string>
+    <string>Save Scene</string>
    </property>
   </action>
   <action name="actionSchliessen">
    <property name="text">
-    <string>Schließen</string>
+    <string>Close</string>
    </property>
   </action>
   <action name="actionRueckgaenig">
    <property name="text">
-    <string>Rückgängig</string>
+    <string>Undo</string>
    </property>
   </action>
  </widget>
