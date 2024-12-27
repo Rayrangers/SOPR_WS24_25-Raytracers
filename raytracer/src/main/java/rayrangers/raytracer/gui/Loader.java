@@ -9,6 +9,8 @@ import io.qt.widgets.QWidget;
 import io.qt.widgets.QMessageBox;
 import io.qt.widgets.tools.QUiLoader;
 import rayrangers.raytracer.Prototype;
+import io.qt.core.QTimer;
+import io.qt.widgets.QProgressBar;
 
 /**
  * Loads the design information for the GUI provided by the UI file.
@@ -17,6 +19,9 @@ public class Loader extends QMainWindow {
     private QUiLoader loader;
     private QFile uiFile;
     private QWidget ui;
+    private QProgressBar progressBar;
+    private QTimer timer;
+    private int progressValue;
 
     /**
      * Builds the GUI based on the 'mainGUI.ui' file.
@@ -40,15 +45,44 @@ public class Loader extends QMainWindow {
         QWidget menu = ui.findChild(QWidget.class, "menubar");
         setMenuWidget(menu);
 
+        // Load progress bar
+        progressBar = centralWidget.findChild(QProgressBar.class, "ProgressBar_main");
+        
+        // Initialize timer
+        timer = new QTimer(this);
+        timer.timeout.connect(this, "updateProgressBar()");
+        
         // Load start button
         QToolButton startButton = centralWidget.findChild(QToolButton.class, "playToolButton");
         if (startButton != null) {
             startButton.clicked.connect(() -> {
-                System.out.println("Starting Prototype");
-                Prototype.main(new String[]{});
+                startProgressBar();
+                new Thread(() -> {
+                    System.out.println("Starting Prototype main");
+                    try {
+                        Prototype.main(new String[]{});
+                        System.out.println("Prototype main finished");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             });
         } else {
             System.out.println("Start Button not found.");
         }
     }
-} 
+
+    private void startProgressBar() {
+        progressValue = 0;
+        progressBar.setValue(progressValue);
+        timer.start(600);
+    }
+
+    private void updateProgressBar() {
+        progressValue += 1;
+        progressBar.setValue(progressValue);
+        if (progressValue >= 100) {
+            timer.stop();
+        }
+    }
+}
