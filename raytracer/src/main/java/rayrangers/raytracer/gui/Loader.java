@@ -4,9 +4,11 @@ import io.qt.core.QFile;
 import io.qt.widgets.QMainWindow;
 import io.qt.widgets.QPushButton;
 import io.qt.widgets.QStackedWidget;
+import io.qt.widgets.QToolButton;
 import io.qt.widgets.QWidget;
 import io.qt.widgets.QMessageBox;
 import io.qt.widgets.tools.QUiLoader;
+import rayrangers.raytracer.Prototype;
 
 /**
  * Loads the design information for the GUI provided by the UI file.
@@ -38,16 +40,15 @@ public class Loader extends QMainWindow {
         QWidget menu = ui.findChild(QWidget.class, "menubar");
         setMenuWidget(menu);
 
-        // Currently not working
-        // QPushButton objectPlusButton = centralWidget.findChild(QPushButton.class, "playToolButton");
-        // if (objectPlusButton != null) {
-        //     System.out.println("Test button was found!");
-        //     objectPlusButton.clicked.connect(() -> {
-        //         System.out.println("Test Button Clicked");
-        //         QMessageBox.information(this, "Info", "Button Clicked!");
-        //     });
-        // } else {
-        //     System.out.println("Test Button not found.");
-        // }
+        // Load start button
+        QToolButton startButton = centralWidget.findChild(QToolButton.class, "playToolButton");
+        if (startButton != null) {
+            startButton.clicked.connect(() -> {
+                System.out.println("Starting Prototype");
+                Prototype.main(new String[]{});
+            });
+        } else {
+            System.out.println("Start Button not found.");
+        }
     }
 } 
