@@ -74,7 +74,7 @@ public class Camera {
         this.worldPosition = worldPosition;
         this.paneDistance = paneDistance;
         viewPane = new ViewPane(resX, resY, paneWidth);
-        // TODO: Transformations of u, v, w
+        rotate(angleX1, angleX2, angleX3);
     }
 
     /**
@@ -161,4 +161,28 @@ public class Camera {
         return w;
     }
 
+    /**
+     * Rotates the camera along the world coordinate axes.
+     * 
+     * @param angleX1 Rotation along x1 axis
+     * @param angleX2 Rotation along x2 axis
+     * @param angleX3 Rotation along x3 axis
+     */
+    public void rotate(double angleX1, double angleX2, double angleX3) {
+        if (angleX1 != 0) {
+            u.rotateX(angleX1);
+            v.rotateX(angleX1);
+            w.rotateX(angleX1);
+        }
+        if (angleX2 != 0) {
+            u.rotateY(angleX2);
+            v.rotateY(angleX2);
+            w.rotateY(angleX2);
+        }
+        if (angleX3 != 0) {
+            u.rotateZ(angleX3);
+            v.rotateZ(angleX3);
+            w.rotateZ(angleX3);
+        }
+    }
 }

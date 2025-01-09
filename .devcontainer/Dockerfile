@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM --platform=linux/amd64 fedora:latest
 
 ARG USERNAME=morphin
 ARG USER_ID=1000
@@ -20,6 +20,9 @@ RUN groupadd --gid ${USER_GID} ${USERNAME} && \
 # Update and install common tools
 RUN dnf -y upgrade --refresh && \
     dnf -y install git zsh curl wget vim openssh
+
+# Fix errors for developers attempting to use Qt xcb (X11 session)
+RUN dnf -y install "xcb-util-*" libxkbcommon-x11
 
 # Install Java OpenJDK 21 and Maven
 RUN dnf -y install java-21-openjdk java-21-openjdk-src maven

@@ -1,9 +1,11 @@
 package rayrangers.raytracer.math;
 
+import rayrangers.raytracer.world.Transformable;
+
 /**
  * Represents a vertex in 3D space.
  */
-public class Vertex3D {
+public class Vertex3D implements Transformable {
 
     /**
      * Location vector of the vertex.
@@ -125,5 +127,15 @@ public class Vertex3D {
      */
     public void setNormalVector(Vector3D normalVector) {
         this.normalVector = normalVector;
+    }
+
+    /**
+     * @see Transformable
+     */
+    @Override
+    public void transform(TrafoMatrix tm) {
+        locationVector.transform(tm);
+        if (normalVector != null)
+            normalVector.transform(tm);
     }
 }

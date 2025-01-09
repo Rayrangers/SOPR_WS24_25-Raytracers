@@ -14,49 +14,49 @@ public class Material {
      * MTL file:
      * newmtl <material-name>
      */
-    private String name;
+    private final String name;
     
     /**
      * Ambient color definition with RGB values.
      * MTL file:
      * Ka <double R> <double G> <double B>
      */
-    private Color ka;
+    private final Color ka;
 
     /**
      * Diffuse color definition with RGB values.
      * MTL file:
      * Kd <double R> <double G> <double B>
      */
-    private Color kd;
+    private final Color kd;
 
     /**
      * Specular color definition with RGB values.
      * MTL file:
      * Ks <double R> <double G> <double B>
      */
-    private Color ks;
+    private final Color ks;
     
     /**
      * Specular exponent.
      * MTL file:
      * Ns <double specular-exponent>
      */
-    private double ns;
+    private final double ns;
 
     /**
      * Transparency (dissolve) coefficient.
      * MTL file:
      * d <double transparency-coefficient>
      */
-    private double d;
+    private final double d;
 
     /**
      * Illumination model index.
      * MTL file:
      * illum <integer model-index>
      */
-    private int illum;
+    private final int illum;
 
     /**
      * Class constructor specifying the name and characteristics of the material.
