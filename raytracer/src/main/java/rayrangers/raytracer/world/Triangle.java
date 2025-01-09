@@ -109,7 +109,14 @@ public class Triangle extends Face {
         record.setT(t); // Set ray parameter of intersection
         record.setHitPoint(ray.pointAt(t)); // Calculate intersection point
         record.setMaterial(material); // Set triangle material
-        
+        Vector3D vecHA =  vertices[0].getlocationVector().sub(ray.pointAt(t).getlocationVector());
+        Vector3D vecHB =  vertices[1].getlocationVector().sub(ray.pointAt(t).getlocationVector());
+        Vector3D normalVec = vecHA.cross(vecHB).normalize();
+        Vector3D viewDirection = ray.getDirection();
+        record.setViewRayDirection(viewDirection);
+        Vertex3D[] verticesAll  = getAllVert();
+        record.setAllVert(verticesAll);
+        record.setNormalVector(normalVec);
         return true;
     }
 }

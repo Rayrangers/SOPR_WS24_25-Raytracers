@@ -41,6 +41,11 @@ public class HitRecord {
     private Vector3D viewRayDirection;
 
     /**
+     * All vertices of the hittable object.
+     */
+    private Vertex3D[] verticesAll;
+
+    /**
      * Returns the point where the hit occurred.
      * 
      * @return
@@ -56,6 +61,24 @@ public class HitRecord {
      */
     public void setHitPoint(Vertex3D hitPoint) {
         this.hitPoint = hitPoint;
+    }
+
+      /**
+     * Returns all vertices of the hittable object.
+     * 
+     * @return Array of vertices
+     */
+    public Vertex3D[] getAllVert() {
+        return verticesAll;
+    }
+
+    /**
+     * Sets all vertices of the hittable object.
+     * 
+     * @param verticesAll Array of vertices
+     */
+    public void setAllVert(Vertex3D[] verticesAll) {
+        this.verticesAll = verticesAll;
     }
 
     /**
