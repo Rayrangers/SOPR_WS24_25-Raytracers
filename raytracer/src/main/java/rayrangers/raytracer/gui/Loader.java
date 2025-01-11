@@ -35,36 +35,65 @@ public class Loader extends QMainWindow {
         uiFile = new QFile("frontend/mainGui.ui");
         ui = loader.load(uiFile, this);
         uiFile.close();
+
+
+        // Load the different windows (basic user navigations)
+        // Load menu bar
+        QWidget menu = ui.findChild(QWidget.class, "menubar");
+        setMenuWidget(menu);
         
         // Load main window
         QStackedWidget centralWidget = ui.findChild(QStackedWidget.class, "stackedWidget");
         centralWidget.setCurrentIndex(0);
         setCentralWidget(centralWidget);
-        setWindowTitle("MainWindow");
-        
-        // Load menu bar
-        QWidget menu = ui.findChild(QWidget.class, "menubar");
-        setMenuWidget(menu);
+        setWindowTitle("Main Window");
 
+        // Load object configuration window
+        QPushButton addObjectButton = centralWidget.findChild(QPushButton.class, "object_plus_Button");
+        addObjectButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(1);
+            setWindowTitle("Object Configuration");
+        });
 
-        // Load result view
+        // Jump back to main window after object configuration
+        QPushButton objectDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf");
+        objectDoneButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(0);
+            setWindowTitle("Main Window");
+        });
+
+        // Load light configuration window
+        QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
+        addLightButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(2);
+            setWindowTitle("Camera Configuration");
+        });
+
+        // Jump back to main window after light configuration
+        QPushButton lightDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf_2");
+        lightDoneButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(0);
+            setWindowTitle("Main Window");
+        });
+
+        // Load result window
         QPushButton resultButton = centralWidget.findChild(QPushButton.class, "resultButton");
         resultButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(3);
-            setWindowTitle("ResultWindow");
+            setWindowTitle("Result Window");
         });
+
+        // Jump back to main window from result window
+        QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
+        sceneButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(0);
+            setWindowTitle("Main Window");
+        });
+
 
         // Load result graphics view (slot for image)
         QGraphicsView resultGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_5");
         QGraphicsScene scene = new QGraphicsScene(resultGraphicsView);
-
-        // Load scene view (main window from result view)
-        QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
-        sceneButton.clicked.connect(() -> {
-            centralWidget.setCurrentIndex(0);
-            setWindowTitle("MainWindow");
-        });
-
 
         // Load progress bar
         progressBar = centralWidget.findChild(QProgressBar.class, "ProgressBar_main");
