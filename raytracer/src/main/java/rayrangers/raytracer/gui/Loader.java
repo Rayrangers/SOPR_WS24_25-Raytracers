@@ -10,8 +10,9 @@ import io.qt.widgets.QStackedWidget;
 import io.qt.widgets.QToolButton;
 import io.qt.widgets.QWidget;
 import io.qt.widgets.tools.QUiLoader;
-import rayrangers.raytracer.Prototype;
 import io.qt.core.QTimer;
+import io.qt.core.Qt.AspectRatioMode;
+import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
 import io.qt.widgets.QProgressBar;
 
@@ -22,6 +23,7 @@ public class Loader extends QMainWindow {
     private QUiLoader loader;
     private QFile uiFile;
     private QWidget ui;
+    private QImage image;
     private QProgressBar progressBar;
     private QTimer timer;
     private int progressValue;
@@ -66,7 +68,7 @@ public class Loader extends QMainWindow {
         QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
         addLightButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(2);
-            setWindowTitle("Camera Configuration");
+            setWindowTitle("Light Configuration");
         });
 
         // Jump back to main window after light configuration
@@ -90,51 +92,71 @@ public class Loader extends QMainWindow {
             setWindowTitle("Main Window");
         });
 
+        // Load Import Button
 
+        QToolButton importButton = centralWidget.findChild(QToolButton.class, "importToolButton");
+        importButton.clicked.connect(() -> {
+            System.out.println("Import Button clicked");
+        });
+
+
+        // Load UI items for object configuration window
+        
+
+        // Load UI items for light configuration window
+
+        
+        // Load UI items for result window
         // Load result graphics view (slot for image)
         QGraphicsView resultGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_5");
         QGraphicsScene scene = new QGraphicsScene(resultGraphicsView);
 
+
+        // Load UI items for main window
         // Load progress bar
         progressBar = centralWidget.findChild(QProgressBar.class, "ProgressBar_main");
-        
         // Initialize timer
         timer = new QTimer(this);
+        // TODO: Fix this
         timer.timeout.connect(this, "updateProgressBar()");
-        
-        // Load start button
+
+        // Load start button and add functionality
         QToolButton startButton = centralWidget.findChild(QToolButton.class, "playToolButton");
         if (startButton != null) {
             startButton.clicked.connect(() -> {
                 startProgressBar();
+                startButton.setEnabled(false);
                 new Thread(() -> {
                     System.out.println("Starting Prototype main");
                     try {
-                        Prototype.main(new String[]{});
+                        image = Worker.invokePrototype();
                         System.out.println("Prototype main finished");
+                        QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
+                        scene.clear();
+                        scene.addItem(item);
+                        resultGraphicsView.setScene(scene);
+                        resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
+                        startButton.setEnabled(true);
+                        timer.stop();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }).start();
-                QPixmap prototype = new QPixmap();
-                prototype.load(":/artifacts/prototpye.png");
-                QGraphicsPixmapItem item = new QGraphicsPixmapItem(prototype);
-                scene.clear();
-                scene.addItem(item);
-                resultGraphicsView.show();
             });
         } else {
             System.out.println("Start Button not found.");
         }
     }
 
+
     private void startProgressBar() {
         progressValue = 0;
         progressBar.setValue(progressValue);
-        timer.start(600);
+        timer.start(1000);
     }
 
-    private void updateProgressBar() {
+    // TODO: No Progess, just timer
+     private void updateProgressBar() {
         progressValue += 1;
         progressBar.setValue(progressValue);
         if (progressValue >= 100) {
