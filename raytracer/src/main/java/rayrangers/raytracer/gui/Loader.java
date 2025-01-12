@@ -1,11 +1,17 @@
 package rayrangers.raytracer.gui;
 
 import io.qt.core.QFile;
+import io.qt.widgets.QComboBox;
+import io.qt.widgets.QFileDialog;
+import io.qt.widgets.QFileDialog.Result;
 import io.qt.widgets.QGraphicsPixmapItem;
 import io.qt.widgets.QGraphicsScene;
 import io.qt.widgets.QGraphicsView;
+import io.qt.widgets.QListView;
 import io.qt.widgets.QMainWindow;
 import io.qt.widgets.QPushButton;
+import io.qt.widgets.QSlider;
+import io.qt.widgets.QSpinBox;
 import io.qt.widgets.QStackedWidget;
 import io.qt.widgets.QToolButton;
 import io.qt.widgets.QWidget;
@@ -33,13 +39,12 @@ public class Loader extends QMainWindow {
      */
     public Loader() {
         loader = new QUiLoader();
-        // Load 'mainGUI.ui' file
-        uiFile = new QFile("frontend/mainGui.ui");
+        uiFile = new QFile("frontend/mainGui.ui"); // Load 'mainGUI.ui' file
         ui = loader.load(uiFile, this);
         uiFile.close();
 
 
-        // Load the different windows (basic user navigations)
+        // Starting point to load all the different UI elements -------------------------------------------------------------------------------------
         // Load menu bar
         QWidget menu = ui.findChild(QWidget.class, "menubar");
         setMenuWidget(menu);
@@ -50,25 +55,86 @@ public class Loader extends QMainWindow {
         setCentralWidget(centralWidget);
         setWindowTitle("Main Window");
 
-        // Load object configuration window
+
+        // Load the UI elements of the main window --------------------------------------------------------------------------------------------------
+        // Elements for "Objects-Configuration"
+        QListView objecListView = centralWidget.findChild(QListView.class, "objectListView");
         QPushButton addObjectButton = centralWidget.findChild(QPushButton.class, "object_plus_Button");
+
+        // Elements for "Light-Configuration"
+        QListView ligthListView = centralWidget.findChild(QListView.class, "lightListView");
+        QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
+
+        // Elements for "Camera-Configuration"
+        QSpinBox cameraPosX = centralWidget.findChild(QSpinBox.class, "pos_x_spinBox");
+        QSpinBox cameraPosY = centralWidget.findChild(QSpinBox.class, "pos_y_spinBox");
+        QSpinBox cameraPosZ = centralWidget.findChild(QSpinBox.class, "pos_z_spinBox");
+        QSpinBox cameraRoll = centralWidget.findChild(QSpinBox.class, "ang_roll_spinBox");
+        QSpinBox cameraPitch = centralWidget.findChild(QSpinBox.class, "ang_pitch_spinBox");
+        QSpinBox cameraYaw = centralWidget.findChild(QSpinBox.class, "ang_yaw_spinBox");
+        QSpinBox cameraDistance = centralWidget.findChild(QSpinBox.class, "distance_spinBox");
+        QSlider cameraFov = centralWidget.findChild(QSlider.class, "fowHorizontalSlider");
+
+        // Elements for "Rendering-Configuration"
+        QSpinBox renderingResWidth = centralWidget.findChild(QSpinBox.class, "res_width_spinBox");          // also for camera needed
+        QSpinBox renderingResHeight = centralWidget.findChild(QSpinBox.class, "res_height_spinBox");        // also for camera needed
+        QComboBox renderingPandeWidth = centralWidget.findChild(QComboBox.class, "comboBox_pane_width");    // also for camera needed
+        QComboBox renderingAntiAliasing = centralWidget.findChild(QComboBox.class, "comboBox_anti_aliasing");
+        QComboBox renderingShading = centralWidget.findChild(QComboBox.class, "comboBox_shading");
+
+        QPushButton resultButton = centralWidget.findChild(QPushButton.class, "resultButton");
+        QGraphicsView mainGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_main_window");
+        QToolButton startButton = centralWidget.findChild(QToolButton.class, "playToolButton");
+        QToolButton importButton = centralWidget.findChild(QToolButton.class, "importToolButton");
+        QToolButton exportButton = centralWidget.findChild(QToolButton.class, "exportToolButton");
+        progressBar = centralWidget.findChild(QProgressBar.class, "ProgressBar_main");
+
+
+        // Load the UI elements of the object configuration window ----------------------------------------------------------------------------------
+
+
+
+        // Load the UI elements of the light configuration window -----------------------------------------------------------------------------------
+
+
+
+        // Load the UI elements of the result window ------------------------------------------------------------------------------------------------
+
+
+        
+        // Add functionality to the UI elements of the main window ----------------------------------------------------------------------------------
+        // Enable 'addObjectButton' (switches to the object configuration window and opens file picker)
         addObjectButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(1);
             setWindowTitle("Object Configuration");
+            Result<String> fileName = QFileDialog.getOpenFileName(centralWidget, tr("Open Object-File"), "examples/");
         });
+
+        // Enable 'addLightButton' (switches to the light configuration window)
+        addLightButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(2);
+            setWindowTitle("Light Configuration");
+        });
+
+        // Enable 'resultButton' (switches to the result window)
+        resultButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(3);
+            setWindowTitle("Result Window");
+        });
+
+        // Enable 'importButton' (import a scene in JSON-format)
+        importButton.clicked.connect(() -> {
+            System.out.println("Import Button clicked");
+        });
+
+
+
 
         // Jump back to main window after object configuration
         QPushButton objectDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf");
         objectDoneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");
-        });
-
-        // Load light configuration window
-        QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
-        addLightButton.clicked.connect(() -> {
-            centralWidget.setCurrentIndex(2);
-            setWindowTitle("Light Configuration");
         });
 
         // Jump back to main window after light configuration
@@ -78,13 +144,6 @@ public class Loader extends QMainWindow {
             setWindowTitle("Main Window");
         });
 
-        // Load result window
-        QPushButton resultButton = centralWidget.findChild(QPushButton.class, "resultButton");
-        resultButton.clicked.connect(() -> {
-            centralWidget.setCurrentIndex(3);
-            setWindowTitle("Result Window");
-        });
-
         // Jump back to main window from result window
         QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
         sceneButton.clicked.connect(() -> {
@@ -92,36 +151,19 @@ public class Loader extends QMainWindow {
             setWindowTitle("Main Window");
         });
 
-        // Load Import Button
-
-        QToolButton importButton = centralWidget.findChild(QToolButton.class, "importToolButton");
-        importButton.clicked.connect(() -> {
-            System.out.println("Import Button clicked");
-        });
-
-
-        // Load UI items for object configuration window
         
 
-        // Load UI items for light configuration window
-
-        
-        // Load UI items for result window
         // Load result graphics view (slot for image)
         QGraphicsView resultGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_5");
         QGraphicsScene scene = new QGraphicsScene(resultGraphicsView);
 
 
-        // Load UI items for main window
-        // Load progress bar
-        progressBar = centralWidget.findChild(QProgressBar.class, "ProgressBar_main");
         // Initialize timer
         timer = new QTimer(this);
         // TODO: Fix this
         timer.timeout.connect(this, "updateProgressBar()");
 
-        // Load start button and add functionality
-        QToolButton startButton = centralWidget.findChild(QToolButton.class, "playToolButton");
+        // Enable 'startButton'
         if (startButton != null) {
             startButton.clicked.connect(() -> {
                 startProgressBar();

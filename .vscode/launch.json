@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "rayrangers.raytracer.Main",
+            "projectName": "raytracer"
+        },
+        {
             "type": "jdk",
             "request": "launch",
             "name": "Launch Java App"
