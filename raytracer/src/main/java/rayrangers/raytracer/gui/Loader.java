@@ -10,6 +10,8 @@ import io.qt.widgets.QGraphicsScene;
 import io.qt.widgets.QGraphicsView;
 import io.qt.widgets.QListView;
 import io.qt.widgets.QMainWindow;
+import io.qt.widgets.QMenu;
+import io.qt.widgets.QMenuBar;
 import io.qt.widgets.QPushButton;
 import io.qt.widgets.QSlider;
 import io.qt.widgets.QSpinBox;
@@ -19,6 +21,7 @@ import io.qt.widgets.QWidget;
 import io.qt.widgets.tools.QUiLoader;
 import io.qt.core.QTimer;
 import io.qt.core.Qt.AspectRatioMode;
+import io.qt.gui.QAction;
 import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
 import io.qt.widgets.QProgressBar;
@@ -48,8 +51,14 @@ public class Loader extends QMainWindow {
 
         // Starting point to load all the different UI elements -------------------------------------------------------------------------------------
         // Load menu bar
-        QWidget menu = ui.findChild(QWidget.class, "menubar");
-        setMenuWidget(menu);
+        QMenuBar menuBar = ui.findChild(QMenuBar.class, "menubar");
+        setMenuBar(menuBar);
+
+        QMenu fileMenu = menuBar.findChild(QMenu.class, "menuDatei");
+        
+        QAction newScene = ui.findChild(QAction.class, "actionNeue_Szene");
+        fileMenu.addAction(newScene);
+        
         
         // Load main window
         QStackedWidget centralWidget = ui.findChild(QStackedWidget.class, "stackedWidget");
@@ -60,11 +69,11 @@ public class Loader extends QMainWindow {
 
         // Load the UI elements of the main window --------------------------------------------------------------------------------------------------
         // Elements for "Objects-Configuration"
-        QListView objecListView = centralWidget.findChild(QListView.class, "objectListView");
+        QListView mainObjectListView = centralWidget.findChild(QListView.class, "objectListView");
         QPushButton addObjectButton = centralWidget.findChild(QPushButton.class, "object_plus_Button");
 
         // Elements for "Light-Configuration"
-        QListView ligthListView = centralWidget.findChild(QListView.class, "lightListView");
+        QListView mainLigthListView = centralWidget.findChild(QListView.class, "lightListView");
         QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
 
         // Elements for "Camera-Configuration"
@@ -93,11 +102,47 @@ public class Loader extends QMainWindow {
 
 
         // Load the UI elements of the object configuration window ----------------------------------------------------------------------------------
+        // Elements for object and light list and 'objGraphicsView'
+        QListView objObjectListView = centralWidget.findChild(QListView.class, "objectListView_conf");
+        QListView objLigthListView = centralWidget.findChild(QListView.class, "lightListView_conf");
+        QGraphicsView objGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_obj");
 
+        // Elements for "Object Position"
+        QSpinBox objectPosX = centralWidget.findChild(QSpinBox.class, "pos_x_spinBox_conf");
+        QSpinBox objectPosY = centralWidget.findChild(QSpinBox.class, "pos_y_spinBox_conf");
+        QSpinBox objectPosZ = centralWidget.findChild(QSpinBox.class, "pos_z_spinBox_conf");
+
+        // Elements for "Object Scaling"
+        QSpinBox objectScaleX = centralWidget.findChild(QSpinBox.class, "scal_x_spinBox");
+        QSpinBox objectScaleY = centralWidget.findChild(QSpinBox.class, "scal_y_spinBox");
+        QSpinBox objectScaleZ = centralWidget.findChild(QSpinBox.class, "scal_z_spinBox");
+
+        // Elements for "Object Rotation"
+        QSpinBox objectRotateX = centralWidget.findChild(QSpinBox.class, "rot_x_spinBox");
+        QSpinBox objectRotateY = centralWidget.findChild(QSpinBox.class, "rot_y_spinBox");
+        QSpinBox objectRotateZ = centralWidget.findChild(QSpinBox.class, "rot_z_spinBox");
+
+        // "Done Button" for object configuration
+        QPushButton objectDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf");
 
 
         // Load the UI elements of the light configuration window -----------------------------------------------------------------------------------
+        // Elements for object and light list and 'ligGraphicsView'
+        QListView ligObjectListView = centralWidget.findChild(QListView.class, "objectListView_conf_2");
+        QListView ligLigthListView = centralWidget.findChild(QListView.class, "lightListView_conf_2");
+        QGraphicsView ligGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_lig");
 
+        // Elements for "Light Position"
+        QSpinBox lightPosX = centralWidget.findChild(QSpinBox.class, "pos_x_spinBox_conf_light");
+        QSpinBox lightPosY = centralWidget.findChild(QSpinBox.class, "pos_y_spinBox_conf_light");
+        QSpinBox lightPosZ = centralWidget.findChild(QSpinBox.class, "pos_z_spinBox_conf_light");
+
+        // Elements for "Light Intensity" and "Light Color"
+        QSpinBox lightIntensity = centralWidget.findChild(QSpinBox.class, "spinBox_light_intensity");
+        QComboBox lightColor = centralWidget.findChild(QComboBox.class, "comboBox_light_color");
+
+        // "Done Button" for light configuration
+        QPushButton lightDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf_2");
 
 
         // Load the UI elements of the result window ------------------------------------------------------------------------------------------------
@@ -115,48 +160,49 @@ public class Loader extends QMainWindow {
 
         
         // Add functionality to the UI elements of the main window ----------------------------------------------------------------------------------
-        // Enable 'addObjectButton' (switches to the object configuration window and opens file picker)
+        // Switches to the object configuration window and opens file picker
         addObjectButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(1);
             setWindowTitle("Object Configuration");
             Result<String> fileName = QFileDialog.getOpenFileName(centralWidget, tr("Open Object-File"), "examples/");
         });
 
-        // Enable 'addLightButton' (switches to the light configuration window)
+        // Switches to the light configuration window
         addLightButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(2);
             setWindowTitle("Light Configuration");
         });
 
-        // Enable 'resultButton' (switches to the result window)
+        // Switches to the result window
         resultButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(3);
             setWindowTitle("Result Window");
         });
 
-        // Enable 'importButton' (import a scene in JSON-format)
+        // Imports a scene in JSON-format
         importButton.clicked.connect(() -> {
             System.out.println("Import Button clicked");
         });
 
 
-
-
-        // Jump back to main window after object configuration
-        QPushButton objectDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf");
+        // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
+        // Saves the current configuration and switches to the main window
         objectDoneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");
         });
 
-        // Jump back to main window after light configuration
-        QPushButton lightDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf_2");
+
+        // Add functionality to the UI elements of the light configuration window -------------------------------------------------------------------
+        // Saves the current configuration and switches to the main window
         lightDoneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");
         });
 
         // Jump back to main window from result window
+        QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
+        // Switch back to main window
         sceneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");

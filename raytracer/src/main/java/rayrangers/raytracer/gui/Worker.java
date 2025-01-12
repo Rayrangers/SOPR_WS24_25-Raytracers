@@ -23,7 +23,7 @@ public class Worker {
     /**
      * This method invokes the prototype for the GUI (only for testing).
      */
-    public static QImage invokePrototype() throws Exception{
+    public static QImage invokePrototype() throws Exception {
         Scene scene = new Scene(Color.BLACK);
 
         // Build the world
