@@ -1,7 +1,7 @@
 package rayrangers.raytracer.gui;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import io.qt.gui.QColor;
@@ -24,7 +24,7 @@ public class Worker {
     /** 
      * List of entities added to a scene.
      */
-    public static List<Entity> entities = new ArrayList<>();
+    public static List<Entity> entities = new LinkedList<>();
 
 
     /**
@@ -35,11 +35,16 @@ public class Worker {
      */
     public static void addEntity(String filePath) throws Exception {
         Entity entity = ObjParser.parseObjFile(filePath);
-        entities.add(entity);
+        entities.addLast(entity);
     }
 
+    /**
+     * This method performs the transformations of an entity.
+     */
     public static void transformEntity() {
-
+        Entity entity = entities.getLast();
+        // do specified transformation
+        entities.addLast(entity);
     }
 
 

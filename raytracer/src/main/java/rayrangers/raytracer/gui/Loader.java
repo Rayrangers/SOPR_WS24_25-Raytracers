@@ -1,6 +1,5 @@
 package rayrangers.raytracer.gui;
 
-import io.qt.core.QEvent;
 import io.qt.core.QFile;
 import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
@@ -213,11 +212,14 @@ public class Loader extends QMainWindow {
 
 
         // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
+        
+        // connect(objectPosX.valueChanged, Function.class);
+
+        // connect(objectPosX.valueChanged, Function.class);
+
+        // connect(new QMetaObject(), null, null)
+        
         // Saves the current configuration and switches to the main window
-
-        objectPosX.event(new QEvent(null));
-
-
         objectDoneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");
