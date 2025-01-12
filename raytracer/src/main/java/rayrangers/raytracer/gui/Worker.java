@@ -1,6 +1,8 @@
 package rayrangers.raytracer.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.qt.gui.QColor;
 import io.qt.gui.QImage;
@@ -18,6 +20,27 @@ import rayrangers.raytracer.world.LightSource;;
  * Provides the functionality for the GUI.
  */
 public class Worker {
+
+    /** 
+     * List of entities added to a scene.
+     */
+    public static List<Entity> entities = new ArrayList<>();
+
+
+    /**
+     * This method adds a given entity to the list of entities.
+     * 
+     * @param filePath to the requested entity
+     * @throws Exception
+     */
+    public static void addEntity(String filePath) throws Exception {
+        Entity entity = ObjParser.parseObjFile(filePath);
+        entities.add(entity);
+    }
+
+    public static void transformEntity() {
+
+    }
 
 
     /**
