@@ -1,6 +1,7 @@
 package rayrangers.raytracer.gui;
 
 import io.qt.core.QFile;
+import io.qt.widgets.QButtonGroup;
 import io.qt.widgets.QComboBox;
 import io.qt.widgets.QFileDialog;
 import io.qt.widgets.QFileDialog.Result;
@@ -21,6 +22,7 @@ import io.qt.core.Qt.AspectRatioMode;
 import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
 import io.qt.widgets.QProgressBar;
+import io.qt.widgets.QLineEdit;
 
 /**
  * Loads the design information for the GUI provided by the UI file.
@@ -99,7 +101,17 @@ public class Loader extends QMainWindow {
 
 
         // Load the UI elements of the result window ------------------------------------------------------------------------------------------------
-
+        QLineEdit numberRays = centralWidget.findChild(QLineEdit.class, "rays_lineEdit");
+        QLineEdit numberObjects = centralWidget.findChild(QLineEdit.class, "objectsLineEdit_info");
+        QLineEdit numberLightSource = centralWidget.findChild(QLineEdit.class, "lightSourceLineEdit_info");
+        QLineEdit renderTime = centralWidget.findChild(QLineEdit.class, "renderTimeLineEdit_info");
+        QLineEdit qualtiyInfo = centralWidget.findChild(QLineEdit.class, "qualityLineEdit_info");
+        QToolButton deleteButton = centralWidget.findChild(QToolButton.class, "deleteButton");
+        QToolButton exportButtonResult = centralWidget.findChild(QToolButton.class, "exportButton_result");
+        QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
+        // Load result graphics view (slot for image)
+        QGraphicsView resultGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_5");
+        QGraphicsScene scene = new QGraphicsScene(resultGraphicsView);
 
         
         // Add functionality to the UI elements of the main window ----------------------------------------------------------------------------------
@@ -145,17 +157,11 @@ public class Loader extends QMainWindow {
         });
 
         // Jump back to main window from result window
-        QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
         sceneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");
         });
 
-        
-
-        // Load result graphics view (slot for image)
-        QGraphicsView resultGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_5");
-        QGraphicsScene scene = new QGraphicsScene(resultGraphicsView);
 
 
         // Initialize timer
