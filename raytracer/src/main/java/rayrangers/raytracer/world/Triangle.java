@@ -46,10 +46,9 @@ public class Triangle extends Face {
     }
 
     /**
-     * Returns all vertices of the triangle in an array.
-     * 
-     * @return vertices
+     * @see Face
      */
+    @Override
     public Vertex3D[] getAllVert() {
         return vertices;
     }
@@ -118,5 +117,15 @@ public class Triangle extends Face {
         record.setAllVert(verticesAll);
         record.setNormalVector(normalVec);
         return true;
+    }
+
+    /**
+     * @see Face
+     */
+    @Override
+    public Vertex3D getCenter() {
+        return new Vertex3D((vertices[0].getCoord(1) + vertices[1].getCoord(1) + vertices[2].getCoord(1)) / 3,
+                            (vertices[0].getCoord(2) + vertices[1].getCoord(2) + vertices[2].getCoord(2)) / 3,
+                            (vertices[0].getCoord(3) + vertices[1].getCoord(3) + vertices[2].getCoord(3)) / 3);
     }
 }

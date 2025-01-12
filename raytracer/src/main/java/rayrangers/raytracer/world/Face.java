@@ -1,5 +1,7 @@
 package rayrangers.raytracer.world;
 
+import rayrangers.raytracer.math.Vertex3D;
+
 /**
  * Represents a face described by a Wavefront OBJ file.
  * OBJ file:
@@ -60,4 +62,18 @@ public abstract class Face implements Hittable {
     public boolean isInSameSmoothinggroup(Face otherFace) {
         return smoothingGroup.equals(otherFace.getSmoothingGroup());
     }
+
+    /**
+     * Returns all vertices of the triangle in an array.
+     * 
+     * @return vertices
+     */
+    public abstract Vertex3D[] getAllVert();
+
+    /**
+     * Calculates the center point of a Face.
+     * 
+     * @return Center point
+     */
+    public abstract Vertex3D getCenter();
 }

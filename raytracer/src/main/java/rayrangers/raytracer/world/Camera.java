@@ -12,8 +12,6 @@ import rayrangers.raytracer.view.ViewPane;
  */
 public class Camera {
 
-    // TODO: Interface Placeable/Adjustable?
-
     /**
      * Randomly generated UUID of the camera.
      */

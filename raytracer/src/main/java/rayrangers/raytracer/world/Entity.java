@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import rayrangers.raytracer.algorithm.HitRecord;
 import rayrangers.raytracer.algorithm.Ray;
-import rayrangers.raytracer.algorithm.bounding.BoundingBox;
+import rayrangers.raytracer.algorithm.bounding.BoundingVolumeHierarchy;
 import rayrangers.raytracer.math.TrafoMatrix;
 import rayrangers.raytracer.math.Vertex3D;
 
@@ -47,8 +47,10 @@ public class Entity implements Hittable, Transformable {
      */
     private Vertex3D worldPosition;
 
-    // TODO: Shift to BVH tree structure
-    private BoundingBox testBoundingBox;
+    /**
+     * 
+     */
+    private BoundingVolumeHierarchy bvhTree;
     
     /**
      * Class constructor with a given UUID.
@@ -138,61 +140,35 @@ public class Entity implements Hittable, Transformable {
     public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
         boolean hit = false;
         // TODO: Deal with entities without transformations
-        if (testBoundingBox != null && !testBoundingBox.hit(ray, t0, t1, record)) {
-            return false;
-        }
-        for (Face face : faces) {
-            // Check if the ray hits the face and if t lies within interval [t0,t1]
-            if (face.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
+            // Check if the ray hits anything in the BVH tree and if t lies within interval [t0,t1]
+            if (bvhTree != null && bvhTree.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {
                 hit = true;
-                t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
+                // t1 = record.getT(); // Update t1 to decrease interval [t0,t1]
             }
-        }
         return hit;
     }
+
+       // /**
+    //  * @see Hittable
+    //  */
+    // @Override
+    // public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
+    //     // TODO: Deal with entities without transformations
+    //     if (bvhTree != null) {
+    //         return bvhTree.hit(ray, t0, t1, record);
+    //     }
+    //     return false;
+    // }
 
     /**
      * @see Transformable
      */
     @Override
     public void transform(TrafoMatrix tm) {
-        // Set initial minimum and maximum values for the axis aligned bounding box
-        double x1min = Double.MAX_VALUE;
-        double x1max = Double.MIN_VALUE;
-        double x2min = Double.MAX_VALUE;
-        double x2max = Double.MIN_VALUE;
-        double x3min = Double.MAX_VALUE;
-        double x3max = Double.MIN_VALUE;
-
+        // Transform all vertices of the Entity
         for (Vertex3D vertex : vertices) {
-            // Transform the vertex first
             vertex.transform(tm);
-            
-            // Calculate new axis-aligned bounding box
-            double vertX1 = vertex.getCoord(1);
-            double vertX2 = vertex.getCoord(2);
-            double vertX3 = vertex.getCoord(3);
-
-            // TODO: Move to BoundingBox
-            if (vertX1 < x1min) {
-                x1min = vertX1;
-            }
-            if (vertX1 > x1max) {
-                x1max = vertX1;
-            }
-            if (vertX2 < x2min) {
-                x2min = vertX2;
-            }
-            if (vertX2 > x2max) {
-                x2max = vertX2;
-            }
-            if (vertX3 < x3min) {
-                x3min = vertX1;
-            }
-            if (vertX3 > x3max) {
-                x3max = vertX3;
-            }
         }
-        testBoundingBox = new BoundingBox(x1min, x1max, x2min, x2max, x3min, x3max);
+        bvhTree = new BoundingVolumeHierarchy(faces);
     }
 }

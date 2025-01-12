@@ -3,6 +3,8 @@ package rayrangers.raytracer.algorithm.bounding;
 import rayrangers.raytracer.algorithm.HitRecord;
 import rayrangers.raytracer.algorithm.Ray;
 import rayrangers.raytracer.world.Hittable;
+import rayrangers.raytracer.world.Face;
+import rayrangers.raytracer.math.Vertex3D;
 
 /**
  * 
@@ -51,6 +53,48 @@ public class BoundingBox implements Hittable {
         this.x3max = x3max;
     }
 
+    public BoundingBox(Face face) {
+        double x1min = Double.MAX_VALUE;
+        double x1max = Double.MIN_VALUE;
+        double x2min = Double.MAX_VALUE;
+        double x2max = Double.MIN_VALUE;
+        double x3min = Double.MAX_VALUE;
+        double x3max = Double.MIN_VALUE;
+
+        for (Vertex3D vertex : face.getAllVert()) {
+
+            // Calculate axis-aligned bounding box
+            double vertX1 = vertex.getCoord(1);
+            double vertX2 = vertex.getCoord(2);
+            double vertX3 = vertex.getCoord(3);
+            
+            if (vertX1 < x1min) {
+                x1min = vertX1;
+            }
+            if (vertX1 > x1max) {
+                x1max = vertX1;
+            }
+            if (vertX2 < x2min) {
+                x2min = vertX2;
+            }
+            if (vertX2 > x2max) {
+                x2max = vertX2;
+            }
+            if (vertX3 < x3min) {
+                x3min = vertX1;
+            }
+            if (vertX3 > x3max) {
+                x3max = vertX3;
+            }
+        }
+        this.x1min = x1min;
+        this.x1max = x1max;
+        this.x2min = x2min;
+        this.x2max = x2max;
+        this.x3min = x3min;
+        this.x3max = x3max;
+    }
+
     /**
      * 
      */
@@ -62,7 +106,8 @@ public class BoundingBox implements Hittable {
         double x3e = ray.getOrigin().getCoord(3);
 
         // Get x1, x2 and x3 coordinates of ray direction d and calculate reciprocal
-        // Divisions by 0 are handled by IEEE floating point conventions (yields +/- Infinity)
+        // Divisions by 0 are handled by IEEE floating point conventions (yields +/-
+        // Infinity)
         double reciprocalX1d = 1 / ray.getDirection().getCoord(1);
         double reciprocalX2d = 1 / ray.getDirection().getCoord(2);
         double reciprocalX3d = 1 / ray.getDirection().getCoord(3);
@@ -73,7 +118,7 @@ public class BoundingBox implements Hittable {
         double tx2max;
         double tx3min;
         double tx3max;
-        
+
         if (reciprocalX1d >= 0) {
             tx1min = (x1min - x1e) * reciprocalX1d;
             tx1max = (x1max - x1e) * reciprocalX1d;
@@ -105,7 +150,25 @@ public class BoundingBox implements Hittable {
             return false;
         }
         return true;
-
     }
 
+    /**
+     * 
+     * Combines two bounding boxes into one by taking the minimum/maximum values
+     * from both.
+     * 
+     * @param box1 First box to combine
+     * @param box2 Second box to combine
+     * @return Combined bounding box
+     */
+    public static BoundingBox combine(BoundingBox box1, BoundingBox box2) {
+        double newX1Min = Math.min(box1.x1min, box2.x1min);
+        double newX1Max = Math.max(box1.x1max, box2.x1max);
+        double newX2Min = Math.min(box1.x2min, box2.x2min);
+        double newX2Max = Math.max(box1.x2max, box2.x2max);
+        double newX3Min = Math.min(box1.x3min, box2.x3min);
+        double newX3Max = Math.max(box1.x3max, box2.x3max);
+
+        return new BoundingBox(newX1Min, newX1Max, newX2Min, newX2Max, newX3Min, newX3Max);
+    }
 }
