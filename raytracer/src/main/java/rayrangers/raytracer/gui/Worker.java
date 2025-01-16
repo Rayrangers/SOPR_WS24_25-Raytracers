@@ -10,11 +10,11 @@ import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.TrafoMatrix;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.parser.ObjParser;
-import rayrangers.raytracer.world.Camera;
-import rayrangers.raytracer.world.Scene;
 import rayrangers.raytracer.view.ViewPane;
+import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
-import rayrangers.raytracer.world.LightSource;;
+import rayrangers.raytracer.world.LightSource;
+import rayrangers.raytracer.world.Scene;;
 
 /**
  * Provides the functionality for the GUI.
@@ -46,6 +46,7 @@ public class Worker {
         // do specified transformation
         entities.addLast(entity);
     }
+
 
 
     /**

@@ -4,6 +4,12 @@ import io.qt.core.QFile;
 import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
 import io.qt.core.QStringListModel;
+import io.qt.core.QTimer;
+import io.qt.core.Qt.AspectRatioMode;
+import io.qt.gui.QAction;
+import io.qt.gui.QImage;
+import io.qt.gui.QPixmap;
+import io.qt.widgets.QApplication;
 import io.qt.widgets.QComboBox;
 import io.qt.widgets.QDoubleSpinBox;
 import io.qt.widgets.QFileDialog;
@@ -11,10 +17,12 @@ import io.qt.widgets.QFileDialog.Result;
 import io.qt.widgets.QGraphicsPixmapItem;
 import io.qt.widgets.QGraphicsScene;
 import io.qt.widgets.QGraphicsView;
+import io.qt.widgets.QLineEdit;
 import io.qt.widgets.QListView;
 import io.qt.widgets.QMainWindow;
 import io.qt.widgets.QMenu;
 import io.qt.widgets.QMenuBar;
+import io.qt.widgets.QProgressBar;
 import io.qt.widgets.QPushButton;
 import io.qt.widgets.QSlider;
 import io.qt.widgets.QSpinBox;
@@ -22,13 +30,6 @@ import io.qt.widgets.QStackedWidget;
 import io.qt.widgets.QToolButton;
 import io.qt.widgets.QWidget;
 import io.qt.widgets.tools.QUiLoader;
-import io.qt.core.QTimer;
-import io.qt.core.Qt.AspectRatioMode;
-import io.qt.gui.QAction;
-import io.qt.gui.QImage;
-import io.qt.gui.QPixmap;
-import io.qt.widgets.QProgressBar;
-import io.qt.widgets.QLineEdit;
 
 /**
  * Loads the design information for the GUI provided by the UI file.
@@ -62,15 +63,42 @@ public class Loader extends QMainWindow {
         QMenuBar menuBar = ui.findChild(QMenuBar.class, "menubar");
         setMenuBar(menuBar);
 
+        // Load menu "file"
         QMenu fileMenu = menuBar.findChild(QMenu.class, "menuDatei");
-        QAction newScene = fileMenu.findChild(QAction.class, "actionNeue_Szene");
+        
+        // Create actions for "file"
+        QAction newScene = new QAction(tr("New Scene"), this);
+        QAction importScene = new QAction(tr("Import Scene"), this);
+        QAction saveScene = new QAction(tr("Export Scene"), this);
+        QAction closeApp = new QAction(tr("Close Raytracer"), this);
+
+        // Add actions to the menu "file"
         fileMenu.addAction(newScene);
-        QAction importScene = fileMenu.findChild(QAction.class, "actionSzene_importieren");
         fileMenu.addAction(importScene);
-        QAction saveScene = fileMenu.findChild(QAction.class, "actionSzene_speichern");
         fileMenu.addAction(saveScene);
-        QAction closeApp = fileMenu.findChild(QAction.class, "actionSchliessen");
         fileMenu.addAction(closeApp);
+
+        // Load menu "edit"
+        QMenu editMenu = menuBar.findChild(QMenu.class, "menuBearbeiten");
+
+        // Create actions for "edit"
+        QAction undo = new QAction(tr("Undo"), this);
+        QAction redo = new QAction(tr("Redo"), this);
+
+        // Add actions to the menu "edit"
+        editMenu.addAction(undo);
+        editMenu.addAction(redo);
+
+        // Load menu "help"
+        QMenu helpMenu = menuBar.findChild(QMenu.class, "menuHilfe");
+
+        // Create actions for "help"
+        QAction about = new QAction(tr("About"), this);
+        QAction help = new QAction(tr("Tutorial"), this);
+
+        // Add actions to the menu "help"
+        helpMenu.addAction(about);
+        helpMenu.addAction(help);
 
         // Load main window
         QStackedWidget centralWidget = ui.findChild(QStackedWidget.class, "stackedWidget");
@@ -157,6 +185,8 @@ public class Loader extends QMainWindow {
         // "Done Button" for light configuration
         QPushButton lightDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf_2");
 
+        
+
 
         // Load the UI elements of the result window ------------------------------------------------------------------------------------------------
         // Elements for "Information about Rendering"
@@ -176,6 +206,31 @@ public class Loader extends QMainWindow {
 
         
         // Add functionality to the UI elements of the main window ----------------------------------------------------------------------------------
+        
+        // Add item to comboBoxes
+        renderingAntiAliasing.addItem("Yes");
+        renderingAntiAliasing.addItem("No");
+        renderingShading.addItem("Yes");
+        renderingShading.addItem("No");
+
+        // Connect comboBoxes to functions
+        renderingAntiAliasing.currentIndexChanged.connect((index) -> {
+            if ("Yes".equals(renderingAntiAliasing.currentText())) {
+                System.out.println("Antialiasing enabled");
+            } else {
+                System.out.println("Antialiasing disabled");
+            }
+        });
+        
+        renderingShading.currentIndexChanged.connect((index) -> {
+            if ("Yes".equals(renderingShading.currentText())) {
+                System.out.println("Shading enabled");
+            } else {
+                System.out.println("Shading disabled");
+            }
+        });
+        
+        
         // Switches to the object configuration window and opens file picker
         addObjectButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(1);
@@ -197,6 +252,7 @@ public class Loader extends QMainWindow {
         addLightButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(2);
             setWindowTitle("Light Configuration");
+            
         });
 
         // Switches to the result window
@@ -241,7 +297,54 @@ public class Loader extends QMainWindow {
             setWindowTitle("Main Window");
         });
 
+        deleteButton.clicked.connect(() -> {
+            scene.clear();
+            resultGraphicsView.setScene(scene);
+        });
 
+
+        // Add functionality to the UI elements on top of the main window ----------------------------------------------------------------------------
+        // "File" -> "New Scene"
+        newScene.triggered.connect(() -> {
+            System.out.println("New Scene");
+        });
+
+        // "File" -> "Import Scene"
+        importScene.triggered.connect(() -> {
+            System.out.println("Import Scene");
+        });
+
+        // "File" -> "Export Scene"
+        saveScene.triggered.connect(() -> {
+            System.out.println("Export Scene");
+        });
+
+        // "File" -> "Close App"
+        closeApp.triggered.connect(() -> {
+            // Perform multiple actions
+            System.out.println("Closing application...");
+            QApplication.quit();
+        });
+
+        // "Edit" -> "Undo"
+        undo.triggered.connect(() -> {
+            System.out.println("Undo");
+        });
+
+        // "Edit" -> "Redo"
+        redo.triggered.connect(() -> {
+            System.out.println("Redo");
+        });
+
+        // "Help" -> "About"
+        about.triggered.connect(() -> {
+            System.out.println("About");
+        });
+
+        // "Help" -> "Tutorial"
+        help.triggered.connect(() -> {
+            System.out.println("Tutorial");
+        });
 
 
         // Initialize timer
