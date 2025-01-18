@@ -81,7 +81,7 @@ public class BoundingBox implements Hittable {
                 x2max = vertX2;
             }
             if (vertX3 < x3min) {
-                x3min = vertX1;
+                x3min = vertX3;
             }
             if (vertX3 > x3max) {
                 x3max = vertX3;
