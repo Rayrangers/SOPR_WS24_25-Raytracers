@@ -6,8 +6,13 @@ import rayrangers.raytracer.algorithm.Ray;
 /**
  * Interface for all objects hittable by a ray.
  * 
- * Inspired by
- * https://raytracing.github.io/books/RayTracingInOneWeekend.html#toc6.3
+ * Inspired by:
+ * 
+ * @see <a href=
+ *      "https://raytracing.github.io/books/RayTracingInOneWeekend.html#toc6.3">
+ *      RayTracingInOneWeekend
+ *      </a>
+ * 
  */
 public interface Hittable {
 
@@ -22,5 +27,4 @@ public interface Hittable {
      */
     boolean hit(Ray ray, double t0, double t1, HitRecord record);
 
-    // TODO: Bounding Box probably here?
 }

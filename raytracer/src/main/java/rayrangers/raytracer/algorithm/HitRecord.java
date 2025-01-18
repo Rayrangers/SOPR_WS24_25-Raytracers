@@ -174,6 +174,9 @@ public class HitRecord {
 
     /**
      * Sets the fields of this record to the fields of another record.
+     * Has to be used as Java does not support pass by reference.
+     * 
+     * @see <a href="https://stackoverflow.com/a/30520738">Stackoverflow answer</a>
      * 
      * @param other HitRecord to copy fields from
      */

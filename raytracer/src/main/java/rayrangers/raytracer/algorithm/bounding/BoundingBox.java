@@ -7,42 +7,54 @@ import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.math.Vertex3D;
 
 /**
- * 
+ * Represents an axis-aligned bounding box in 3D space.
+ * Used to calculate the intersection of a ray with a bounding box instead of a
+ * single face to enhance runtime during rendering.
  */
 public class BoundingBox implements Hittable {
 
     /**
-     * 
+     * Minimum value of box along x1 axis.
      */
     private final double x1min;
 
     /**
-     * 
+     * Maximum value of box along x1 axis.
      */
     private final double x1max;
 
     /**
-     * 
+     * Minimum value of box along x2 axis.
      */
     private final double x2min;
 
     /**
-     * 
+     * Maximum value of box along x2 axis.
      */
     private final double x2max;
 
     /**
-     * 
+     * Minimum value of box along x3 axis.
      */
     private final double x3min;
 
     /**
-     * 
+     * Maximum value of box along x3 axis.
      */
     private final double x3max;
 
     /**
      * 
+     * Constructs a bounding box with the given minimum and maximum values along all
+     * axes.
+     * For internal use only to combine two bounding boxes.
+     * 
+     * @param x1min minimum value along x1 axis
+     * @param x1max maximum value along x1 axis
+     * @param x2min minimum value along x2 axis
+     * @param x2max maximum value along x2 axis
+     * @param x3min minimum value along x3 axis
+     * @param x3max maximum value along x3 axis
      */
     public BoundingBox(double x1min, double x1max, double x2min, double x2max, double x3min, double x3max) {
         this.x1min = x1min;
@@ -53,7 +65,14 @@ public class BoundingBox implements Hittable {
         this.x3max = x3max;
     }
 
+    /**
+     * Constructs a bounding box that encompasses the given face.
+     * 
+     * @param face Face to create the bounding box around
+     */
     public BoundingBox(Face face) {
+        // Initialise all variables with minumum and maximum double values,
+        // representing +/- Infinity
         double x1min = Double.MAX_VALUE;
         double x1max = Double.MIN_VALUE;
         double x2min = Double.MAX_VALUE;
@@ -61,13 +80,16 @@ public class BoundingBox implements Hittable {
         double x3min = Double.MAX_VALUE;
         double x3max = Double.MIN_VALUE;
 
+        // Compare all vertices of the face
         for (Vertex3D vertex : face.getAllVert()) {
 
             // Calculate axis-aligned bounding box
             double vertX1 = vertex.getCoord(1);
             double vertX2 = vertex.getCoord(2);
             double vertX3 = vertex.getCoord(3);
-            
+
+            // Compare tzhe vertices with the current minimum and maximum
+            // and update the values if necessary 
             if (vertX1 < x1min) {
                 x1min = vertX1;
             }
@@ -96,7 +118,7 @@ public class BoundingBox implements Hittable {
     }
 
     /**
-     * 
+     * @see Hittable
      */
     @Override
     public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
@@ -108,9 +130,9 @@ public class BoundingBox implements Hittable {
         // Get x1, x2 and x3 coordinates of ray direction d and calculate reciprocal
         // Divisions by 0 are handled by IEEE floating point conventions (yields +/-
         // Infinity)
-        double reciprocalX1d = 1 / ray.getDirection().getCoord(1);
-        double reciprocalX2d = 1 / ray.getDirection().getCoord(2);
-        double reciprocalX3d = 1 / ray.getDirection().getCoord(3);
+        double reciprocalX1d = 1 / ray.getDirection().getCoord(1); // reciprocal: (1/x1)
+        double reciprocalX2d = 1 / ray.getDirection().getCoord(2); // reciprocal: (1/x2)
+        double reciprocalX3d = 1 / ray.getDirection().getCoord(3); // reciprocal: (1/x3)
 
         double tx1min;
         double tx1max;
@@ -144,9 +166,9 @@ public class BoundingBox implements Hittable {
         }
 
         // Check all permutations
-        if (tx1min > tx2max || tx2min > tx1max 
-            || tx1min > tx3max || tx3min > tx1max 
-            || tx3min > tx2max || tx2min > tx3max) {
+        if (tx1min > tx2max || tx2min > tx1max
+                || tx1min > tx3max || tx3min > tx1max
+                || tx3min > tx2max || tx2min > tx3max) {
             return false;
         }
         return true;

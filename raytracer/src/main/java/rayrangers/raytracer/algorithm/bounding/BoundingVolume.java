@@ -8,7 +8,7 @@ import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.world.Hittable;
 
 /**
- * 
+ * Representation of a node in a BoundingVolumeHierarchy tree.
  */
 public class BoundingVolume implements Hittable {
 
@@ -29,15 +29,19 @@ public class BoundingVolume implements Hittable {
     private Hittable right;
 
     /**
-     * 
+     * Bounding box associated with the BoundingVolume.
      */
     private BoundingBox boundingBox;
 
     /**
-     * 
+     * List of faces contained inside the BoundingVolume.
      */
     private List<Face> faces;
 
+    /**
+     * Constructs a BoundingVolume with the given list of faces and the axis they
+     * are aligned to.
+     */
     public BoundingVolume(List<Face> faces, int axis) {
         this.faces = faces;
         // Create left and right BoundingVolumes
@@ -46,6 +50,12 @@ public class BoundingVolume implements Hittable {
 
     /**
      * 
+     * Creates left and right child nodes of the BoundingVolume recursively.
+     * If only one face is left, the child node is set to the face itself, allowed
+     * by the Hittable interface. Else, the faces are sorted along the chosen axis,
+     * split in the middle and two new BoundingVolumes are created.
+     * 
+     * @param axis Axis the faces are aligned to
      */
     public void create(int axis) {
         if (faces.size() == 1) { // BoundingVolume only contains one face
@@ -103,31 +113,5 @@ public class BoundingVolume implements Hittable {
         }
         return false;
     }
-
-    // public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
-    // // Check if the ray intersects the bounding box of the current BoundingVolume
-    // if (!boundingBox.hit(ray, t0, t1, record)) {
-    // return false;
-    // }
-
-    // // Initialize variables to keep track of whether we hit anything
-    // boolean hitLeft = false;
-    // boolean hitRight = false;
-
-    // // Check for intersection with the left child
-    // if (left != null) {
-    // hitLeft = left.hit(ray, t0, t1, record);
-    // double t1 = record.getT();
-    // }
-
-    // // Check for intersection with the right child
-    // if (right != null) {
-    // hitRight = right.hit(ray, t0, t1, record);
-    // double t2 = record.getT();
-    // }
-
-    // // Return true if we hit anything
-    // return hitLeft || hitRight;
-    // }
 
 }
