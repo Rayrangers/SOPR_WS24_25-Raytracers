@@ -49,6 +49,11 @@ public class Loader extends QMainWindow {
     private QStringList objectList = new QStringList();
 
     /**
+     * Model for list views.
+     */
+    private QStringListModel modelForObjectList = new QStringListModel();
+
+    /**
      * Builds the GUI based on the 'mainGUI.ui' file.
      */
     public Loader() {
@@ -58,8 +63,14 @@ public class Loader extends QMainWindow {
         uiFile.close();
 
 
-        // Starting point to load all the different UI elements -------------------------------------------------------------------------------------
-        // Load menu bar
+        // Starting point to load all the different UI elements (main window) -----------------------------------------------------------------------
+        QStackedWidget centralWidget = ui.findChild(QStackedWidget.class, "stackedWidget");
+        centralWidget.setCurrentIndex(0);
+        setCentralWidget(centralWidget);
+        setWindowTitle("Main Window");
+
+
+        // Load menu bar and its elements -----------------------------------------------------------------------------------------------------------
         QMenuBar menuBar = ui.findChild(QMenuBar.class, "menubar");
         setMenuBar(menuBar);
 
@@ -100,17 +111,10 @@ public class Loader extends QMainWindow {
         helpMenu.addAction(about);
         helpMenu.addAction(help);
 
-        // Load main window
-        QStackedWidget centralWidget = ui.findChild(QStackedWidget.class, "stackedWidget");
-        centralWidget.setCurrentIndex(0);
-        setCentralWidget(centralWidget);
-        setWindowTitle("Main Window");
-
 
         // Load the UI elements of the main window --------------------------------------------------------------------------------------------------
         // Elements for "Objects-Configuration"
         QListView mainObjectListView = centralWidget.findChild(QListView.class, "objectListView");
-        QStringListModel modelForObjectList = new QStringListModel();
         QPushButton addObjectButton = centralWidget.findChild(QPushButton.class, "object_plus_Button");
 
         // Elements for "Light-Configuration"
@@ -118,13 +122,13 @@ public class Loader extends QMainWindow {
         QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
 
         // Elements for "Camera-Configuration"
-        QDoubleSpinBox cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_spinBox");
-        QDoubleSpinBox cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_spinBox");
-        QDoubleSpinBox cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_spinBox");
-        QDoubleSpinBox cameraRoll = centralWidget.findChild(QDoubleSpinBox.class, "ang_roll_spinBox");
-        QDoubleSpinBox cameraPitch = centralWidget.findChild(QDoubleSpinBox.class, "ang_pitch_spinBox");
-        QDoubleSpinBox cameraYaw = centralWidget.findChild(QDoubleSpinBox.class, "ang_yaw_spinBox");
-        QDoubleSpinBox cameraDistance = centralWidget.findChild(QDoubleSpinBox.class, "distance_spinBox");
+        QDoubleSpinBox cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox");
+        QDoubleSpinBox cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox");
+        QDoubleSpinBox cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox");
+        QDoubleSpinBox cameraRoll = centralWidget.findChild(QDoubleSpinBox.class, "ang_roll_doubleSpinBox");
+        QDoubleSpinBox cameraPitch = centralWidget.findChild(QDoubleSpinBox.class, "ang_pitch_doubleSpinBox");
+        QDoubleSpinBox cameraYaw = centralWidget.findChild(QDoubleSpinBox.class, "ang_yaw_doubleSpinBox");
+        QDoubleSpinBox cameraDistance = centralWidget.findChild(QDoubleSpinBox.class, "distance_doubleSpinBox");
         QSlider cameraFov = centralWidget.findChild(QSlider.class, "fowHorizontalSlider");
 
         // Elements for "Rendering-Configuration"
@@ -149,19 +153,20 @@ public class Loader extends QMainWindow {
         QGraphicsView objGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_obj");
 
         // Elements for "Object Position"
-        QDoubleSpinBox objectPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_spinBox_conf");
-        QDoubleSpinBox objectPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_spinBox_conf");
-        QDoubleSpinBox objectPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_spinBox_conf");
+        //QDoubleSpinBox objectPosX = new QDoubleSpinBox();
+        QDoubleSpinBox objectPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox_conf");
+        QDoubleSpinBox objectPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox_conf");
+        QDoubleSpinBox objectPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox_conf");
 
         // Elements for "Object Scaling"
-        QDoubleSpinBox objectScaleX = centralWidget.findChild(QDoubleSpinBox.class, "scal_x_spinBox");
-        QDoubleSpinBox objectScaleY = centralWidget.findChild(QDoubleSpinBox.class, "scal_y_spinBox");
-        QDoubleSpinBox objectScaleZ = centralWidget.findChild(QDoubleSpinBox.class, "scal_z_spinBox");
+        QDoubleSpinBox objectScaleX = centralWidget.findChild(QDoubleSpinBox.class, "scal_x_doubleSpinBox");
+        QDoubleSpinBox objectScaleY = centralWidget.findChild(QDoubleSpinBox.class, "scal_y_doubleSpinBox");
+        QDoubleSpinBox objectScaleZ = centralWidget.findChild(QDoubleSpinBox.class, "scal_z_doubleSpinBox");
 
         // Elements for "Object Rotation"
-        QDoubleSpinBox objectRotateX = centralWidget.findChild(QDoubleSpinBox.class, "rot_x_spinBox");
-        QDoubleSpinBox objectRotateY = centralWidget.findChild(QDoubleSpinBox.class, "rot_y_spinBox");
-        QDoubleSpinBox objectRotateZ = centralWidget.findChild(QDoubleSpinBox.class, "rot_z_spinBox");
+        QDoubleSpinBox objectRotateX = centralWidget.findChild(QDoubleSpinBox.class, "rot_x_doubleSpinBox");
+        QDoubleSpinBox objectRotateY = centralWidget.findChild(QDoubleSpinBox.class, "rot_y_doubleSpinBox");
+        QDoubleSpinBox objectRotateZ = centralWidget.findChild(QDoubleSpinBox.class, "rot_z_doubleSpinBox");
 
         // "Done Button" for object configuration
         QPushButton objectDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf");
@@ -174,18 +179,16 @@ public class Loader extends QMainWindow {
         QGraphicsView ligGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_lig");
 
         // Elements for "Light Position"
-        QDoubleSpinBox lightPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_spinBox_conf_light");
-        QDoubleSpinBox lightPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_spinBox_conf_light");
-        QDoubleSpinBox lightPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_spinBox_conf_light");
+        QDoubleSpinBox lightPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox_conf_light");
+        QDoubleSpinBox lightPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox_conf_light");
+        QDoubleSpinBox lightPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox_conf_light");
 
         // Elements for "Light Intensity" and "Light Color"
-        QDoubleSpinBox lightIntensity = centralWidget.findChild(QDoubleSpinBox.class, "spinBox_light_intensity");
+        QDoubleSpinBox lightIntensity = centralWidget.findChild(QDoubleSpinBox.class, "doubleSpinBox");
         QComboBox lightColor = centralWidget.findChild(QComboBox.class, "comboBox_light_color");
 
         // "Done Button" for light configuration
         QPushButton lightDoneButton = centralWidget.findChild(QPushButton.class, "saveButton_conf_2");
-
-        
 
 
         // Load the UI elements of the result window ------------------------------------------------------------------------------------------------
@@ -206,30 +209,6 @@ public class Loader extends QMainWindow {
 
         
         // Add functionality to the UI elements of the main window ----------------------------------------------------------------------------------
-        
-        // Add item to comboBoxes
-        renderingAntiAliasing.addItem("Yes");
-        renderingAntiAliasing.addItem("No");
-        renderingShading.addItem("Yes");
-        renderingShading.addItem("No");
-
-        // Connect comboBoxes to functions
-        renderingAntiAliasing.currentIndexChanged.connect((index) -> {
-            if ("Yes".equals(renderingAntiAliasing.currentText())) {
-                System.out.println("Antialiasing enabled");
-            } else {
-                System.out.println("Antialiasing disabled");
-            }
-        });
-        
-        renderingShading.currentIndexChanged.connect((index) -> {
-            if ("Yes".equals(renderingShading.currentText())) {
-                System.out.println("Shading enabled");
-            } else {
-                System.out.println("Shading disabled");
-            }
-        });
-        
         
         // Switches to the object configuration window and opens file picker
         addObjectButton.clicked.connect(() -> {
@@ -255,6 +234,29 @@ public class Loader extends QMainWindow {
             
         });
 
+        // Add item to comboBoxes
+        renderingAntiAliasing.addItem("Yes");
+        renderingAntiAliasing.addItem("No");
+        renderingShading.addItem("Yes");
+        renderingShading.addItem("No");
+
+        // Connect comboBoxes to functions
+        renderingAntiAliasing.currentIndexChanged.connect((index) -> {
+            if ("Yes".equals(renderingAntiAliasing.currentText())) {
+                System.out.println("Antialiasing enabled");
+            } else {
+                System.out.println("Antialiasing disabled");
+            }
+        });
+        
+        renderingShading.currentIndexChanged.connect((index) -> {
+            if ("Yes".equals(renderingShading.currentText())) {
+                System.out.println("Shading enabled");
+            } else {
+                System.out.println("Shading disabled");
+            }
+        });
+
         // Switches to the result window
         resultButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(3);
@@ -269,11 +271,10 @@ public class Loader extends QMainWindow {
 
         // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
         
-        // connect(objectPosX.valueChanged, Function.class);
-
-        // connect(objectPosX.valueChanged, Function.class);
-
-        // connect(new QMetaObject(), null, null)
+        objectPosX.valueChanged.connect(() -> {
+            System.out.println("Test");
+        });
+        
         
         // Saves the current configuration and switches to the main window
         objectDoneButton.clicked.connect(() -> {
@@ -303,7 +304,7 @@ public class Loader extends QMainWindow {
         });
 
 
-        // Add functionality to the UI elements on top of the main window ----------------------------------------------------------------------------
+        // Add functionality to the UI elements of the menu bar -------------------------------------------------------------------------------------
         // "File" -> "New Scene"
         newScene.triggered.connect(() -> {
             System.out.println("New Scene");

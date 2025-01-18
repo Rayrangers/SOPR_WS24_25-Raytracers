@@ -56,17 +56,25 @@ public class Worker {
         Scene scene = new Scene(Color.BLACK);
 
         // Build the world
-        Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 75, 100, 2000, 2000);
-        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(0, 50, 200), Color.WHITE);
+        Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
+        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
+        LightSource lightSource2 = new LightSource(0.15, new Vertex3D(300, 50, 0), Color.WHITE);
 
-        // Add an entity
+        // Add an entity (tuna)
         Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
         TrafoMatrix tmTuna = new TrafoMatrix(0, 150, 0, -90, 0, 0, 1, 1, 1);
         tuna.transform(tmTuna);
 
+        // Add an entity (teapot)
+        Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
+        TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
+        teapot.transform(tmTea);
+
         scene.addCamera(camera);
         scene.addLightSource(lightSource1);
+        scene.addLightSource(lightSource2);
         scene.addEntity(tuna);
+        scene.addEntity(teapot);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         ViewPane viewPane = camera.getViewPane();
