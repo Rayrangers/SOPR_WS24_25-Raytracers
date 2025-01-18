@@ -109,10 +109,16 @@ public class Vector3D implements Transformable {
      * @return The scalar triple product (a · (b × c)) as a double.
      */
     public double scalarTriple(Vector3D vec1, Vector3D vec2) {
+<<<<<<< HEAD
+        // Compute b × c
+        Vector3D crossProduct = vec1.cross(vec2);
+        // Compute a · (b × c)
+=======
         // Scalar triple product is the dot product of this vector and the cross product
         // of the other two
         // Compute a · (b × c)
         Vector3D crossProduct = vec1.cross(vec2);
+>>>>>>> origin/main
         return this.scalar(crossProduct);
     }
 
