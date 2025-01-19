@@ -1,0 +1,148 @@
+{
+    "renderentity": [
+      {
+        "name": "teapot",
+        "uuid": "a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6",
+        "Translation": {
+          "position": {
+            "x": -50,
+            "y": -100,
+            "z": 10
+          },
+          "rotation": {
+            "x": -90,
+            "y": 10,
+            "z": -33
+          },
+          "scale": {
+            "x": 1,
+            "y": 1,
+            "z": 1
+          }
+        },
+        "components": {
+          "RenderComponent": {
+            "objUUID": "90eaceed-907a-4d04-8ada-181b56691e02",
+            "matUUID": "90eaceed-907a-4d04-8ada-181b56691e02"
+          }
+        }
+      },
+      {
+        "name": "tuna",
+        "uuid": "30ceccb5-e72d-4c39-ba98-0ee07ee738f6",
+        "Translation": {
+          "position": {
+            "x": 0,
+            "y": 150,
+            "z": 0
+          },
+          "rotation": {
+            "x": -90,
+            "y": 0,
+            "z": 0
+          },
+          "scale": {
+            "x": 1,
+            "y": 1,
+            "z": 1
+          }
+        },
+        "components": {
+          "RenderComponent": {
+            "objUUID": "e2f64683-7f39-4ec5-a607-cf5201a03175",
+            "matUUID": "e2f64683-7f39-4ec5-a607-cf5201a03175"
+          }
+        }
+      }
+    ],
+    "lightentity": [
+      {
+        "name": "light1",
+        "uuid": "03aae3ad-2f9a-40d6-b5f7-ef5bca625937",
+        "Translation": {
+          "position": {
+            "x": 300,
+            "y": 250,
+            "z": 200
+          }
+        },
+        "components": {
+          "LightComponent": {
+            "intensity": 0.15,
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          }
+        }
+      },
+      {
+        "name": "light2",
+        "uuid": "17e6742b-2f04-4d84-b351-a217795be44e",
+        "Translation": {
+          "position": {
+            "x": 300,
+            "y": 50,
+            "z": 0
+          }
+        },
+        "components": {
+          "LightComponent": {
+            "intensity": 0.15,
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          }
+        }
+      }
+    ],
+    "cameraentity": [
+      {
+        "name": "main_camera",
+        "uuid": "41455145-1902-49c3-9ca6-807f1c08d623",
+        "Translation": {
+          "position": {
+            "x": 400,
+            "y": 25,
+            "z": 0
+          },
+          "rotation": {
+            "x": 0,
+            "y": 90,
+            "z": 0
+          }
+        },
+        "components": {
+          "CameraComponent": {
+            "paneDistance": 75,
+            "aspectRatio": 1.77,
+            "paneWidth": 100,
+            "resX": 2000,
+            "resY": 2000
+          }
+        }
+      }
+    ],
+    "resources": [
+      {
+        "uuid": "90eaceed-907a-4d04-8ada-181b56691e02",
+        "type": "obj",
+        "path": "examples/teapot/Teapot.obj"
+      },
+      {
+        "uuid": "e2f64683-7f39-4ec5-a607-cf5201a03175",
+        "type": "obj",
+        "path": "examples/tuna/tuna-low.obj"
+      }
+    ],
+    "metadata": {
+      "backgroundColor": [0, 0, 0],
+      "globalIllumination": true,
+      "renderMode": "raytracing",
+      "maxDepth": 5,
+      "samplesPerPixel": 100
+    }
+  }
