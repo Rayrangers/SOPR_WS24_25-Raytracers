@@ -4,7 +4,7 @@ import rayrangers.raytracer.math.Vector3D;
 import rayrangers.raytracer.math.Vertex3D;
 
 /**
- * Represents a ray with an origin
+ * Represents a ray with a specified origin and direction.
  */
 public class Ray {
 
@@ -19,10 +19,10 @@ public class Ray {
     private Vector3D direction;
 
     /**
-     * Creates a new ray.
+     * Creates a new ray with a given origin and direction.
      * 
-     * @param origin    Origin of ray
-     * @param direction Direction of ray
+     * @param origin origin of the ray
+     * @param direction direction of the ray
      */
     public Ray(Vertex3D origin, Vector3D direction) {
         this.origin = origin;
@@ -39,20 +39,20 @@ public class Ray {
     }
 
     /**
-     * Returns the direction of the ray
+     * Returns the direction of the ray.
      * 
-     * @return Vector representing direction of ray
+     * @return direction of the ray
      */
     public Vector3D getDirection() {
         return direction;
     }
 
     /**
-     * Calculates the vertex for a given ray parameter t
+     * Calculates the vertex for a given ray parameter t,
      * using the equation p(t) = origin + t * direction
      * 
-     * @param t Ray parameter t
-     * @return vertex
+     * @param t ray parameter t
+     * @return vertex the ray points at
      */
     public Vertex3D pointAt(double t) {
         return new Vertex3D(origin.getlocationVector().add(direction.mult(t)));

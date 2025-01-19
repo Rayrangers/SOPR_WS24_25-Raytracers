@@ -16,27 +16,27 @@ public class HitRecord {
     private Hittable hitObject;
 
     /**
-     * Point where the hit occurred.
+     * Hit point where the hit occurred.
      */
     private Vertex3D hitPoint;
 
     /**
-     * Parameter for ray function.
+     * Parameter for the ray function.
      */
     private double t;
 
     /**
-     * Reference to material of the hittable object.
+     * Reference to the material of the hittable object.
      */
     private Material material;
 
     /**
-     * Normal vector of hitObject (optional)
+     * Normal vector of the hit object.
      */
     private Vector3D normalVector;
 
     /**
-     * Direction vector of ray for this hit record.
+     * Direction vector of the ray that hits the hit object.
      */
     private Vector3D viewRayDirection;
 
@@ -48,25 +48,25 @@ public class HitRecord {
     /**
      * Returns the point where the hit occurred.
      * 
-     * @return Vertex3D of hit point
+     * @return vertex of the hit point
      */
     public Vertex3D getHitPoint() {
         return hitPoint;
     }
 
     /**
-     * Sets the hit point of the record.
+     * Sets the hit point of the hit record.
      * 
-     * @param hitPoint Vertex3D representing the hit point
+     * @param hitPoint vertex of the hit point
      */
     public void setHitPoint(Vertex3D hitPoint) {
         this.hitPoint = hitPoint;
     }
 
-      /**
+    /**
      * Returns all vertices of the hittable object.
      * 
-     * @return Array of vertices
+     * @return array of vertices
      */
     public Vertex3D[] getAllVert() {
         return verticesAll;
@@ -75,7 +75,7 @@ public class HitRecord {
     /**
      * Sets all vertices of the hittable object.
      * 
-     * @param verticesAll Array of vertices
+     * @param verticesAll array of vertices
      */
     public void setAllVert(Vertex3D[] verticesAll) {
         this.verticesAll = verticesAll;
@@ -84,7 +84,7 @@ public class HitRecord {
     /**
      * Returns the ray parameter t.
      * 
-     * @return Ray parameter t of record
+     * @return ray parameter t of the hit record
      */
     public double getT() {
         return t;
@@ -93,92 +93,91 @@ public class HitRecord {
     /**
      * Sets the ray parameter t.
      * 
-     * @param t Ray parameter
+     * @param t ray parameter t
      */
     public void setT(double t) {
         this.t = t;
     }
 
     /**
-     * Returns the material of the record.
+     * Returns the material of the hit record.
      * 
-     * @return Material
+     * @return material
      */
     public Material getMaterial() {
         return material;
     }
 
     /**
-     * Sets the material of the record.
+     * Sets the material of the hit record.
      * 
-     * @param material Material
+     * @param material material
      */
     public void setMaterial(Material material) {
         this.material = material;
     }
 
     /**
-     * Returns the normal vector associated with the hittable object (optional)
+     * Returns the normal vector associated with the hittable object.
      * 
-     * @return Normal vector (optional)
+     * @return normal vector
      */
     public Vector3D getNormalVector() {
         return normalVector;
     }
 
     /**
-     * Sets the normal vector associated with the hittable object (optional)
+     * Sets the normal vector associated with the hittable object.
      * 
-     * @param normalVector Vertex3D representing the normal vector
+     * @param normalVector normal vector
      */
     public void setNormalVector(Vector3D normalVector) {
         this.normalVector = normalVector;
     }
 
     /**
-     * Returns the direction of the view ray associated with this record.
+     * Returns the direction of the view ray associated with the hit record.
      * 
-     * @return View ray direction
+     * @return view ray direction
      */
     public Vector3D getViewRayDirection() {
         return viewRayDirection;
     }
 
     /**
-     * Sets the direction of the view ray associated with this record.
+     * Sets the direction of the view ray associated with the hit record.
      * 
-     * @param viewRayDirection View ray direction
+     * @param viewRayDirection view ray direction
      */
     public void setViewRayDirection(Vector3D viewRayDirection) {
         this.viewRayDirection = viewRayDirection;
     }
 
     /**
-     * Returns the hittable object stored in record.
+     * Returns the hittable object stored in the hit record.
      * 
-     * @return Hittable object
+     * @return hittable object
      */
     public Hittable getHitObject() {
         return hitObject;
     }
 
     /**
-     * /**
-     * Sets the hittable object stored in record.
+     * Sets the hittable object stored in the hit record.
      * 
-     * @param hitObject Hittable object
+     * @param hitObject hittable object
      */
     public void setHitObject(Hittable hitObject) {
         this.hitObject = hitObject;
     }
 
     /**
-     * Sets the fields of this record to the fields of another record.
-     * Has to be used as Java does not support pass by reference.
+     * Sets the fields of the hit record to the fields of another hit record.
+     * Has to be used as Java does not support pass-by-reference.
      * 
      * @see <a href="https://stackoverflow.com/a/30520738">Stackoverflow answer</a>
      * 
-     * @param other HitRecord to copy fields from
+     * @param other hit record to copy fields from
      */
     public void set(HitRecord other) {
         this.t = other.t;

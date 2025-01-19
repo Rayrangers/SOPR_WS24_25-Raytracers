@@ -8,53 +8,51 @@ import rayrangers.raytracer.math.Vertex3D;
 
 /**
  * Represents an axis-aligned bounding box in 3D space.
- * Used to calculate the intersection of a ray with a bounding box instead of a
- * single face to enhance runtime during rendering.
+ * Used to calculate the intersection of a ray with a bounding box 
+ * instead of a single face to enhance runtime during rendering.
  */
 public class BoundingBox implements Hittable {
 
     /**
-     * Minimum value of box along x1 axis.
+     * Minimum value of bounding box along x1-axis.
      */
     private final double x1min;
 
     /**
-     * Maximum value of box along x1 axis.
+     * Maximum value of bounding box along x1-axis.
      */
     private final double x1max;
 
     /**
-     * Minimum value of box along x2 axis.
+     * Minimum value of bounding box along x2-axis.
      */
     private final double x2min;
 
     /**
-     * Maximum value of box along x2 axis.
+     * Maximum value of bounding box along x2-axis.
      */
     private final double x2max;
 
     /**
-     * Minimum value of box along x3 axis.
+     * Minimum value of bounding box along x3-axis.
      */
     private final double x3min;
 
     /**
-     * Maximum value of box along x3 axis.
+     * Maximum value of bounding box along x3-axis.
      */
     private final double x3max;
 
     /**
+     * Constructs a bounding box with the given minimum and maximum values along all axes. 
+     * Only for internal use to combine two bounding boxes.
      * 
-     * Constructs a bounding box with the given minimum and maximum values along all
-     * axes.
-     * For internal use only to combine two bounding boxes.
-     * 
-     * @param x1min minimum value along x1 axis
-     * @param x1max maximum value along x1 axis
-     * @param x2min minimum value along x2 axis
-     * @param x2max maximum value along x2 axis
-     * @param x3min minimum value along x3 axis
-     * @param x3max maximum value along x3 axis
+     * @param x1min minimum value along x1-axis
+     * @param x1max maximum value along x1-axis
+     * @param x2min minimum value along x2-axis
+     * @param x2max maximum value along x2-axis
+     * @param x3min minimum value along x3-axis
+     * @param x3max maximum value along x3-axis
      */
     public BoundingBox(double x1min, double x1max, double x2min, double x2max, double x3min, double x3max) {
         this.x1min = x1min;
@@ -68,11 +66,11 @@ public class BoundingBox implements Hittable {
     /**
      * Constructs a bounding box that encompasses the given face.
      * 
-     * @param face Face to create the bounding box around
+     * @param face face to create the bounding box around
      */
     public BoundingBox(Face face) {
-        // Initialise all variables with minumum and maximum double values,
-        // representing +/- Infinity
+        // Initialise all variables with minimum and maximum double values,
+        // representing +/- infinity
         double x1min = Double.MAX_VALUE;
         double x1max = Double.MIN_VALUE;
         double x2min = Double.MAX_VALUE;
@@ -88,7 +86,7 @@ public class BoundingBox implements Hittable {
             double vertX2 = vertex.getCoord(2);
             double vertX3 = vertex.getCoord(3);
 
-            // Compare tzhe vertices with the current minimum and maximum
+            // Compare the vertices with the current minimum and maximum values
             // and update the values if necessary 
             if (vertX1 < x1min) {
                 x1min = vertX1;
@@ -128,11 +126,10 @@ public class BoundingBox implements Hittable {
         double x3e = ray.getOrigin().getCoord(3);
 
         // Get x1, x2 and x3 coordinates of ray direction d and calculate reciprocal
-        // Divisions by 0 are handled by IEEE floating point conventions (yields +/-
-        // Infinity)
-        double reciprocalX1d = 1 / ray.getDirection().getCoord(1); // reciprocal: (1/x1)
-        double reciprocalX2d = 1 / ray.getDirection().getCoord(2); // reciprocal: (1/x2)
-        double reciprocalX3d = 1 / ray.getDirection().getCoord(3); // reciprocal: (1/x3)
+        // Divisions by 0 are handled by IEEE floating point conventions (yields +/- infinity)
+        double reciprocalX1d = 1 / ray.getDirection().getCoord(1); // Reciprocal: (1/x1)
+        double reciprocalX2d = 1 / ray.getDirection().getCoord(2); // Reciprocal: (1/x2)
+        double reciprocalX3d = 1 / ray.getDirection().getCoord(3); // Reciprocal: (1/x3)
 
         double tx1min;
         double tx1max;
@@ -175,13 +172,12 @@ public class BoundingBox implements Hittable {
     }
 
     /**
+     * Combines two bounding boxes into one 
+     * by taking the minimum and maximum values from both.
      * 
-     * Combines two bounding boxes into one by taking the minimum/maximum values
-     * from both.
-     * 
-     * @param box1 First box to combine
-     * @param box2 Second box to combine
-     * @return Combined bounding box
+     * @param box1 first box to combine
+     * @param box2 second box to combine
+     * @return combined bounding box
      */
     public static BoundingBox combine(BoundingBox box1, BoundingBox box2) {
         double newX1Min = Math.min(box1.x1min, box2.x1min);
