@@ -448,6 +448,9 @@ public class Loader extends QMainWindow {
                         int lightSource = Worker.getLightSourcesCount();
                         numberLightSource.setText(String.valueOf(lightSource));
 
+                        int rays = Worker.getRaysCount();
+                        numberRays.setText(String.valueOf(rays));
+
                         QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
                         scene.clear();
                         scene.addItem(item);

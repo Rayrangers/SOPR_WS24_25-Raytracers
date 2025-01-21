@@ -14,7 +14,7 @@ import rayrangers.raytracer.view.ViewPane;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
 import rayrangers.raytracer.world.LightSource;
-import rayrangers.raytracer.world.Scene;;
+import rayrangers.raytracer.world.Scene;
 
 /**
  * Provides the functionality for the GUI.
@@ -24,6 +24,7 @@ public class Worker {
     private static double renderTime;
     private static int objectCount;
     private static int lightSourceCount;
+    private static int raysCount;
 
     /** 
      * List of entities added to a scene.
@@ -66,7 +67,7 @@ public class Worker {
         Scene scene = new Scene(Color.BLACK);
 
         // Build the world
-        // Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
+        Camera legacyCamera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
         LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
         LightSource lightSource2 = new LightSource(0.15, new Vertex3D(300, 50, 0), Color.WHITE);
 
@@ -80,7 +81,7 @@ public class Worker {
         TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
         teapot.transform(tmTea);
 
-        scene.addCamera(camera);
+        scene.addCamera(legacyCamera);
 
         // Add light sources to the scene
         scene.addLightSource(lightSource1);
@@ -91,7 +92,7 @@ public class Worker {
         lightSources.add(lightSource2);
 
         // Add entities to the scene
-        scene.addEntity(tuna);
+        //scene.addEntity(tuna);
         scene.addEntity(teapot);
 
         // Add entities to the list
@@ -109,8 +110,8 @@ public class Worker {
             System.out.println("Teapot not added to the list of entities.");
         }
 
-        Renderer renderer = new Renderer(scene, camera.getUuid());
-        ViewPane viewPane = camera.getViewPane();
+        Renderer renderer = new Renderer(scene, legacyCamera.getUuid());
+        ViewPane viewPane = legacyCamera.getViewPane();
         renderer.render();
 
         // Create a QImage
@@ -119,6 +120,7 @@ public class Worker {
         QImage result = new QImage(width, height, QImage.Format.Format_RGB32);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
+                
                 int rgbColor = viewPane.getPixelAt(x, y).getColor().getRGB();
                 QColor color = new QColor(rgbColor);
                 result.setPixel(x, y, color.rgb());
@@ -133,6 +135,9 @@ public class Worker {
 
         lightSourceCount = lightSources.size();
         System.out.println("Number of light sources: " + lightSourceCount);
+
+        raysCount = Renderer.getRayCount();
+        System.out.println("Total number of rays: " + raysCount);
         
         return result;
     }
@@ -147,6 +152,10 @@ public class Worker {
 
     public static int getLightSourcesCount() {
         return lightSourceCount;
+    }
+
+    public static int getRaysCount() {
+        return raysCount;
     }
 
 }
