@@ -53,6 +53,7 @@ public class Worker {
      * This method invokes the prototype for the GUI (only for testing).
      */
     public static QImage invokePrototype() throws Exception {
+        long start = System.currentTimeMillis();
         Scene scene = new Scene(Color.BLACK);
 
         // Build the world
@@ -91,6 +92,9 @@ public class Worker {
                 result.setPixel(x, y, color.rgb());
             }
         }
+        long end = System.currentTimeMillis();
+        System.out.printf("Total runtime for rendering: %f s%n", (end - start) / 1000.0);
+        
         return result;
     }
 
