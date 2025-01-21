@@ -1,0 +1,21 @@
+name: Test Javadoc for deployment
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-javadoc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test JavaDoc documentation
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          javadoc-branch: javadoc
+          java-version: 21
+          # target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc
+          project: maven
+          custom-command: mvn -f raytracer/pom.xml javadoc:aggregate
+          without-deploy: true

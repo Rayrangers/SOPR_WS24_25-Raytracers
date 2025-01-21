@@ -22,7 +22,7 @@ public interface Hittable {
      * @param ray    Ray to check for a hit
      * @param t0     Minimum ray parameter
      * @param t1     Maximum ray parameter
-     * @param record
+     * @param record Hit record
      * @return Returns true if a hit occurred in the interval.
      */
     boolean hit(Ray ray, double t0, double t1, HitRecord record);

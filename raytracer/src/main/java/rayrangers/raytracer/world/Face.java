@@ -5,9 +5,9 @@ import rayrangers.raytracer.math.Vertex3D;
 /**
  * Represents a face described by a Wavefront OBJ file.
  * OBJ file:
- * f <integer v> ...
- * f <integer v>/<integer vt> ...
- * f <integer v>/<integer vt>/<integer vn> ...
+ * f v ...
+ * f v/vt ...
+ * f v/vt/vn ...
  */
 public abstract class Face implements Hittable {
 
@@ -19,7 +19,7 @@ public abstract class Face implements Hittable {
     /**
      * Smoothing group the face belongs to.
      * OBJ file:
-     * s <integer smoothing-group>
+     * s smoothing-group
      */
     protected String smoothingGroup;
 
@@ -27,7 +27,7 @@ public abstract class Face implements Hittable {
      * Class constructor specifying the material and smoothing group of the face.
      * 
      * @param material  material
-     * @param smoothing smoothing group, parser will pass Integer.MIN_VALUE if not
+     * @param smoothingGroup smoothing group, parser will pass Integer.MIN_VALUE if not
      *                  specified
      */
     public Face(Material material, String smoothingGroup) {

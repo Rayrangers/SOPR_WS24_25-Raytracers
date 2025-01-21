@@ -4,10 +4,15 @@ import java.awt.Color;
 import java.util.UUID;
 
 import rayrangers.raytracer.math.Vector3D;
+import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.view.Pixel;
 import rayrangers.raytracer.view.ViewPane;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Scene;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Represents a renderer using the raytracing algorithm.
@@ -40,7 +45,7 @@ public class Renderer {
      * Class constructor specifiying the scene and the UUID of the camera.
      * 
      * @param scene scene to be rendered 
-     * @param cameraUUId UUId of the camera the scene is rendered from
+     * @param cameraUUID UUId of the camera the scene is rendered from
      */
     public Renderer(Scene scene, UUID cameraUUID) {
         this.scene = scene;
@@ -53,13 +58,44 @@ public class Renderer {
      * Renders the scene.
      */
     public void render() {
-        for (int j = 0; j < viewpane.getResY(); j++) {
-            for (int i = 0; i < viewpane.getResY(); i++) {
-                Pixel p = viewpane.getPixelAt(i, j);
-                Ray viewRay = new Ray(camera.getWorldPosition(), computeRayDirection(p));
-                rayCount++;
-                p.setColor(traceRay(viewRay));
+        // Get number of available processors and create a thread pool of that size
+        int numCores = Runtime.getRuntime().availableProcessors();
+        ExecutorService executor = Executors.newFixedThreadPool(numCores);
+
+        // Get resolution of viewpane 
+        int resX = viewpane.getResX();
+        int resY = viewpane.getResY();
+
+        // Get camera position
+        Vertex3D cameraPos = camera.getWorldPosition();
+        Vector3D u = camera.getU();
+        Vector3D v = camera.getV();
+        Vector3D w = camera.getW();
+        double d = camera.getPaneDistance();
+
+        // Iterate over all pixels in viewpane
+        for (int j = 0; j < resY; j++) {
+            for (int i = 0; i < resX; i++) {
+                // Indices must be final variables for lambda
+                final int x = i;
+                final int y = j;
+                
+                // Submit Runnable for each ray to thread pool
+                executor.execute(() -> {
+                    Pixel p = viewpane.getPixelAt(x, y);
+                    Ray viewRay = new Ray(cameraPos, computeRayDirection(p, u, v, w, d));
+                    // Measure Ray Count
+                    rayCount++;
+                    p.setColor(traceRay(viewRay));
+                });
             }
+        }
+        executor.shutdown(); // Request an orderly shutdown such that no new tasks will be accepted
+        try {
+            // Blocks until all tasks have completed execution
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -84,11 +120,7 @@ public class Renderer {
      * @param pixel pixel the ray is going through
      * @return ray direction as a vector
      */
-    private Vector3D computeRayDirection(Pixel pixel) {
-        Vector3D u = camera.getU();
-        Vector3D v = camera.getV();
-        Vector3D w = camera.getW();
-        double d = camera.getPaneDistance();
+    private Vector3D computeRayDirection(Pixel pixel, Vector3D u, Vector3D v, Vector3D w, double d) {
         return w.mult(-d).add(u.mult(pixel.getU())).add(v.mult(pixel.getV())); // Ray direction formula: −d * w + pixel.u * u + pixel.v * v
     }
 

@@ -48,7 +48,7 @@ public class HitRecord {
     /**
      * Returns the point where the hit occurred.
      * 
-     * @return
+     * @return Vertex3D of hit point
      */
     public Vertex3D getHitPoint() {
         return hitPoint;
