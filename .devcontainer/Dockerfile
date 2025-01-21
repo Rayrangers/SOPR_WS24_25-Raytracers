@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 fedora:latest
+FROM --platform=linux fedora:latest
 
 ARG USERNAME=morphin
 ARG USER_ID=1000
