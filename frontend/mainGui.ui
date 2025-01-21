@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>837</width>
-    <height>711</height>
+    <height>847</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,7 +24,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_5">
@@ -160,7 +160,7 @@
               <item>
                <widget class="QListView" name="objectListView">
                 <property name="textElideMode">
-                 <enum>Qt::TextElideMode::ElideNone</enum>
+                 <enum>Qt::ElideLeft</enum>
                 </property>
                </widget>
               </item>
@@ -188,6 +188,7 @@
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>50</weight>
                   <italic>false</italic>
                   <bold>false</bold>
                   <strikeout>false</strikeout>
@@ -254,7 +255,11 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox">
+                    <property name="maximum">
+                     <double>800.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -365,11 +370,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSlider" name="fowHorizontalSlider">
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Horizontal</enum>
-                  </property>
-                 </widget>
+                 <widget class="QSlider" name="fowHorizontalSlider"/>
                 </item>
                </layout>
               </item>
@@ -524,7 +525,7 @@
               <item>
                <widget class="QListView" name="objectListView">
                 <property name="contextMenuPolicy">
-                 <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+                 <enum>Qt::NoContextMenu</enum>
                 </property>
                </widget>
               </item>
@@ -694,7 +695,7 @@
                 <item>
                  <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox_conf">
                   <property name="contextMenuPolicy">
-                   <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+                   <enum>Qt::NoContextMenu</enum>
                   </property>
                  </widget>
                 </item>
@@ -1311,7 +1312,7 @@
      <x>0</x>
      <y>0</y>
      <width>837</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
