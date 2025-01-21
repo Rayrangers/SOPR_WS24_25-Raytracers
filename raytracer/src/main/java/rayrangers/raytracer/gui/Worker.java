@@ -21,10 +21,19 @@ import rayrangers.raytracer.world.Scene;;
  */
 public class Worker {
 
+    private static double renderTime;
+    private static int objectCount;
+    private static int lightSourceCount;
+
     /** 
      * List of entities added to a scene.
      */
     public static List<Entity> entities = new LinkedList<>();
+
+    /**
+     * List of light sources added to a scene.
+     */
+    public static List<LightSource> lightSources = new LinkedList<>();
 
 
     /**
@@ -72,10 +81,22 @@ public class Worker {
         teapot.transform(tmTea);
 
         scene.addCamera(camera);
+
+        // Add light sources to the scene
         scene.addLightSource(lightSource1);
         scene.addLightSource(lightSource2);
-        scene.addEntity(tuna);
+
+        // Add light sources to the list
+        lightSources.add(lightSource1);
+        lightSources.add(lightSource2);
+
+        // Add entities to the scene
+        //scene.addEntity(tuna);
         scene.addEntity(teapot);
+
+        // Add entities to the list
+        //entities.add(tuna);
+        entities.add(teapot);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         ViewPane viewPane = camera.getViewPane();
@@ -93,9 +114,28 @@ public class Worker {
             }
         }
         long end = System.currentTimeMillis();
-        System.out.printf("Total runtime for rendering: %f s%n", (end - start) / 1000.0);
+        renderTime = (end - start) / 1000.0;
+        System.out.printf("Total runtime for rendering: %f s%n", renderTime);
+
+        objectCount = entities.size();
+        System.out.println("Number of objects: " + objectCount);
+
+        lightSourceCount = lightSources.size();
+        System.out.println("Number of light sources: " + lightSourceCount);
         
         return result;
+    }
+
+    public static double getRenderTime() {
+        return renderTime;
+    }
+
+    public static int getObjectsCount() {
+        return objectCount;
+    }
+
+    public static int getLightSourcesCount() {
+        return lightSourceCount;
     }
 
 }
