@@ -1178,7 +1178,7 @@
             <item>
              <widget class="QLabel" name="infoLabel">
               <property name="text">
-               <string>Informationen about Rendering</string>
+               <string>Information about Rendering</string>
               </property>
              </widget>
             </item>
