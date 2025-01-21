@@ -36,6 +36,8 @@ public class Scene implements Hittable {
 
     /**
      * Constructs a scene with the specified background color.
+     * 
+     @param backgroundColor background color
      */
     public Scene(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
