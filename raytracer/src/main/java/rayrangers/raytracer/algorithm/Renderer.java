@@ -42,7 +42,7 @@ public class Renderer {
     private static int rayCount = 0;
 
     /**
-     * Constructs a renderer for the given the scene and camera.
+     * Constructs a renderer for the given scene and camera.
      * 
      * @param scene scene to be rendered 
      * @param cameraUUID UUID of the camera the scene is rendered from
@@ -66,7 +66,7 @@ public class Renderer {
         int resX = viewpane.getResX();
         int resY = viewpane.getResY();
 
-        // Get the camera position
+        // Get camera position, base vectors and viewpane distance
         Vertex3D cameraPos = camera.getWorldPosition();
         Vector3D u = camera.getU();
         Vector3D v = camera.getV();

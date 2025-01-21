@@ -21,7 +21,7 @@ import rayrangers.raytracer.world.Triangle;
  * Parser for a Wavefront OBJ file.
  * 
  * Inspired by
- * https://github.com/UtkuOktay/Ray-Tracer/blob/main/src/main/java/com/utils/OBJParser.java
+ * @see <a href="https://github.com/UtkuOktay/Ray-Tracer/blob/main/src/main/java/com/utils/OBJParser.java">UtkuOktay</a>
  */
 public class ObjParser {
 
@@ -36,12 +36,12 @@ public class ObjParser {
 
     // TODO: Maybe default material?
     /**
-     * Parses a Wavefront OBJ file at the given location.$
+     * Parses a Wavefront OBJ file at the given location.
      * 
-     * @param filePath path to the OBJ file
-     * @return Entity
-     * @throws FileNotFoundException if OBJ file is not present
-     * @throws IOException           if there is any error while reading the file
+     * @param filePath relative path to the OBJ file
+     * @return parsed entity
+     * @throws FileNotFoundException if the OBJ file cannot be found
+     * @throws IOException if there is any error while reading the file
      */
     public static Entity parseObjFile(String filePath) throws FileNotFoundException, IOException {
 
@@ -88,7 +88,7 @@ public class ObjParser {
                     case "f": // Face
                         faces.add(parseFace(data));
                         break;
-                    default: // Ignore unused params, e.g.: groups ('g')
+                    default: // Ignore unused params, e.g. groups ('g')
                         break;
                 }
             }
@@ -118,7 +118,7 @@ public class ObjParser {
             throw new UnsupportedOperationException("Polygons are not supported yet.");
         } else {
             if (data[1].length() == data[1].replace("/", "").length()) { // Check first data element
-                                                                         // for format f v1 v2 v3
+                                                                                            // for format f v1 v2 v3
                 // "Shortcut": Only vertices in data element
                 return new Triangle(
                         currentMaterial, currentSmoothingGroup,
@@ -134,7 +134,7 @@ public class ObjParser {
                 parsedIndices.add(currCoord.split("/"));
                 for (String[] idxEntry : parsedIndices) {
                     int vertIdx = Integer.parseInt(idxEntry[0]);
-                    if (idxEntry.length == 3) { // Add normalVector for formats v/vt/vn OR v//vn
+                    if (idxEntry.length == 3) { // Add normal vector for formats v/vt/vn OR v//vn
                         vertices.get(vertIdx - 1)
                                 .setNormalVector(normalVectors.get(Integer.parseInt(idxEntry[2]) - 1));
                     }

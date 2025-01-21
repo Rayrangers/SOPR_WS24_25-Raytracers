@@ -175,7 +175,7 @@ public class HitRecord {
      * Sets the fields of the hit record to the fields of another hit record.
      * Has to be used as Java does not support pass-by-reference.
      * 
-     * @see <a href="https://stackoverflow.com/a/30520738">Stackoverflow answer</a>
+     * @see <a href="https://stackoverflow.com/a/30520738">Stackoverflow</a>
      * 
      * @param other hit record to copy fields from
      */
