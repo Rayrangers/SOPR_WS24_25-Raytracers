@@ -4,7 +4,6 @@ import io.qt.core.QFile;
 import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
 import io.qt.core.QStringListModel;
-import io.qt.core.QTimer;
 import io.qt.core.Qt.AspectRatioMode;
 import io.qt.gui.QAction;
 import io.qt.gui.QImage;
@@ -41,8 +40,6 @@ public class Loader extends QMainWindow {
     private QWidget ui;
     private QImage image;
     private QProgressBar progressBar;
-    private QTimer timer;
-    private int progressValue;
 
     /** 
      * List with file names of the objects. 
@@ -145,6 +142,11 @@ public class Loader extends QMainWindow {
         QToolButton importButton = centralWidget.findChild(QToolButton.class, "importToolButton");
         QToolButton exportButton = centralWidget.findChild(QToolButton.class, "exportToolButton");
         progressBar = centralWidget.findChild(QProgressBar.class, "ProgressBar_main");
+
+        // Initialize progress bar
+        progressBar.setTextVisible(true);
+        progressBar.setFormat("Ready");
+        progressBar.setValue(0);
 
 
         // Load the UI elements of the object configuration window ----------------------------------------------------------------------------------
@@ -352,11 +354,6 @@ public class Loader extends QMainWindow {
         });
 
 
-        // Initialize timer
-        timer = new QTimer(this);
-        // TODO: Fix this
-        timer.timeout.connect(this, "updateProgressBar()");
-
         // Enable 'startButton'
         if (startButton != null) {
             startButton.clicked.connect(() -> {
@@ -373,7 +370,13 @@ public class Loader extends QMainWindow {
                         resultGraphicsView.setScene(scene);
                         resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
                         startButton.setEnabled(true);
-                        timer.stop();
+                        stopProgressBar();
+                        progressBar.setTextVisible(true);
+                        // Set text to "Rendering finished"
+                        progressBar.setFormat("Rendering finished");
+                        // Wait 5 seconds before setting text to "Ready" again
+                        Thread.sleep(5000);
+                        progressBar.setFormat("Ready");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -384,19 +387,22 @@ public class Loader extends QMainWindow {
         }
     }
 
+    /**
+     * Starts the progress bar.
+     */
 
     private void startProgressBar() {
-        progressValue = 0;
-        progressBar.setValue(progressValue);
-        timer.start(1000);
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(0);
     }
 
-    // TODO: No Progess, just timer
-     private void updateProgressBar() {
-        progressValue += 1;
-        progressBar.setValue(progressValue);
-        if (progressValue >= 100) {
-            timer.stop();
-        }
+    /**
+     * Stops the progress bar and sets the text to "Ready".
+     */
+
+     private void stopProgressBar() {
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(100);
+        progressBar.setValue(0);
     }
 }
