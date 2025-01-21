@@ -95,7 +95,7 @@ public class ViewPane {
     }
 
     /**
-     * Returns the aspect ratio of the viewpane,
+     * Returns the aspect ratio of the viewpane as decimal number,
      * e.g. 1920px / 1080px = 16/9 = 1,777777777777778.
      * 
      * @return aspect ratio as decimal number     

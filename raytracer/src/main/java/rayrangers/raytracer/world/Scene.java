@@ -9,7 +9,7 @@ import rayrangers.raytracer.algorithm.HitRecord;
 import rayrangers.raytracer.algorithm.Ray;
 
 /**
- * Represents a scene to be rendered.
+ * Represents the scene to be rendered.
  */
 public class Scene implements Hittable {
 
@@ -19,39 +19,42 @@ public class Scene implements Hittable {
     private Color backgroundColor;
 
     /**
-     * Collection of entities
+     * Map of entities contained in the scene.
      */
 
     private Map<UUID, Entity> entities = new HashMap<>();;
 
     /**
-     * Collection of cameras to capture the scene.
+     * Map of cameras to capture the scene.
      */
     private Map<UUID, Camera> cameras = new HashMap<>();;
 
     /**
-     * 
+     * Map of light sources that illuminate the scene.
      */
     private Map<UUID, LightSource> lightSources = new HashMap<>();;
 
+    /**
+     * Constructs a scene with the specified background color.
+     */
     public Scene(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
     /**
-     * Adds a new entity to the entities hash map.
+     * Adds a new entity to the map of entities.
      * 
-     * @param entity Entity to add
+     * @param entity entity to add
      */
     public void addEntity(Entity entity) {
         entities.put(entity.getUuid(), entity);
     }
 
     /**
-     * Returns an entity from the hash map for a given UUID
+     * Returns the entity from the map with the given UUID.
      * 
      * @param uuid UUID to search for
-     * @return
+     * @return associated entity 
      */
     public Entity getEntityByUuid(UUID uuid) {
         return entities.get(uuid);
@@ -60,54 +63,54 @@ public class Scene implements Hittable {
     /**
      * Returns the background color of the scene.
      * 
-     * @return Background color
+     * @return background color
      */
     public Color getBackgroundColor() {
         return backgroundColor;
     }
 
     /**
-     * Returns the hash map of all entites in the scene.
+     * Returns a map of all entites in the scene.
      * 
-     * @return Entities hash map
+     * @return map of entities
      */
     public Map<UUID, Entity> getEntities() {
         return entities;
     }
 
     /**
-     * Returns the hash map of all cameras in the scene.
+     * Returns a map of all cameras in the scene.
      * 
-     * @return Cameras hash map
+     * @return map of cameras
      */
     public Map<UUID, Camera> getCameras() {
         return cameras;
     }
 
     /**
-     * Returns the hash map of all light sources in the scene.
+     * Returns a map of all light sources in the scene.
      * 
-     * @return Light sources hash map
+     * @return map of light sources
      */
     public Map<UUID, LightSource> getLightSources() {
         return lightSources;
     }
 
     /**
-     * Adds a camera with a unique identifier if it has not been added yet.
+     * Adds a camera with a unique UUID if it has not been added yet.
      * 
-     * @param camera Camera to add
-     * @return Returns true if camera has not been added yet, else false.
+     * @param camera camera to add
+     * @return true if camera has not been added yet, otherwise false
      */
     public boolean addCamera(Camera camera) {
         return cameras.putIfAbsent(camera.getUuid(), camera) == null;
     }
 
     /**
-     * Adds a light source with a unique identifier if it has not been added yet.
+     * Adds a light source with a unique UUID if it has not been added yet.
      * 
-     * @param lightSource Light source to add
-     * @return Returns true if light source has not been added yet, else false.
+     * @param lightSource light source to add
+     * @return true if light source has not been added yet, otherwise false.
      */
     public boolean addLightSource(LightSource lightSource) {
         return lightSources.putIfAbsent(lightSource.getUuid(), lightSource) == null;
@@ -119,7 +122,7 @@ public class Scene implements Hittable {
     @Override
     public boolean hit(Ray ray, double t0, double t1, HitRecord record) {
         boolean hit = false;
-        // Iterate over entities
+        // Iterate over all entities
         for (Entity entity : entities.values()) {
             // Check if the ray hits the entity and if t lies within interval [t0,t1]
             if (entity.hit(ray, t0, t1, record) && record.getT() <= t1 && record.getT() >= t0) {

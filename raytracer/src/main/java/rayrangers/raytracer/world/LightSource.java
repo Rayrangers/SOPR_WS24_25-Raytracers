@@ -6,7 +6,7 @@ import java.util.UUID;
 import rayrangers.raytracer.math.Vertex3D;
 
 /**
- * Represents a lightsource in the scene.
+ * Represents a light source in the scene.
  */
 public class LightSource {
 
@@ -31,13 +31,13 @@ public class LightSource {
     private Color color;
 
     /**
-     * Class constructor specifying the uuid, intensity, position and color of the
-     * light source.
+     * Constructs a light source with the specified intensity, position and color.
+     * The light source is identified with the given UUID.
      * 
-     * @param uuid      UUID of the light source
+     * @param uuid UUID of the light source
      * @param intensity intensity of the light source
-     * @param position  position of the light source
-     * @param color     color of the light source
+     * @param position position of the light source
+     * @param color color of the light source
      */
     public LightSource(UUID uuid, double intensity, Vertex3D position, Color color) {
         this.uuid = uuid;
@@ -47,12 +47,12 @@ public class LightSource {
     }
 
     /**
-     * Class constructor specifying the intensity, position and color of the light
-     * source.
+     * Constructs a light source with the specified intensity, position and color,
+     * but without a given UUID. Generates a random UUID for the light source instead.
      * 
      * @param intensity intensity of the light source
-     * @param position  position of the light source
-     * @param color     color of the light source
+     * @param position position of the light source
+     * @param color color of the light source
      */
     public LightSource(double intensity, Vertex3D position, Color color) {
         this(UUID.randomUUID(), intensity, position, color);
@@ -61,7 +61,7 @@ public class LightSource {
     /**
      * Returns the UUID of the light source.
      * 
-     * @return UUID of the light source
+     * @return UUID
      */
     public UUID getUuid() {
         return uuid;
@@ -70,7 +70,7 @@ public class LightSource {
     /**
      * Returns the intensity of the light source.
      * 
-     * @return intensity of the light source
+     * @return intensity
      */
     public double getIntensity() {
         return intensity;
@@ -79,7 +79,7 @@ public class LightSource {
     /**
      * Sets the intensity of the light source.
      * 
-     * @param intensity intensity of the light source
+     * @param intensity intensity
      */
     public void setIntensity(double intensity) {
         this.intensity = intensity;
@@ -88,7 +88,7 @@ public class LightSource {
     /**
      * Returns the position of the light source in the world coordinate system.
      * 
-     * @return position of the light source
+     * @return position
      */
     public Vertex3D getPosition() {
         return position;
@@ -97,7 +97,7 @@ public class LightSource {
     /**
      * Sets the position of the light source in the world coordinate system.
      * 
-     * @param position position of the light source
+     * @param position position
      */
     public void setPosition(Vertex3D position) {
         this.position = position;
@@ -106,7 +106,7 @@ public class LightSource {
     /**
      * Returns the color of the light source.
      * 
-     * @return color of the light source
+     * @return color
      */
     public Color getColor() {
         return color;
@@ -115,7 +115,7 @@ public class LightSource {
     /**
      * Sets the color of the light source.
      * 
-     * @param color color of the light source
+     * @param color color
      */
     public void setColor(Color color) {
         this.color = color;
