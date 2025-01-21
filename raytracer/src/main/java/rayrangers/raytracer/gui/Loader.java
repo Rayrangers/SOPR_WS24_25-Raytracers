@@ -205,7 +205,7 @@ public class Loader extends QMainWindow {
         QLineEdit qualtiyInfo = centralWidget.findChild(QLineEdit.class, "qualityLineEdit_info");
 
         QToolButton deleteButton = centralWidget.findChild(QToolButton.class, "deleteButton");
-        QToolButton exportButtonResult = centralWidget.findChild(QToolButton.class, "exportButton_result");
+        QPushButton exportButtonResult = centralWidget.findChild(QPushButton.class, "exportButton_result");
         QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
 
         // Element for result (slot for image)
@@ -274,6 +274,8 @@ public class Loader extends QMainWindow {
         });
 
 
+
+
         // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
         
         objectPosX.valueChanged.connect(() -> {
@@ -308,6 +310,21 @@ public class Loader extends QMainWindow {
             resultGraphicsView.setScene(scene);
         });
 
+        /**
+         * Exports the rendered image as a PNG file.
+         */
+
+        exportButtonResult.clicked.connect(() -> {
+            if (image == null) {
+                QMessageBox.critical(this, "Fehler", "No image was rendered yet.");
+            } else {
+                Result<String> fileName = QFileDialog.getSaveFileName(this, tr("Save Image"), "artifacts/", tr("Images (*.png)"));
+                if (fileName != null) {
+                    image.save(fileName.result);
+                }
+            }
+        });
+
         
 
 
@@ -319,12 +336,12 @@ public class Loader extends QMainWindow {
 
         // "File" -> "Import Scene"
         importScene.triggered.connect(() -> {
-            System.out.println("Import Scene");
+            System.out.println("Import Scene is not yet implemented :(");
         });
 
         // "File" -> "Export Scene"
         saveScene.triggered.connect(() -> {
-            System.out.println("Export Scene");
+            System.out.println("Export Scene is not yet implemented :(");
         });
 
         // "File" -> "Close App"
@@ -336,12 +353,12 @@ public class Loader extends QMainWindow {
 
         // "Edit" -> "Undo"
         undo.triggered.connect(() -> {
-            System.out.println("Undo");
+            System.out.println("Undo is not yet implemented :(");
         });
 
         // "Edit" -> "Redo"
         redo.triggered.connect(() -> {
-            System.out.println("Redo");
+            System.out.println("Redo is not yet implemented :(");
         });
 
         // "Help" -> "About"
@@ -377,6 +394,13 @@ public class Loader extends QMainWindow {
                     try {
                         image = Worker.invokePrototype();
                         System.out.println("Prototype main finished");
+
+                        double renderTimeResult = Worker.getRenderTime();
+                        renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
+
+                        int objects = Worker.getObjectsCount();
+                        numberObjects.setText(String.valueOf(objects));
+
                         QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
                         scene.clear();
                         scene.addItem(item);
