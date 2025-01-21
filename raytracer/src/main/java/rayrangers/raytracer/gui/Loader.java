@@ -316,13 +316,13 @@ public class Loader extends QMainWindow {
 
         exportButtonResult.clicked.connect(() -> {
             if (image == null) {
-                QMessageBox.critical(this, "Fehler", "No image was rendered yet.");
+                QMessageBox.critical(this, "Error", "No image was rendered yet.");
             } else {
                 Result<String> result = QFileDialog.getSaveFileName(
             this,
-            tr("Bild exportieren"),
+            tr("Export Image"),
             "artifacts/",
-            tr("PNG-Datei (*.png)")
+            tr("PNG-File (*.png)")
         );
 
         if (result != null && result.result != null && !result.result.isEmpty()) {
