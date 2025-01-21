@@ -13,7 +13,7 @@ public class Vector3D implements Transformable {
     private double[] coordinates;
 
     /**
-     * Constructor to initialize the vector with 3 components.
+     * Constructs a vector with the three specified coordinates.
      *
      * @param x1 coordinate of x1-dimension
      * @param x2 coordinate of x2-dimension
@@ -24,7 +24,9 @@ public class Vector3D implements Transformable {
     }
 
     /**
-     * Getter for the vertices array.
+     * Returns the coordinates of the vector.
+     * 
+     * @return array of coordinates
      */
     public double[] getCoordinates() {
         return coordinates;
@@ -44,7 +46,11 @@ public class Vector3D implements Transformable {
     }
 
     /**
-     * Setter for the vertices array.
+     * Sets the coordinates of the vector.
+     * 
+     * @param x1 coordinate of x1-dimension
+     * @param x2 coordinate of x2-dimension
+     * @param x3 coordinate of x3-dimension
      */
     public void setCoordinates(double x1, double x2, double x3) {
         this.coordinates = new double[]{x1, x2, x3};
@@ -53,8 +59,8 @@ public class Vector3D implements Transformable {
     /**
      * Adds another vector to this vector.
      *
-     * @param vec The other vector.
-     * @return A new vector representing the sum.
+     * @param vec other vector
+     * @return new vector representing the sum
      */
     public Vector3D add(Vector3D vec) {
         double x1 = this.coordinates[0] + vec.coordinates[0];
@@ -66,8 +72,8 @@ public class Vector3D implements Transformable {
     /**
      * Subtracts another vector from this vector.
      *
-     * @param vec The other vector.
-     * @return A new vector representing the difference.
+     * @param vec other vector
+     * @return new vector representing the difference
      */
     public Vector3D sub(Vector3D vec) {
         double x1 = this.coordinates[0] - vec.coordinates[0];
@@ -79,8 +85,8 @@ public class Vector3D implements Transformable {
     /**
      * Multiplies this vector by a scalar.
      *
-     * @param scalar The scalar value.
-     * @return A new vector scaled by the scalar.
+     * @param scalar scalar value
+     * @return new vector scaled by the scalar
      */
     public Vector3D mult(double scalar) {
         double x1 = this.coordinates[0] * scalar;
@@ -92,8 +98,8 @@ public class Vector3D implements Transformable {
     /**
      * Computes the scalar (dot) product with another vector.
      *
-     * @param vec The other vector.
-     * @return The scalar product as a double.
+     * @param vec other vector
+     * @return scalar product as a double
      */
     public double scalar(Vector3D vec) {
         return this.coordinates[0] * vec.coordinates[0] +
@@ -102,15 +108,16 @@ public class Vector3D implements Transformable {
     }
 
     /**
-     * Computes the scalar triple product with two other vectors.
+     * Computes the scalar triple product with two other vectors:
+     * (a · (b × c))
      *
-     * @param vec1 The first vector.
-     * @param vec2 The second vector.
-     * @return The scalar triple product (a · (b × c)) as a double.
+     * @param vec1 first other vector
+     * @param vec2 second other vector
+     * @return scalar triple product as a double
      */
     public double scalarTriple(Vector3D vec1, Vector3D vec2) {
-        // Scalar triple product is the dot product of this vector and the cross product
-        // of the other two
+        // Scalar triple product is the dot product of this vector 
+        // and the cross product of the other two
         // Compute a · (b × c)
         Vector3D crossProduct = vec1.cross(vec2);
         return this.scalar(crossProduct);
@@ -119,8 +126,8 @@ public class Vector3D implements Transformable {
     /**
      * Computes the cross product with another vector.
      *
-     * @param vec The other vector.
-     * @return A new vector representing the cross product.
+     * @param vec other vector
+     * @return new vector representing the cross product
      */
     public Vector3D cross(Vector3D vec) {
         double x1 = this.coordinates[1] * vec.coordinates[2] - this.coordinates[2] * vec.coordinates[1];
@@ -132,7 +139,7 @@ public class Vector3D implements Transformable {
     /**
      * Computes the length (magnitude) of this vector.
      *
-     * @return The length as a double.
+     * @return length as a double
      */
     public double length() {
         return Math.sqrt(this.coordinates[0] * this.coordinates[0] +
@@ -144,8 +151,8 @@ public class Vector3D implements Transformable {
      * Normalizes this vector, returning a new vector with the same direction
      * but a length (magnitude) of 1.
      *
-     * @return A new Vector3D instance representing the normalized vector.
-     * @throws ArithmeticException If the vector has a length of 0, as normalization is undefined.
+     * @return new vector representing the normalized vector
+     * @throws ArithmeticException if the vector has a length of 0, as normalization is undefined
      */
     public Vector3D normalize() {
         double len = this.length();
@@ -158,15 +165,15 @@ public class Vector3D implements Transformable {
     /**
      * Scales the vector by the given scaling factors (sx, sy, sz).
      *
-     * @param sx Scaling factor for the x-coordinate.
-     * @param sy Scaling factor for the y-coordinate.
-     * @param sz Scaling factor for the z-coordinate.
+     * @param sx scaling factor for the x-coordinate
+     * @param sy scaling factor for the y-coordinate
+     * @param sz scaling factor for the z-coordinate
      */
     public void scale(double sx, double sy, double sz) {
         // Scaling matrix (4x4)
-        // [ sx  0   0   0 ]
-        // [  0  sy  0   0 ]
-        // [  0   0  sz  0 ]
+        // [  sx  0   0   0 ]
+        // [  0   sy  0   0 ]
+        // [  0   0   sz  0 ]
         // [  0   0   0   1 ]
 
         // Extend the vector to homogeneous coordinates (x1, x2, x3, 1)
@@ -180,12 +187,12 @@ public class Vector3D implements Transformable {
     }
 
     /**
-     * Rotates the vector around the X-axis by the given angle.
+     * Rotates the vector around the x-axis by the given angle.
      *
-     * @param angle Rotation angle in degrees.
+     * @param angle rotation angle around x-axis in degrees
      */
     public void rotateX(double angle) {
-        // Rotation matrix around the X-axis (4x4)
+        // Rotation matrix around the x-axis (4x4)
         // [ 1    0           0          0 ]
         // [ 0    cos(θ)     -sin(θ)     0 ]
         // [ 0    sin(θ)     cos(θ)      0 ]
@@ -206,12 +213,12 @@ public class Vector3D implements Transformable {
     }
 
     /**
-     * Rotates the vector around the Y-axis by the given angle.
+     * Rotates the vector around the y-axis by the given angle.
      *
-     * @param angle Rotation angle in degrees.
+     * @param angle rotation angle around y-axis in degrees
      */
     public void rotateY(double angle) {
-        // Rotation matrix around the Y-axis (4x4)
+        // Rotation matrix around the y-axis (4x4)
         // [ cos(θ)   0    sin(θ)   0 ]
         // [ 0        1    0        0 ]
         // [ -sin(θ)  0    cos(θ)   0 ]
@@ -232,16 +239,16 @@ public class Vector3D implements Transformable {
     }
 
     /**
-     * Rotates the vector around the Z-axis by the given angle.
+     * Rotates the vector around the z-axis by the given angle.
      *
-     * @param angle Rotation angle in degrees.
+     * @param angle rotation angle around z-axis in degrees
      */
     public void rotateZ(double angle) {
-        // Rotation matrix around the Z-axis (4x4)
+        // Rotation matrix around the z-axis (4x4)
         // [ cos(θ)  -sin(θ)   0   0 ]
         // [ sin(θ)   cos(θ)   0   0 ]
-        // [  0        0      1   0 ]
-        // [  0        0      0   1 ]
+        // [  0        0       1   0 ]
+        // [  0        0       0   1 ]
 
         double angleRad = Math.toRadians(angle); // Convert angle to radians
         double cosAngle = Math.cos(angleRad);
@@ -258,16 +265,16 @@ public class Vector3D implements Transformable {
     /**
      * Translates the vector by the given translation factors (tx, ty, tz).
      *
-     * @param tx Translation factor for the x-coordinate.
-     * @param ty Translation factor for the y-coordinate.
-     * @param tz Translation factor for the z-coordinate.
+     * @param tx translation factor for the x-coordinate
+     * @param ty translation factor for the y-coordinate
+     * @param tz translation factor for the z-coordinate
      */
     public void translate(double tx, double ty, double tz) {
         // Translation matrix (4x4)
         // [ 1  0  0  tx ]
         // [ 0  1  0  ty ]
         // [ 0  0  1  tz ]
-        // [ 0  0  0  1 ]
+        // [ 0  0  0   1 ]
 
         // Apply the translation to the coordinates (homogeneous coordinates)
         double x1 = this.coordinates[0];

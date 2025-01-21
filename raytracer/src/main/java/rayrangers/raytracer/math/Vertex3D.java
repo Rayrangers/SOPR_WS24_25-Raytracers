@@ -18,7 +18,7 @@ public class Vertex3D implements Transformable {
     private Vector3D normalVector;
 
     /**
-     * Class constructor specifying the coordinates of all dimensions.
+     * Constructs a vertex with the specified coordinates of all dimensions.
      * 
      * @param x1 coordinate of x1-dimension
      * @param x2 coordinate of x2-dimension
@@ -29,9 +29,9 @@ public class Vertex3D implements Transformable {
     }
 
     /**
-     * Class constructor for a vertex with a given location vector.
+     * Constructs a vertex with the given location vector.
      * 
-     * @param locationVector Location vector of vertex
+     * @param locationVector location vector of vertex
      */
     public Vertex3D(Vector3D locationVector) {
         this.locationVector = locationVector;
@@ -39,8 +39,8 @@ public class Vertex3D implements Transformable {
     }
 
     /**
-     * Class constructor specifying the coordinates of all dimensions and the normal
-     * vector.
+     * Constructs a vertex with the specified coordinates of all dimensions 
+     * and the given normal vector.
      * 
      * @param x1  coordinate of x1-dimension
      * @param x2  coordinate of x2-dimension
@@ -68,7 +68,7 @@ public class Vertex3D implements Transformable {
     /**
      * Returns the coordinates of the vertex in an array.
      * 
-     * @return coordinates array
+     * @return array of coordinates
      */
     public Vector3D getlocationVector() {
         return locationVector;
@@ -110,7 +110,7 @@ public class Vertex3D implements Transformable {
     /**
      * Sets the coordinate of a specified dimension.
      * 
-     * @param dim   dimension, integer value in [1,3]
+     * @param dim dimension, integer value in [1,3]
      * @param coord coordinate
      * @throws IndexOutOfBoundsException if {@code dim < 1 || dim > 3}
      */

@@ -1,28 +1,30 @@
 package rayrangers.raytracer.math;
 
 /**
- * Represents cumulated transformation matrix.
+ * Represents a 4x4 cumulated transformation matrix.
+ * Used to transform any transformable objects 
+ * such as entities, vertices and vectors.
  */
 public class TrafoMatrix {
+
     /**
      * Array of all matrix elements.
      */
     private double[] elements = new double[16];
 
     /**
-     * Class constructor specifying the translation parameters, rotation angles and
-     * scaling factors.
-     * Creates the corresponding cumulated transformation matrix:
+     * Constructs a cumulated transformation matrix with the specified 
+     * translation parameters, rotation angles and scaling factors:
      * CTM = RMX3 * RMX2 * RMX1 * SM * TM
      * (CTM = cumulated transformation matrix,
      * RM = rotation matrix, SM = scaling matrix, TM = translation matrix)
      *
-     * @param translX1  translation in x1-direction
-     * @param translX2  translation in x2-direction
-     * @param translX3  translation in x3-direction
-     * @param angleX1   rotation angle around x1-axis
-     * @param angleX2   rotation angle around x2-axis
-     * @param angleX3   rotation angle around x3-axis
+     * @param translX1 translation in x1-direction
+     * @param translX2 translation in x2-direction
+     * @param translX3 translation in x3-direction
+     * @param angleX1 rotation angle around x1-axis
+     * @param angleX2 rotation angle around x2-axis
+     * @param angleX3 rotation angle around x3-axis
      * @param scalingX1 scaling factor in x1-direction
      * @param scalingX2 scaling factor in x2-direction
      * @param scalingX3 scaling factor in x3-direction
@@ -55,9 +57,10 @@ public class TrafoMatrix {
     }
 
     /**
-     * Private constructor only used internally for Rotation matrices.
+     * Constructs a cumulated transformation matrix with the given matrix elements.
+     * Only used internally to generate single translation, scaling and rotation matrices.
      *
-     * @param elements
+     * @param elements array of matrix elements
      */
     private TrafoMatrix(double[] elements) {
         this.elements = elements;
@@ -68,7 +71,7 @@ public class TrafoMatrix {
      *
      * @param i row position
      * @param j column position
-     * @return Value of element
+     * @return value of the element
      */
     public double getElement(int i, int j) {
         return elements[i * 4 + j];
@@ -77,8 +80,8 @@ public class TrafoMatrix {
     /**
      * Multiplies this transformation matrix by another transformation matrix.
      *
-     * @param m The transformation matrix to multiply with.
-     * @return A new TrafoMatrix instance representing the result.
+     * @param m transformation matrix to multiply with
+     * @return new transformation matrix representing the result
      */
     private TrafoMatrix matrMult(TrafoMatrix m) {
         double[] result = new double[16];
@@ -95,7 +98,6 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     *
      * Returns a translation and scaling matrix.
      * <!-- @formatter:off -->
      * [ sX1 0  0  tX1 ]
@@ -104,13 +106,13 @@ public class TrafoMatrix {
      * [ 0   0  0   1  ]
      * <!-- @formatter:on -->
      *
-     * @param translX1
-     * @param translX2
-     * @param translX3
-     * @param scalingX1
-     * @param scalingX2
-     * @param scalingX3
-     * @return A new TrafoMatrix instance representing the translation and scaling.
+     * @param translX1 translation in x1-direction
+     * @param translX2 translation in x2-direction
+     * @param translX3 translation in x3-direction
+     * @param scalingX1 scaling factor in x1-direction
+     * @param scalingX2 scaling factor in x2-direction
+     * @param scalingX3 scaling factor in x3-direction
+     * @return new transformation matrix representing the translation and scaling
      */
     private TrafoMatrix createTranslationScalingTrafoMatrix(double translX1, double translX2, double translX3,
             double scalingX1, double scalingX2, double scalingX3) {
@@ -123,8 +125,7 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     *
-     * Returns a rotation matrix around the x1-axis (x-axis).
+     * Returns a rotation matrix around the x1-axis (or: x-axis).
      * <!-- @formatter:off -->
      * [ 1   0       0    0 ]
      * [ 0 cos(φ) -sin(φ) 0 ]
@@ -132,8 +133,8 @@ public class TrafoMatrix {
      * [ 0   0       0    1 ]
      * <!-- @formatter:on -->
      *
-     * @param phi The rotation angle in radians.
-     * @return A new TrafoMatrix instance representing the rotation.
+     * @param phi rotation angle around x1-axis in radians
+     * @return new transformation matrix representing the rotation
      */
     private TrafoMatrix getRotationX1(double phi) {
         phi = Math.toRadians(phi);
@@ -147,8 +148,7 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     *
-     * Returns a rotation matrix around the x2-axis (y-axis).
+     * Returns a rotation matrix around the x2-axis (or: y-axis).
      * * <!-- @formatter:on -->
      * [  cos(φ)  0  sin(φ)  0 ]
      * [    0     1    0     0 ]
@@ -156,8 +156,8 @@ public class TrafoMatrix {
      * [    0     0    0     1 ]
      * * <!-- @formatter:off -->
      *
-     * @param phi The rotation angle in radians.
-     * @return A new TrafoMatrix instance representing the rotation.
+     * @param phi rotation angle around x2-axis in radians
+     * @return new transformation matrix representing the rotation
      */
     private TrafoMatrix getRotationX2(double phi) {
         phi = Math.toRadians(phi);
@@ -171,8 +171,7 @@ public class TrafoMatrix {
 
     /**
      * Internal helper method:
-     *
-     * Returns a rotation matrix around the x3-axis (z-axis).
+     * Returns a rotation matrix around the x3-axis (or: z-axis).
      * <!-- @formatter:off -->
      * [ cos(φ) -sin(φ)  0  0 ]
      * [ sin(φ)  cos(φ)  0  0 ]
@@ -180,8 +179,8 @@ public class TrafoMatrix {
      * [   0       0     0  1 ]
      * <!-- @formatter:on -->
      *
-     * @param phi The rotation angle in radians.
-     * @return A new TrafoMatrix instance representing the rotation.
+     * @param phi rotation angle around x3-axis in radians
+     * @return new transformation matrix representing the rotation
      */
     private TrafoMatrix getRotationX3(double phi) {
         phi = Math.toRadians(phi);
