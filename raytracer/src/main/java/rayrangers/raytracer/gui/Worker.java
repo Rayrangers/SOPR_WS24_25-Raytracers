@@ -61,12 +61,12 @@ public class Worker {
     /**
      * This method invokes the prototype for the GUI (only for testing).
      */
-    public static QImage invokePrototype() throws Exception {
+    public static QImage invokePrototype(Camera camera) throws Exception {
         long start = System.currentTimeMillis();
         Scene scene = new Scene(Color.BLACK);
 
         // Build the world
-        Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
+        // Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
         LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
         LightSource lightSource2 = new LightSource(0.15, new Vertex3D(300, 50, 0), Color.WHITE);
 
@@ -91,12 +91,23 @@ public class Worker {
         lightSources.add(lightSource2);
 
         // Add entities to the scene
-        //scene.addEntity(tuna);
+        scene.addEntity(tuna);
         scene.addEntity(teapot);
 
         // Add entities to the list
-        //entities.add(tuna);
-        entities.add(teapot);
+        if (scene.getEntities().containsValue(tuna)) {
+            entities.add(tuna);
+            System.out.println("Tuna added to the list of entities.");
+        } else {
+            System.out.println("Tuna not added to the list of entities.");
+        }
+
+        if (scene.getEntities().containsValue(teapot)) {
+            entities.add(teapot);
+            System.out.println("Teapot added to the list of entities.");
+        } else {
+            System.out.println("Teapot not added to the list of entities.");
+        }
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         ViewPane viewPane = camera.getViewPane();

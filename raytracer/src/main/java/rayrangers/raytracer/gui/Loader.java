@@ -32,6 +32,8 @@ import io.qt.widgets.QStackedWidget;
 import io.qt.widgets.QToolButton;
 import io.qt.widgets.QWidget;
 import io.qt.widgets.tools.QUiLoader;
+import rayrangers.raytracer.math.Vertex3D;
+import rayrangers.raytracer.world.Camera;
 
 /**
  * Loads the design information for the GUI provided by the UI file.
@@ -42,6 +44,15 @@ public class Loader extends QMainWindow {
     private QWidget ui;
     private QImage image;
     private QProgressBar progressBar;
+
+    private QDoubleSpinBox cameraPosX;
+    private QDoubleSpinBox cameraPosY;
+    private QDoubleSpinBox cameraPosZ;
+    private QDoubleSpinBox cameraRoll;
+    private QDoubleSpinBox cameraPitch;
+    private QDoubleSpinBox cameraYaw;
+    private QDoubleSpinBox cameraDistance;
+    private QSlider cameraFov;
 
     /** 
      * List with file names of the objects. 
@@ -121,15 +132,26 @@ public class Loader extends QMainWindow {
         QListView mainLigthListView = centralWidget.findChild(QListView.class, "lightListView");
         QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
 
-        // Elements for "Camera-Configuration"
-        QDoubleSpinBox cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox");
-        QDoubleSpinBox cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox");
-        QDoubleSpinBox cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox");
-        QDoubleSpinBox cameraRoll = centralWidget.findChild(QDoubleSpinBox.class, "ang_roll_doubleSpinBox");
-        QDoubleSpinBox cameraPitch = centralWidget.findChild(QDoubleSpinBox.class, "ang_pitch_doubleSpinBox");
-        QDoubleSpinBox cameraYaw = centralWidget.findChild(QDoubleSpinBox.class, "ang_yaw_doubleSpinBox");
-        QDoubleSpinBox cameraDistance = centralWidget.findChild(QDoubleSpinBox.class, "distance_doubleSpinBox");
-        QSlider cameraFov = centralWidget.findChild(QSlider.class, "fowHorizontalSlider");
+        // Elements for "Camera-Configuration" --------------------------------------------------------------------------------------------------
+        cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox_conf");
+        cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox_conf");
+        cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox_conf");
+        cameraRoll = centralWidget.findChild(QDoubleSpinBox.class, "ang_roll_doubleSpinBox");
+        cameraPitch = centralWidget.findChild(QDoubleSpinBox.class, "ang_pitch_doubleSpinBox");
+        cameraYaw = centralWidget.findChild(QDoubleSpinBox.class, "ang_yaw_doubleSpinBox");
+        cameraDistance = centralWidget.findChild(QDoubleSpinBox.class, "distance_doubleSpinBox");
+        cameraFov = centralWidget.findChild(QSlider.class, "fowHorizontalSlider");
+                
+        // Default Values for camera
+        cameraPosX.setValue(400.0);
+        cameraPosY.setValue(25.0);
+        cameraPosZ.setValue(0.0);
+        cameraRoll.setValue(0.0);
+        cameraPitch.setValue(90.0);
+        cameraYaw.setValue(0.0);
+        cameraDistance.setValue(75.0);
+        cameraFov.setValue(100);
+
 
         // Elements for "Rendering-Configuration"
         QSpinBox renderingResWidth = centralWidget.findChild(QSpinBox.class, "res_width_spinBox");          // also for camera needed
@@ -413,7 +435,8 @@ public class Loader extends QMainWindow {
                 new Thread(() -> {
                     System.out.println("Starting Prototype main");
                     try {
-                        image = Worker.invokePrototype();
+                        Camera camera = getCameraFromGUI();
+                        image = Worker.invokePrototype(camera);
                         System.out.println("Prototype main finished");
 
                         double renderTimeResult = Worker.getRenderTime();
@@ -466,4 +489,19 @@ public class Loader extends QMainWindow {
         progressBar.setMaximum(100);
         progressBar.setValue(0);
     }
+
+    private Camera getCameraFromGUI() {
+        Vertex3D position = new Vertex3D(
+            cameraPosX.value(),
+            cameraPosY.value(),
+            cameraPosZ.value()
+        );
+        double roll = cameraRoll.value();
+        double pitch = cameraPitch.value();
+        double yaw = cameraYaw.value();
+        double distance = cameraDistance.value();
+
+        return new Camera(position, roll, pitch, yaw, distance, 100, 2000, 2000);
+    }
+    
 }
