@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>843</width>
-    <height>605</height>
+    <width>837</width>
+    <height>847</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -69,7 +69,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QGraphicsView" name="graphicsView"/>
+             <widget class="QGraphicsView" name="graphicsView_main_window"/>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,2">
@@ -127,7 +127,7 @@
               <item>
                <widget class="QProgressBar" name="ProgressBar_main">
                 <property name="value">
-                 <number>36</number>
+                 <number>0</number>
                 </property>
                 <property name="invertedAppearance">
                  <bool>false</bool>
@@ -138,8 +138,90 @@
             </item>
            </layout>
           </item>
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_15">
+            <item>
+             <layout class="QVBoxLayout" name="objectVerticalLayout">
+              <property name="spacing">
+               <number>1</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="objectLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Objects</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListView" name="objectListView">
+                <property name="textElideMode">
+                 <enum>Qt::ElideLeft</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="object_plus_Button">
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="lightVerticalLayout">
+              <property name="spacing">
+               <number>1</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lightLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <weight>50</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
+                  <strikeout>false</strikeout>
+                  <stylestrategy>PreferDefault</stylestrategy>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Light Sources</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListView" name="lightListView"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="light_plus_Button">
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
           <item row="0" column="1">
-           <layout class="QVBoxLayout" name="verticalLayout_5">
+           <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
@@ -173,7 +255,11 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="pos_x_spinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox">
+                    <property name="maximum">
+                     <double>800.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -187,7 +273,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="pos_y_spinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox"/>
                   </item>
                  </layout>
                 </item>
@@ -201,7 +287,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="pos_z_spinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox"/>
                   </item>
                  </layout>
                 </item>
@@ -226,7 +312,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="ang_roll_spinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_roll_doubleSpinBox"/>
                   </item>
                  </layout>
                 </item>
@@ -240,7 +326,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="ang_pitch_spinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_pitch_doubleSpinBox"/>
                   </item>
                  </layout>
                 </item>
@@ -254,7 +340,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="ang_yaw_spinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_yaw_doubleSpinBox"/>
                   </item>
                  </layout>
                 </item>
@@ -270,7 +356,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="focus_spinBox"/>
+                 <widget class="QDoubleSpinBox" name="distance_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -377,7 +463,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="qualityComboBox"/>
+                 <widget class="QComboBox" name="comboBox_pane_width"/>
                 </item>
                </layout>
               </item>
@@ -391,7 +477,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_3"/>
+                 <widget class="QComboBox" name="comboBox_anti_aliasing"/>
                 </item>
                </layout>
               </item>
@@ -405,87 +491,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="fileComboBox"/>
+                 <widget class="QComboBox" name="comboBox_shading"/>
                 </item>
                </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="0">
-           <layout class="QVBoxLayout" name="verticalLayout_15">
-            <item>
-             <layout class="QVBoxLayout" name="objectVerticalLayout">
-              <property name="spacing">
-               <number>1</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="objectLabel">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Objects</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListView" name="objectListView"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="object_plus_Button">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>+</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="lightVerticalLayout">
-              <property name="spacing">
-               <number>1</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="lightLabel">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>50</weight>
-                  <italic>false</italic>
-                  <bold>false</bold>
-                  <strikeout>false</strikeout>
-                  <stylestrategy>PreferDefault</stylestrategy>
-                  <kerning>true</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Light Sources</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListView" name="lightListView"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="light_plus_Button">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>+</string>
-                </property>
-               </widget>
               </item>
              </layout>
             </item>
@@ -519,10 +527,17 @@
                </widget>
               </item>
               <item>
-               <widget class="QListView" name="objectListView_conf"/>
+               <widget class="QListView" name="objectListView">
+                <property name="contextMenuPolicy">
+                 <enum>Qt::NoContextMenu</enum>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="objectPlusButton_conf">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>9</pointsize>
@@ -555,6 +570,9 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="lightPlusButton_conf">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>9</pointsize>
@@ -588,7 +606,7 @@
               <item>
                <widget class="QPushButton" name="resultButton_conf">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="text">
                  <string>Result</string>
@@ -604,6 +622,9 @@
              <layout class="QHBoxLayout" name="horizontalLayout_15">
               <item>
                <widget class="QPushButton" name="playButton_conf">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Start</string>
                 </property>
@@ -611,6 +632,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="importButton_conf">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Import</string>
                 </property>
@@ -618,6 +642,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="exportButton_conf">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Export</string>
                 </property>
@@ -625,8 +652,11 @@
               </item>
               <item>
                <widget class="QProgressBar" name="progressBar_conf">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="value">
-                 <number>24</number>
+                 <number>0</number>
                 </property>
                </widget>
               </item>
@@ -667,9 +697,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="pos_x_spinBox_conf">
-                  <property name="maximum">
-                   <number>100</number>
+                 <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox_conf">
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::NoContextMenu</enum>
                   </property>
                  </widget>
                 </item>
@@ -685,11 +715,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="pos_y_spinBox_conf">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox_conf"/>
                 </item>
                </layout>
               </item>
@@ -703,11 +729,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="pos_z_spinBox_conf">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox_conf"/>
                 </item>
                </layout>
               </item>
@@ -732,11 +754,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="scal_x_spinBox">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="scal_x_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -750,11 +768,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="scal_y_spinBox">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="scal_y_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -768,11 +782,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="scal_z_spinBox">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="scal_z_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -797,11 +807,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="rot_x_spinBox">
-                  <property name="maximum">
-                   <number>360</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="rot_x_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -815,11 +821,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="rot_y_spinBox">
-                  <property name="maximum">
-                   <number>360</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="rot_y_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -833,11 +835,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="rot_z_spinBox">
-                  <property name="maximum">
-                   <number>360</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="rot_z_doubleSpinBox"/>
                 </item>
                </layout>
               </item>
@@ -857,144 +855,15 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_8" columnstretch="2,2,6">
-          <item row="0" column="0">
-           <layout class="QVBoxLayout" name="verticalLayout_25">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_26">
-              <property name="spacing">
-               <number>1</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="objectLabel_conf_2">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Objects</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListView" name="objectListView_conf_2"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="objectPlusButton_conf_2">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>+</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_27">
-                <property name="spacing">
-                 <number>1</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="lightLabel_conf_2">
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Light Sources</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QListView" name="lightListView_conf_2"/>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="lightPlusButton_conf_2">
-                  <property name="font">
-                   <font>
-                    <pointsize>9</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>+</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="2">
-           <layout class="QVBoxLayout" name="verticalLayout_28">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_18">
-              <item>
-               <widget class="QPushButton" name="sceneButton_conf_2">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Scene</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="resultButton_conf_2">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Result</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QGraphicsView" name="graphicsView_conf_2"/>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_19">
-              <item>
-               <widget class="QPushButton" name="playButton_conf_2">
-                <property name="text">
-                 <string>Start</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="importButton_conf_2">
-                <property name="text">
-                 <string>Import</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="exportButton_conf_2">
-                <property name="text">
-                 <string>Export</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QProgressBar" name="progressBar_conf_2">
-                <property name="value">
-                 <number>24</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
           <item row="0" column="1">
            <layout class="QVBoxLayout" name="verticalLayout_29">
             <item>
@@ -1028,11 +897,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="pos_x_spinBox_conf_light">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox_conf_light"/>
                 </item>
                </layout>
               </item>
@@ -1046,11 +911,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="pos_y_spinBox_conf_light">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox_conf_light"/>
                 </item>
                </layout>
               </item>
@@ -1064,11 +925,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="pos_z_spinBox_conf_light">
-                  <property name="maximum">
-                   <number>100</number>
-                  </property>
-                 </widget>
+                 <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox_conf_light"/>
                 </item>
                </layout>
               </item>
@@ -1089,7 +946,7 @@
                  <double>1.000000000000000</double>
                 </property>
                 <property name="singleStep">
-                 <double>0.100000000000000</double>
+                 <double>0.050000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1115,6 +972,166 @@
                <string>Done</string>
               </property>
              </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_25">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_26">
+              <property name="spacing">
+               <number>1</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="objectLabel_conf_2">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Objects</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListView" name="objectListView_conf_2"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="objectPlusButton_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_27">
+                <property name="spacing">
+                 <number>1</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lightLabel_conf_2">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Light Sources</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListView" name="lightListView_conf_2"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="lightPlusButton_conf_2">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>9</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>+</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="2">
+           <layout class="QVBoxLayout" name="verticalLayout_28">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QPushButton" name="sceneButton_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Scene</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="resultButton_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Result</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QGraphicsView" name="graphicsView_conf_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_19">
+              <item>
+               <widget class="QPushButton" name="playButton_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Start</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="importButton_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Import</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="exportButton_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Export</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QProgressBar" name="progressBar_conf_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -1150,7 +1167,14 @@
              </layout>
             </item>
             <item>
-             <widget class="QGraphicsView" name="graphicsView_5"/>
+             <widget class="QGraphicsView" name="graphicsView_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -1159,7 +1183,7 @@
             <item>
              <widget class="QLabel" name="infoLabel">
               <property name="text">
-               <string>Informationen about Rendering</string>
+               <string>Information about Rendering</string>
               </property>
              </widget>
             </item>
@@ -1215,7 +1239,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_3">
+               <widget class="QLineEdit" name="lightSourceLineEdit_info">
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -1233,7 +1257,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="renderDurationLineEdit_info">
+               <widget class="QLineEdit" name="renderTimeLineEdit_info">
                 <property name="text">
                  <string/>
                 </property>
@@ -1254,7 +1278,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_4">
+               <widget class="QLineEdit" name="qualityLineEdit_info">
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -1291,8 +1315,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>843</width>
-     <height>18</height>
+     <width>837</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">

@@ -39,6 +39,8 @@ public class Renderer {
      */
     private Shader shader;
 
+    private static int rayCount = 0;
+
     /**
      * Class constructor specifiying the scene and the UUID of the camera.
      * 
@@ -82,6 +84,8 @@ public class Renderer {
                 executor.execute(() -> {
                     Pixel p = viewpane.getPixelAt(x, y);
                     Ray viewRay = new Ray(cameraPos, computeRayDirection(p, u, v, w, d));
+                    // Measure Ray Count
+                    rayCount++;
                     p.setColor(traceRay(viewRay));
                 });
             }
@@ -118,5 +122,9 @@ public class Renderer {
      */
     private Vector3D computeRayDirection(Pixel pixel, Vector3D u, Vector3D v, Vector3D w, double d) {
         return w.mult(-d).add(u.mult(pixel.getU())).add(v.mult(pixel.getV())); // Ray direction formula: −d * w + pixel.u * u + pixel.v * v
+    }
+
+    public static int getRayCount() {
+        return rayCount;
     }
 }
