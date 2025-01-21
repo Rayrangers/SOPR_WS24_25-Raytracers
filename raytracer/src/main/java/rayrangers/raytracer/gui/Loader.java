@@ -4,8 +4,10 @@ import io.qt.core.QFile;
 import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
 import io.qt.core.QStringListModel;
+import io.qt.core.QUrl;
 import io.qt.core.Qt.AspectRatioMode;
 import io.qt.gui.QAction;
+import io.qt.gui.QDesktopServices;
 import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
 import io.qt.widgets.QApplication;
@@ -306,6 +308,8 @@ public class Loader extends QMainWindow {
             resultGraphicsView.setScene(scene);
         });
 
+        
+
 
         // Add functionality to the UI elements of the menu bar -------------------------------------------------------------------------------------
         // "File" -> "New Scene"
@@ -326,7 +330,7 @@ public class Loader extends QMainWindow {
         // "File" -> "Close App"
         closeApp.triggered.connect(() -> {
             // Perform multiple actions
-            System.out.println("Closing application...");
+            System.out.println("Closing application");
             QApplication.quit();
         });
 
@@ -350,7 +354,16 @@ public class Loader extends QMainWindow {
 
         // "Help" -> "Tutorial"
         help.triggered.connect(() -> {
-            System.out.println("Tutorial");
+            int answer = QMessageBox.question(
+            this,
+            "Tutorial - GitHub-Wiki",
+            "This will open your browser.\n Proceed?",
+            QMessageBox.StandardButton.Yes,
+            QMessageBox.StandardButton.No
+            );
+            if (answer == QMessageBox.StandardButton.Yes.value()) {
+                QDesktopServices.openUrl(new QUrl("https://github.com/Rayrangers/SOPR_WS24_25-Raytracers/wiki"));
+            }
         });
 
 
