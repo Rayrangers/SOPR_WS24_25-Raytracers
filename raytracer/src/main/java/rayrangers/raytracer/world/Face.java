@@ -20,7 +20,7 @@ public abstract class Face implements Hittable {
     /**
      * Smoothing group the face belongs to.
      * OBJ file:
-     * s <integer smoothing-group>
+     * s <int smoothing-group>
      */
     protected String smoothingGroup;
 
