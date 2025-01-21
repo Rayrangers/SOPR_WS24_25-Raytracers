@@ -318,11 +318,32 @@ public class Loader extends QMainWindow {
             if (image == null) {
                 QMessageBox.critical(this, "Fehler", "No image was rendered yet.");
             } else {
-                Result<String> fileName = QFileDialog.getSaveFileName(this, tr("Save Image"), "artifacts/", tr("Images (*.png)"));
-                if (fileName != null) {
-                    image.save(fileName.result);
-                }
+                Result<String> result = QFileDialog.getSaveFileName(
+            this,
+            tr("Bild exportieren"),
+            "artifacts/",
+            tr("PNG-Datei (*.png)")
+        );
+
+        if (result != null && result.result != null && !result.result.isEmpty()) {
+            String fileName = result.result;
+            
+            // Check if the file name ends with ".png"
+            if (!fileName.toLowerCase().endsWith(".png")) {
+                fileName += ".png";
             }
+            // Save the image
+            boolean saved = image.save(fileName, "PNG");
+            // Show a message box with the result of saving the image
+            if (!saved) {
+                QMessageBox.critical(this, "Error", "Error while saving the image.");
+            } else {
+                QMessageBox.information(this, "Success", "The image was saved successfully.");
+            }
+            } else {
+                QMessageBox.warning(this, "Cancelled", "The image was not saved.");
+            }
+        }
         });
 
         
@@ -400,6 +421,9 @@ public class Loader extends QMainWindow {
 
                         int objects = Worker.getObjectsCount();
                         numberObjects.setText(String.valueOf(objects));
+
+                        int lightSource = Worker.getLightSourcesCount();
+                        numberLightSource.setText(String.valueOf(lightSource));
 
                         QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
                         scene.clear();
