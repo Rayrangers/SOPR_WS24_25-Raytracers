@@ -12,6 +12,9 @@ import rayrangers.raytracer.parser.SceneParser;
 import rayrangers.raytracer.view.ViewPane;
 import rayrangers.raytracer.world.Scene;
 
+/**
+ * Prototype utilizing the JSON parser for the scene specification based on Quicktype.
+ */
 public class ParserPrototype {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
