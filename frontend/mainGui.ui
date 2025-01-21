@@ -370,7 +370,11 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSlider" name="fowHorizontalSlider"/>
+                 <widget class="QSlider" name="horizontalSlider">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
