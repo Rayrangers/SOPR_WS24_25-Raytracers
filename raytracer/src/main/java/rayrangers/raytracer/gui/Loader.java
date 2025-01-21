@@ -22,6 +22,7 @@ import io.qt.widgets.QListView;
 import io.qt.widgets.QMainWindow;
 import io.qt.widgets.QMenu;
 import io.qt.widgets.QMenuBar;
+import io.qt.widgets.QMessageBox;
 import io.qt.widgets.QProgressBar;
 import io.qt.widgets.QPushButton;
 import io.qt.widgets.QSlider;
@@ -339,7 +340,10 @@ public class Loader extends QMainWindow {
 
         // "Help" -> "About"
         about.triggered.connect(() -> {
-            System.out.println("About");
+            QMessageBox aboutBox = new QMessageBox(this);
+            aboutBox.setWindowTitle("About");
+            aboutBox.setText("Version: 1.0\nDeveloped by: Team Raytracers\nContributors: Jan Birkert, Chantal Deusch, Adrian Desiderato, Jan Gaschler, David Geri, Paulina Pyczot, Lisa Korntheuer");
+            aboutBox.exec();
         });
 
         // "Help" -> "Tutorial"
