@@ -169,6 +169,15 @@ public class Loader extends QMainWindow {
         QComboBox renderingAntiAliasing = centralWidget.findChild(QComboBox.class, "comboBox_anti_aliasing");
         QComboBox renderingShading = centralWidget.findChild(QComboBox.class, "comboBox_shading");
 
+        // set renderingResWidth to 2000
+        renderingResWidth.setValue(2000);
+        // set renderingResHeight to 2000
+        renderingResHeight.setValue(2000);
+
+        // Lock renderingResWidth and renderingResHeight
+        renderingResWidth.setEnabled(false);
+        renderingResHeight.setEnabled(false);
+
         QPushButton resultButton = centralWidget.findChild(QPushButton.class, "resultButton");
         QGraphicsView mainGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_main_window");
         QToolButton startButton = centralWidget.findChild(QToolButton.class, "playToolButton");
