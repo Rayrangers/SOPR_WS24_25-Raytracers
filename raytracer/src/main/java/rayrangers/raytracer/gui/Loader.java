@@ -259,9 +259,9 @@ public class Loader extends QMainWindow {
         addObjectButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(1);
             setWindowTitle("Object Configuration");
+            try {
             Result<String> fileName = QFileDialog.getOpenFileName(centralWidget, tr("Open Object-File"), "examples/", tr("Object Files (*.obj)"));
             Worker.addEntity(fileName.result);
-
             QFileInfo info = new QFileInfo(fileName.result);
             objectList.add(info.baseName());
 
@@ -270,6 +270,9 @@ public class Loader extends QMainWindow {
             mainObjectListView.setModel(modelForObjectList);
             objObjectListView.setModel(modelForObjectList);
             ligObjectListView.setModel(modelForObjectList);
+            } catch (Exception e) {
+                QMessageBox.warning(this, "Error", "No valid .obj file selected, please try again.");
+            }
         });
 
         // Switches to the light configuration window
