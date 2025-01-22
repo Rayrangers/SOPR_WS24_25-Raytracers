@@ -119,7 +119,7 @@ public class Worker {
         Scene scene = new Scene(Color.BLACK);
 
         // Build the world
-        Camera legacyCamera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
+        // Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
         LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
         LightSource lightSource2 = new LightSource(0.15, new Vertex3D(300, 50, 0), Color.WHITE);
 
@@ -133,7 +133,7 @@ public class Worker {
         TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
         teapot.transform(tmTea);
 
-        scene.addCamera(legacyCamera);
+        scene.addCamera(camera);
 
         // Add light sources to the scene
         scene.addLightSource(lightSource1);
@@ -162,8 +162,8 @@ public class Worker {
             System.out.println("Teapot not added to the list of entities.");
         }
 
-        Renderer renderer = new Renderer(scene, legacyCamera.getUuid());
-        ViewPane viewPane = legacyCamera.getViewPane();
+        Renderer renderer = new Renderer(scene, camera.getUuid());
+        ViewPane viewPane = camera.getViewPane();
         renderer.render();
 
         // Create a QImage

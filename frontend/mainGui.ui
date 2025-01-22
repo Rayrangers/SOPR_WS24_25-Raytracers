@@ -406,7 +406,11 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDoubleSpinBox" name="distance_doubleSpinBox"/>
+                 <widget class="QDoubleSpinBox" name="distance_doubleSpinBox">
+                  <property name="maximum">
+                   <double>120.000000000000000</double>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -421,6 +425,9 @@
                 </item>
                 <item>
                  <widget class="QSlider" name="fowHorizontalSlider">
+                  <property name="maximum">
+                   <number>120</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -775,6 +782,9 @@
                 </item>
                 <item>
                  <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox_conf">
+                    <property name="maximum">
+                     <double>500.000000000000000</double>
+                    </property>
                   <property name="contextMenuPolicy">
                    <enum>Qt::NoContextMenu</enum>
                   </property>

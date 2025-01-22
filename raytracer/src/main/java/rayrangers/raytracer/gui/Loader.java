@@ -144,9 +144,9 @@ public class Loader extends QMainWindow {
         QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
 
         // Elements for "Camera-Configuration" --------------------------------------------------------------------------------------------------
-        cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox_conf");
-        cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox_conf");
-        cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox_conf");
+        cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox");
+        cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox");
+        cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox");
         cameraRoll = centralWidget.findChild(QDoubleSpinBox.class, "ang_roll_doubleSpinBox");
         cameraPitch = centralWidget.findChild(QDoubleSpinBox.class, "ang_pitch_doubleSpinBox");
         cameraYaw = centralWidget.findChild(QDoubleSpinBox.class, "ang_yaw_doubleSpinBox");
@@ -161,7 +161,7 @@ public class Loader extends QMainWindow {
         cameraPitch.setValue(90.0);
         cameraYaw.setValue(0.0);
         cameraDistance.setValue(75.0);
-        cameraFov.setValue(100);
+        cameraFov.setValue(100); 
 
 
         // Elements for "Rendering-Configuration"
@@ -577,15 +577,26 @@ public class Loader extends QMainWindow {
     }
 
     private Camera getCameraFromGUI() {
+        double posX = cameraPosX.value();
+        double posY = cameraPosY.value();
+        double posZ = cameraPosZ.value();
+        double roll = cameraRoll.value();
+        double pitch = cameraPitch.value();
+        double yaw = cameraYaw.value();
+        double distance = cameraDistance.value();
+        
         Vertex3D position = new Vertex3D(
             cameraPosX.value(),
             cameraPosY.value(),
             cameraPosZ.value()
         );
-        double roll = cameraRoll.value();
-        double pitch = cameraPitch.value();
-        double yaw = cameraYaw.value();
-        double distance = cameraDistance.value();
+        // position to String
+        String positionString = position.toString();
+        System.out.println("Position as String: " + positionString);
+        System.out.println("Roll: " + roll);
+        System.out.println("Pitch: " + pitch);
+        System.out.println("Yaw: " + yaw);
+        System.out.println("Distance: " + distance);
 
         return new Camera(position, roll, pitch, yaw, distance, 100, 2000, 2000);
     }
