@@ -18,14 +18,13 @@ public class Triangle extends Face {
     private Vertex3D[] vertices;
 
     /**
-     * Class constructor specifying the material, smoothing group and the vertices
-     * of the triangle.
+     * Constructs a triangle with the specified material, smoothing group and single vertices.
      * 
-     * @param material       material
+     * @param material material
      * @param smoothingGroup smoothing group
-     * @param v1             vertex 1
-     * @param v2             vertex 2
-     * @param v3             vertex 3
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     * @param v3 vertex 3
      * @see Face
      */
     public Triangle(Material material, String smoothingGroup, Vertex3D v1, Vertex3D v2, Vertex3D v3) {
@@ -34,11 +33,12 @@ public class Triangle extends Face {
     }
 
     /**
-     * Class constructor called by ObjParser.
+     * Constructs a triangle with the specified material, smoothing group and list of vertices.
+     * Used by the ObjParser.
      * 
-     * @param material       material
+     * @param material material
      * @param smoothingGroup smoothing group
-     * @param vertices       vertex list
+     * @param vertices list of vertices
      */
     public Triangle(Material material, String smoothingGroup, List<Vertex3D> vertices) {
         super(material, smoothingGroup);

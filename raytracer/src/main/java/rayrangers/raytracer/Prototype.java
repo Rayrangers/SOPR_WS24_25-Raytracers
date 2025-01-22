@@ -3,11 +3,11 @@ package rayrangers.raytracer;
 import java.awt.Color;
 
 import rayrangers.raytracer.world.Scene;
-// import rayrangers.raytracer.world.Triangle;
+//import rayrangers.raytracer.world.Triangle;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
 import rayrangers.raytracer.world.LightSource;
-// import rayrangers.raytracer.world.Face;
+//import rayrangers.raytracer.world.Face;
 import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.TrafoMatrix;
 import rayrangers.raytracer.math.Vertex3D;
@@ -17,19 +17,29 @@ import rayrangers.raytracer.view.ViewPane;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-// import java.util.ArrayList;
-// import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Prototype of the raytracer.
+ */
 public class Prototype {
+
+    /**
+     * Main method.
+     * 
+     * @param args string arguments
+     * @throws Exception if OBJ or MTL file cannot be parsed
+     */
     public static void main(String[] args) throws Exception {
 
         long start = System.currentTimeMillis();
 
         Scene scene = new Scene(Color.BLACK);
 
-        // Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 75, 100, 2000, 2000);
+        //Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 75, 100, 2000, 2000);
         Camera camera = new Camera(new Vertex3D(200, 150, 100), -30, 90, 0, 75, 100, 2000, 2000);
         ViewPane viewPane = camera.getViewPane();
 

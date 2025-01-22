@@ -42,10 +42,10 @@ public class Renderer {
     private static int rayCount = 0;
 
     /**
-     * Class constructor specifiying the scene and the UUID of the camera.
+     * Constructs a renderer for the given scene and camera.
      * 
      * @param scene scene to be rendered 
-     * @param cameraUUID UUId of the camera the scene is rendered from
+     * @param cameraUUID UUID of the camera the scene is rendered from
      */
     public Renderer(Scene scene, UUID cameraUUID) {
         this.scene = scene;
@@ -62,25 +62,24 @@ public class Renderer {
         int numCores = Runtime.getRuntime().availableProcessors();
         ExecutorService executor = Executors.newFixedThreadPool(numCores);
 
-        // Get resolution of viewpane 
+        // Get resolution of the viewpane 
         int resX = viewpane.getResX();
         int resY = viewpane.getResY();
 
-        // Get camera position
+        // Get camera position, base vectors and viewpane distance
         Vertex3D cameraPos = camera.getWorldPosition();
         Vector3D u = camera.getU();
         Vector3D v = camera.getV();
         Vector3D w = camera.getW();
         double d = camera.getPaneDistance();
 
-        // Iterate over all pixels in viewpane
+        // Iterate over all pixels in the viewpane
         for (int j = 0; j < resY; j++) {
             for (int i = 0; i < resX; i++) {
                 // Indices must be final variables for lambda
                 final int x = i;
                 final int y = j;
-                
-                // Submit Runnable for each ray to thread pool
+                // Submit Runnable for each ray to the thread pool
                 executor.execute(() -> {
                     Pixel p = viewpane.getPixelAt(x, y);
                     Ray viewRay = new Ray(cameraPos, computeRayDirection(p, u, v, w, d));
@@ -108,7 +107,7 @@ public class Renderer {
     private Color traceRay(Ray viewRay) {
         HitRecord record = new HitRecord();
         // Initial values for interval [t0,t1]: 
-        // t0 = 0, t1 = infinity
+        // t0 = 0, t1 = + infinity
         if (scene.hit(viewRay, 0, Double.MAX_VALUE, record))
             return shader.calculatePixelColor(record, scene);
         return scene.getBackgroundColor();
@@ -118,7 +117,11 @@ public class Renderer {
      * Computes the direction of a ray going through a specified pixel.
      * 
      * @param pixel pixel the ray is going through
-     * @return ray direction as a vector
+     * @param u base vector of the camera in u-direction
+     * @param v base vector of the camera in v-direction
+     * @param w base vector of the camera in w-direction
+     * @param d distance of the camera to the viewpane
+     * @return ray direction
      */
     private Vector3D computeRayDirection(Pixel pixel, Vector3D u, Vector3D v, Vector3D w, double d) {
         return w.mult(-d).add(u.mult(pixel.getU())).add(v.mult(pixel.getV())); // Ray direction formula: −d * w + pixel.u * u + pixel.v * v

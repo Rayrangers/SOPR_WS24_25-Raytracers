@@ -23,7 +23,7 @@ public class Pixel {
     private final double v;
 
     /**
-     * Class constructor specifying the pixel coordinates in u- and v-direction.
+     * Constructs a pixel with the given coordinates in u- and v-direction.
      * 
      * @param u pixel coordinate in u-direction
      * @param v pixel coordinate in v-direction

@@ -14,14 +14,12 @@ import rayrangers.raytracer.math.Vertex3D;
  */
 public class Entity implements Hittable, Transformable {
 
-    // TODO: Maybe class TemplateEntity <|---- Entity -------> Hittable,
-    // Transformable
-    // TODO: Take a look at how UUIDs are handled (e.g. for template entities,
-    // clones etc.)
+    // TODO: Maybe class TemplateEntity <|---- Entity -------> Hittable,Transformable
+    // TODO: Take a look at how UUIDs are handled (e.g. for template entities, clones etc.)
 
     /**
      * Randomly generated UUID of the entity.
-     * Used in the JSON file for the specification of the scene view.
+     * Used in the JSON file for the specification of the scene.
      */
     private UUID uuid;
 
@@ -54,12 +52,13 @@ public class Entity implements Hittable, Transformable {
     private BoundingVolumeHierarchy bvhTree;
 
     /**
-     * Class constructor with a given UUID.
+     * Constructs an entity with the specified name, faces and vertices.
+     * The entity is identified with the given UUID.
      * 
-     * @param uuid     UUID of the entity
-     * @param name     entity name, null if {@code name == null}
-     * @param faces    face list
-     * @param vertices vertices
+     * @param uuid UUID of the entity
+     * @param name entity name, null if {@code name == null}
+     * @param faces list of faces
+     * @param vertices list of vertices
      */
     public Entity(UUID uuid, String name, List<Face> faces, List<Vertex3D> vertices) {
         this.uuid = uuid;
@@ -69,12 +68,12 @@ public class Entity implements Hittable, Transformable {
     }
 
     /**
-     * Class constructor without a given UUID.
-     * Generates a random UUID for the entity.
+     * Constructs an entity with the specified name, faces and vertices,
+     * but without a given UUID. Generates a random UUID for the entity instead.
      * 
-     * @param name     entity name, null if {@code name == null}
-     * @param faces    face list
-     * @param vertices vertices
+     * @param name entity name, null if {@code name == null}
+     * @param faces list of faces
+     * @param vertices list of vertices
      */
     public Entity(String name, List<Face> faces, List<Vertex3D> vertices) {
         this(UUID.randomUUID(), name, faces, vertices);
@@ -83,7 +82,7 @@ public class Entity implements Hittable, Transformable {
     /**
      * Returns a list of all faces the entity is composed of.
      * 
-     * @return face list
+     * @return list of faces
      */
     public List<Face> getFaces() {
         return faces;
@@ -92,7 +91,7 @@ public class Entity implements Hittable, Transformable {
     /**
      * Returns a list of all unique vertices of the entity.
      * 
-     * @return vertex list
+     * @return list if vertices
      */
     public List<Vertex3D> getVertices() {
         return vertices;
@@ -155,7 +154,7 @@ public class Entity implements Hittable, Transformable {
      */
     @Override
     public void transform(TrafoMatrix tm) {
-        // Transform all vertices of the Entity
+        // Transform all vertices of the entity
         for (Vertex3D vertex : vertices) {
             vertex.transform(tm);
         }

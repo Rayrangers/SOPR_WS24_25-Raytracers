@@ -15,7 +15,7 @@ import rayrangers.raytracer.world.Material;
  * Parser for a Wavefront MTL file.
  * 
  * Inspired by
- * https://github.com/UtkuOktay/Ray-Tracer/blob/main/src/main/java/com/utils/MTLParser.java
+ * @see <a href="https://github.com/UtkuOktay/Ray-Tracer/blob/main/src/main/java/com/utils/MTLParser.java">UtkuOktay</a>
  */
 public class MtlParser {
 
@@ -23,10 +23,9 @@ public class MtlParser {
      * Parses a Wavefront MTL file at the given location.
      * 
      * @param mtlPath relative path to the MTL file
-     * @return HashMap with material name and Material object
-     * @throws FileNotFoundException if MTL file referenced in OBJ file is not
-     *                               present
-     * @throws IOException           if there is any error while reading the file
+     * @return map with the parsed material name and material object
+     * @throws FileNotFoundException if the MTL file referenced in the OBJ file cannot be found
+     * @throws IOException if there is any error while reading the file
      */
     public static Map<String, Material> parseMaterialFile(String mtlPath) throws FileNotFoundException, IOException {
         // Temporary parsing data structures
@@ -88,8 +87,12 @@ public class MtlParser {
     }
 
     /**
-     * @param data
-     * @return
+     * Parses the colors associated with Ka (ambient color), Kd (diffuse color) and Ks (specular color).
+     * The corresponding lines in the MTL file contain four components: the color name and all three RGB values.
+     * Each line in the MTL file is passed as an array of strings containing these components.
+     * 
+     * @param data array of strings containing the color name and the RGB values
+     * @return parsed color
      */
     private static Color parseColor(String[] data) {
         // Optional fourth alpha channel value is ignored

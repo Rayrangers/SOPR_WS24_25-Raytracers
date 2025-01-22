@@ -7,6 +7,7 @@ import rayrangers.raytracer.math.Vertex3D;
  * OBJ file:
  * f v ...
  * f v/vt ...
+ * f v//vn
  * f v/vt/vn ...
  */
 public abstract class Face implements Hittable {
@@ -24,11 +25,10 @@ public abstract class Face implements Hittable {
     protected String smoothingGroup;
 
     /**
-     * Class constructor specifying the material and smoothing group of the face.
+     * Constructs a face with the given material and smoothing group.
      * 
-     * @param material  material
-     * @param smoothingGroup smoothing group, parser will pass Integer.MIN_VALUE if not
-     *                  specified
+     * @param material material
+     * @param smoothingGroup smoothing group, parser will pass Integer.MIN_VALUE if not specified
      */
     public Face(Material material, String smoothingGroup) {
         this.material = material;
@@ -54,26 +54,26 @@ public abstract class Face implements Hittable {
     }
 
     /**
-     * Checks if another Face is in the same smoothing group.
+     * Checks if another face is in the same smoothing group.
      * 
-     * @param otherFace Face to compare
-     * @return result
+     * @param otherFace face to compare
+     * @return boolean result
      */
     public boolean isInSameSmoothinggroup(Face otherFace) {
         return smoothingGroup.equals(otherFace.getSmoothingGroup());
     }
 
     /**
-     * Returns all vertices of the triangle in an array.
+     * Returns all vertices of the face in an array.
      * 
      * @return vertices
      */
     public abstract Vertex3D[] getAllVert();
 
     /**
-     * Calculates the center point of a Face.
+     * Calculates the center point of a face.
      * 
-     * @return Center point
+     * @return center point
      */
     public abstract Vertex3D getCenter();
 }
