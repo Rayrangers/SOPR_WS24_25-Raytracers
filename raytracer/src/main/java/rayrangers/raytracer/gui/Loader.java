@@ -5,11 +5,14 @@ import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
 import io.qt.core.QStringListModel;
 import io.qt.core.QUrl;
+import io.qt.core.Qt;
 import io.qt.core.Qt.AspectRatioMode;
 import io.qt.gui.QAction;
 import io.qt.gui.QDesktopServices;
+import io.qt.gui.QFont;
 import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
+import io.qt.gui.QResizeEvent;
 import io.qt.widgets.QApplication;
 import io.qt.widgets.QComboBox;
 import io.qt.widgets.QDoubleSpinBox;
@@ -34,6 +37,7 @@ import io.qt.widgets.QWidget;
 import io.qt.widgets.tools.QUiLoader;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.world.Camera;
+
 
 /**
  * Loads the design information for the GUI provided by the UI file.
@@ -72,6 +76,11 @@ public class Loader extends QMainWindow {
         uiFile = new QFile("frontend/mainGui.ui"); // Load 'mainGUI.ui' file
         ui = loader.load(uiFile, this);
         uiFile.close();
+
+        QFont defaultFont = new QFont("Arial", 10);
+        QApplication.setFont(defaultFont);
+
+        setFixedSize(960, 580); // Beispielwerte: Breite 800px, Höhe 600px
 
 
         // Starting point to load all the different UI elements (main window) -----------------------------------------------------------------------
@@ -498,8 +507,15 @@ public class Loader extends QMainWindow {
                     QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
                     scene.clear();
                     scene.addItem(item);
+
+                    // Set the scene to the graphics view
                     resultGraphicsView.setScene(scene);
-                    resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
+                    // Verwenden Sie die BoundingRect der Items
+                    resultGraphicsView.setSceneRect(scene.itemsBoundingRect());
+                    // Damit das Bild nicht verzerrt wird und vollständig sichtbar bleibt
+                    resultGraphicsView.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter);
+                    resultGraphicsView.fitInView(scene.itemsBoundingRect(), AspectRatioMode.KeepAspectRatio);
+
                     startButton.setEnabled(true);
                     stopProgressBar();
                     progressBar.setTextVisible(true);

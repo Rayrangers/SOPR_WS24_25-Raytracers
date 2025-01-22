@@ -1218,6 +1218,24 @@
                 <verstretch>1</verstretch>
                </sizepolicy>
               </property>
+              <property name="backgroundBrush">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foregroundBrush">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
              </widget>
             </item>
            </layout>
