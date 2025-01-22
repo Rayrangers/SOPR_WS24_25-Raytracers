@@ -24,7 +24,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_5">
@@ -226,6 +226,12 @@
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
                <widget class="QLabel" name="cameraLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -428,6 +434,12 @@
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
                <widget class="QLabel" name="renderLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -435,6 +447,9 @@
                 </property>
                 <property name="text">
                  <string>Rendering</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -449,10 +464,13 @@
                 </item>
                 <item>
                  <layout class="QVBoxLayout" name="verticalLayout_23">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetFixedSize</enum>
+                  </property>
                   <item>
                    <widget class="QLabel" name="res_width_label">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
@@ -465,10 +483,13 @@
                   <item>
                    <widget class="QSpinBox" name="res_width_spinBox">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
+                    </property>
+                    <property name="maximum">
+                     <number>2800</number>
                     </property>
                    </widget>
                   </item>
@@ -476,8 +497,17 @@
                 </item>
                 <item>
                  <layout class="QVBoxLayout" name="verticalLayout_24">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetFixedSize</enum>
+                  </property>
                   <item>
                    <widget class="QLabel" name="res_height_label">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="text">
                      <string>Height</string>
                     </property>
@@ -486,10 +516,13 @@
                   <item>
                    <widget class="QSpinBox" name="res_height_spinBox">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
+                    </property>
+                    <property name="maximum">
+                     <number>2800</number>
                     </property>
                    </widget>
                   </item>
