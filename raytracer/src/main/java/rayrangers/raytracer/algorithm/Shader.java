@@ -52,11 +52,11 @@ public class Shader {
      */
     public Color calculatePixelColor(HitRecord record, Scene scene) {
 
-        // get material, normal vector, view ray direction and hit point from hit record
+        // Get material, normal vector, view ray direction and hit point from hit record
         Material material = record.getMaterial();
         Vertex3D hitPoint = record.getHitPoint();
 
-        // get all Vertices from the current hit record
+        // Get all vertices from the current hit record
         Vertex3D[] vertices = record.getAllVert();
         Vector3D normal0 = vertices[0].getlocationVector().normalize();
         Vector3D normal1 = vertices[1].getlocationVector().normalize();
@@ -66,9 +66,9 @@ public class Shader {
         Vector3D interpolatedNormal = normal0.mult(barycentric[0]).add(normal1.mult(barycentric[1]))
                 .add(normal2.mult(barycentric[2])).normalize();
 
-        // get ambient coefficients from material
+        // Get ambient coefficients from material
         Color ambientCoefficients = material.getAmbient();
-        // calculate ambient color
+        // Calculate ambient color
         Color ambientColor = new Color((int) (backgroundColor.getRed() * (ambientCoefficients.getRed() / 255.0)),
                 (int) (backgroundColor.getGreen() * (ambientCoefficients.getGreen() / 255.0)),
                 (int) (backgroundColor.getBlue() * (ambientCoefficients.getBlue() / 255.0)));
@@ -78,32 +78,32 @@ public class Shader {
 
 
 
-        // iterate over all light sources
+        // Iterate over all light sources
         for (LightSource lightSource : lightSources.values()) {
 
-            // get light source position, color and intensity
+            // Get light source position, color and intensity
             Color lightColor = lightSource.getColor();
 
-            // calculate light vector
+            // Calculate light vector
             Vector3D lightVector = lightSource.getPosition().getlocationVector().sub(hitPoint.getlocationVector())
                     .normalize();
                 
                   
-             //shadow ray from hit point towards light source
+            // Shadow ray from hit point towards light source
             Ray shadowRay = new Ray(hitPoint, lightVector);
 
-            // check if shadow ray intersects with any object
+            // Check if shadow ray intersects with any object
             HitRecord shadowRecord =  new HitRecord();
             boolean inShadow = scene.hit(shadowRay, 0.1, Double.POSITIVE_INFINITY, shadowRecord);
 
-            // get coefficients from material
+            // Get coefficients from material
             Color diffuseColor = material.getDiffuse();
             Color specularColor = material.getSpecular();
             double specularExponent = material.getSpecularExp();
             double dissolve = material.getTransparency();
 
             if (!inShadow) {
-            // calculate diffuse color
+            // Calculate diffuse color
             double diffuseIntensity = Math.max(0, interpolatedNormal.scalar(lightVector));
             Color diffuse = new Color((int) (lightColor.getRed() * (diffuseColor.getRed() / 255.0) * diffuseIntensity),
                     (int) (lightColor.getGreen() * (diffuseColor.getGreen() / 255.0) * diffuseIntensity),
@@ -113,7 +113,7 @@ public class Shader {
                     Math.min(255, color.getGreen() + diffuse.getGreen()),
                     Math.min(255, color.getBlue() + diffuse.getBlue()));
 
-                // calculate specular color using Blinn-Phong shading
+            // Calculate specular color using Blinn-Phong shading
             Vector3D viewVector = record.getViewRayDirection().mult(-1).normalize();
             Vector3D halfwayVector = lightVector.add(viewVector).normalize();
             double specularIntensity = specularExponent > 0
@@ -146,8 +146,8 @@ public class Shader {
     /**
      * Mixes two colors based on a dissolve factor.
      * 
-     * @param color1   first color
-     * @param color2   second color
+     * @param color1 first color
+     * @param color2 second color
      * @param dissolve dissolve factor
      * @return mixed color
      */
@@ -161,7 +161,7 @@ public class Shader {
     /**
      * Calculates the barycentric coordinates of a point in a triangle.
      * 
-     * @param p  point
+     * @param p point
      * @param v0 vertex 0
      * @param v1 vertex 1
      * @param v2 vertex 2
