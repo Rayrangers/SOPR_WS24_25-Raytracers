@@ -5,11 +5,14 @@ import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
 import io.qt.core.QStringListModel;
 import io.qt.core.QUrl;
+import io.qt.core.Qt;
 import io.qt.core.Qt.AspectRatioMode;
 import io.qt.gui.QAction;
 import io.qt.gui.QDesktopServices;
+import io.qt.gui.QFont;
 import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
+import io.qt.gui.QResizeEvent;
 import io.qt.widgets.QApplication;
 import io.qt.widgets.QComboBox;
 import io.qt.widgets.QDoubleSpinBox;
@@ -35,6 +38,7 @@ import io.qt.widgets.tools.QUiLoader;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.world.Camera;
 
+
 /**
  * Loads the design information for the GUI provided by the UI file.
  */
@@ -53,6 +57,8 @@ public class Loader extends QMainWindow {
     private QDoubleSpinBox cameraYaw;
     private QDoubleSpinBox cameraDistance;
     private QSlider cameraFov;
+    private int width = 2000;
+    private int height = 2000;
 
     /** 
      * List with file names of the objects. 
@@ -72,6 +78,11 @@ public class Loader extends QMainWindow {
         uiFile = new QFile("frontend/mainGui.ui"); // Load 'mainGUI.ui' file
         ui = loader.load(uiFile, this);
         uiFile.close();
+
+        QFont defaultFont = new QFont("Arial", 10);
+        QApplication.setFont(defaultFont);
+
+        setFixedSize(960, 580); // Beispielwerte: Breite 800px, Höhe 600px
 
 
         // Starting point to load all the different UI elements (main window) -----------------------------------------------------------------------
@@ -133,9 +144,9 @@ public class Loader extends QMainWindow {
         QPushButton addLightButton = centralWidget.findChild(QPushButton.class, "light_plus_Button");
 
         // Elements for "Camera-Configuration" --------------------------------------------------------------------------------------------------
-        cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox_conf");
-        cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox_conf");
-        cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox_conf");
+        cameraPosX = centralWidget.findChild(QDoubleSpinBox.class, "pos_x_doubleSpinBox");
+        cameraPosY = centralWidget.findChild(QDoubleSpinBox.class, "pos_y_doubleSpinBox");
+        cameraPosZ = centralWidget.findChild(QDoubleSpinBox.class, "pos_z_doubleSpinBox");
         cameraRoll = centralWidget.findChild(QDoubleSpinBox.class, "ang_roll_doubleSpinBox");
         cameraPitch = centralWidget.findChild(QDoubleSpinBox.class, "ang_pitch_doubleSpinBox");
         cameraYaw = centralWidget.findChild(QDoubleSpinBox.class, "ang_yaw_doubleSpinBox");
@@ -150,7 +161,7 @@ public class Loader extends QMainWindow {
         cameraPitch.setValue(90.0);
         cameraYaw.setValue(0.0);
         cameraDistance.setValue(75.0);
-        cameraFov.setValue(100);
+        cameraFov.setValue(100); 
 
 
         // Elements for "Rendering-Configuration"
@@ -159,6 +170,15 @@ public class Loader extends QMainWindow {
         QComboBox renderingPandeWidth = centralWidget.findChild(QComboBox.class, "comboBox_pane_width");    // also for camera needed
         QComboBox renderingAntiAliasing = centralWidget.findChild(QComboBox.class, "comboBox_anti_aliasing");
         QComboBox renderingShading = centralWidget.findChild(QComboBox.class, "comboBox_shading");
+
+        // set renderingResWidth to 2000
+        renderingResWidth.setValue(width);
+        // set renderingResHeight to 2000
+        renderingResHeight.setValue(height);
+
+        // Lock renderingResWidth and renderingResHeight
+        renderingResWidth.setEnabled(false);
+        renderingResHeight.setEnabled(false);
 
         QPushButton resultButton = centralWidget.findChild(QPushButton.class, "resultButton");
         QGraphicsView mainGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_main_window");
@@ -225,6 +245,7 @@ public class Loader extends QMainWindow {
         QLineEdit numberLightSource = centralWidget.findChild(QLineEdit.class, "lightSourceLineEdit_info");
         QLineEdit renderTime = centralWidget.findChild(QLineEdit.class, "renderTimeLineEdit_info");
         QLineEdit qualtiyInfo = centralWidget.findChild(QLineEdit.class, "qualityLineEdit_info");
+        
 
         QToolButton deleteButton = centralWidget.findChild(QToolButton.class, "deleteButton");
         QPushButton exportButtonResult = centralWidget.findChild(QPushButton.class, "exportButton_result");
@@ -241,9 +262,9 @@ public class Loader extends QMainWindow {
         addObjectButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(1);
             setWindowTitle("Object Configuration");
+            try {
             Result<String> fileName = QFileDialog.getOpenFileName(centralWidget, tr("Open Object-File"), "examples/", tr("Object Files (*.obj)"));
             Worker.addEntity(fileName.result);
-
             QFileInfo info = new QFileInfo(fileName.result);
             objectList.add(info.baseName());
 
@@ -252,6 +273,9 @@ public class Loader extends QMainWindow {
             mainObjectListView.setModel(modelForObjectList);
             objObjectListView.setModel(modelForObjectList);
             ligObjectListView.setModel(modelForObjectList);
+            } catch (Exception e) {
+                QMessageBox.warning(this, "Error", "No valid .obj file selected, please try again.");
+            }
         });
 
         // Switches to the light configuration window
@@ -266,6 +290,12 @@ public class Loader extends QMainWindow {
         renderingAntiAliasing.addItem("No");
         renderingShading.addItem("Yes");
         renderingShading.addItem("No");
+
+        // TODO: Add functionality to the comboBoxes
+        renderingShading.setEnabled(false);
+        renderingAntiAliasing.setEnabled(false);
+        renderingPandeWidth.setEnabled(false);
+
 
         // Connect comboBoxes to functions
         renderingAntiAliasing.currentIndexChanged.connect((index) -> {
@@ -292,10 +322,47 @@ public class Loader extends QMainWindow {
 
         // Imports a scene in JSON-format
         importButton.clicked.connect(() -> {
-            System.out.println("Import Button clicked");
+            Result<String> fileName = QFileDialog.getOpenFileName(centralWidget, tr("Open JSON-File"), "artifacts/", tr("JSON Files (*.json)"));
+            QFileInfo path = new QFileInfo(fileName.result);
+            startProgressBar();
+            startButton.setEnabled(false);
+            new Thread(() -> {
+                System.out.println(path.filePath());
+                Worker.renderJSON(path.filePath());
+
+                double renderTimeResult = Worker.getRenderTime();
+                renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
+
+                int objects = Worker.getObjectsCount();
+                numberObjects.setText(String.valueOf(objects));
+
+                int lightSource = Worker.getLightSourcesCount();
+                numberLightSource.setText(String.valueOf(lightSource));
+
+                int rays = Worker.getRaysCount();
+                numberRays.setText(String.valueOf(rays));
+
+                QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
+                scene.clear();
+                scene.addItem(item);
+                resultGraphicsView.setScene(scene);
+                resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
+                startButton.setEnabled(true);
+                stopProgressBar();
+                progressBar.setTextVisible(true);
+                // Set text to "Rendering finished"
+                progressBar.setFormat("Rendering finished");
+                // Show message box that rendering is finished
+                QMessageBox.information(this, "Finished", "Raytracing finished!");
+                // Wait 5 seconds before setting text to "Ready" again
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressBar.setFormat("Ready");
+            }).start();
         });
-
-
 
 
         // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
@@ -368,8 +435,6 @@ public class Loader extends QMainWindow {
         }
         });
 
-        
-
 
         // Add functionality to the UI elements of the menu bar -------------------------------------------------------------------------------------
         // "File" -> "New Scene"
@@ -434,39 +499,57 @@ public class Loader extends QMainWindow {
                 startButton.setEnabled(false);
                 new Thread(() -> {
                     System.out.println("Starting Prototype main");
+                    Camera camera = getCameraFromGUI();
                     try {
-                        Camera camera = getCameraFromGUI();
                         image = Worker.invokePrototype(camera);
-                        System.out.println("Prototype main finished");
-
-                        double renderTimeResult = Worker.getRenderTime();
-                        renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
-
-                        int objects = Worker.getObjectsCount();
-                        numberObjects.setText(String.valueOf(objects));
-
-                        int lightSource = Worker.getLightSourcesCount();
-                        numberLightSource.setText(String.valueOf(lightSource));
-
-                        int rays = Worker.getRaysCount();
-                        numberRays.setText(String.valueOf(rays));
-
-                        QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
-                        scene.clear();
-                        scene.addItem(item);
-                        resultGraphicsView.setScene(scene);
-                        resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
-                        startButton.setEnabled(true);
-                        stopProgressBar();
-                        progressBar.setTextVisible(true);
-                        // Set text to "Rendering finished"
-                        progressBar.setFormat("Rendering finished");
-                        // Wait 5 seconds before setting text to "Ready" again
-                        Thread.sleep(5000);
-                        progressBar.setFormat("Ready");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    System.out.println("Prototype main finished");
+
+                    double renderTimeResult = Worker.getRenderTime();
+                    renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
+
+                    int objects = Worker.getObjectsCount();
+                    numberObjects.setText(String.valueOf(objects));
+
+                    int lightSource = Worker.getLightSourcesCount();
+                    numberLightSource.setText(String.valueOf(lightSource));
+
+                    int rays = Worker.getRaysCount();
+                    numberRays.setText(String.valueOf(rays));
+                    
+
+                    qualtiyInfo.setText(width + "x" + height);
+
+                    QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
+                    scene.clear();
+                    scene.addItem(item);
+                    
+                    centralWidget.setCurrentIndex(3);
+
+                    // Set the scene to the graphics view
+                    resultGraphicsView.setScene(scene);
+                    // Verwenden Sie die BoundingRect der Items
+                    resultGraphicsView.setSceneRect(scene.itemsBoundingRect());
+                    // Damit das Bild nicht verzerrt wird und vollständig sichtbar bleibt
+                    resultGraphicsView.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter);
+                    resultGraphicsView.fitInView(scene.itemsBoundingRect(), AspectRatioMode.KeepAspectRatio);
+
+                    startButton.setEnabled(true);
+                    stopProgressBar();
+                    progressBar.setTextVisible(true);
+                    // Set text to "Rendering finished"
+                    progressBar.setFormat("Rendering finished");
+                    // Show message box that rendering is finished
+                    QMessageBox.information(this, "Finished", "Raytracing finished!");
+                    // Wait 5 seconds before setting text to "Ready" again
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    progressBar.setFormat("Ready");
                 }).start();
             });
         } else {
@@ -494,15 +577,16 @@ public class Loader extends QMainWindow {
     }
 
     private Camera getCameraFromGUI() {
+        double roll = cameraRoll.value();
+        double pitch = cameraPitch.value();
+        double yaw = cameraYaw.value();
+        double distance = cameraDistance.value();
+        
         Vertex3D position = new Vertex3D(
             cameraPosX.value(),
             cameraPosY.value(),
             cameraPosZ.value()
         );
-        double roll = cameraRoll.value();
-        double pitch = cameraPitch.value();
-        double yaw = cameraYaw.value();
-        double distance = cameraDistance.value();
 
         return new Camera(position, roll, pitch, yaw, distance, 100, 2000, 2000);
     }

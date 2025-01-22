@@ -226,6 +226,12 @@
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
                <widget class="QLabel" name="cameraLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -233,6 +239,9 @@
                 </property>
                 <property name="text">
                  <string>Camera</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -243,6 +252,9 @@
                   <property name="text">
                    <string>Position</string>
                   </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -251,6 +263,9 @@
                    <widget class="QLabel" name="pos_x_Label">
                     <property name="text">
                      <string>x</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -270,10 +285,17 @@
                     <property name="text">
                      <string>y</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox">
+                    <property name="maximum">
+                     <double>200.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -284,10 +306,17 @@
                     <property name="text">
                      <string>z</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox">
+                    <property name="maximum">
+                     <double>800.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -309,10 +338,17 @@
                     <property name="text">
                      <string>Roll</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="ang_roll_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_roll_doubleSpinBox">
+                    <property name="maximum">
+                     <double>100.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -323,10 +359,17 @@
                     <property name="text">
                      <string>Pitch</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="ang_pitch_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_pitch_doubleSpinBox">
+                    <property name="maximum">
+                     <double>100.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -337,10 +380,17 @@
                     <property name="text">
                      <string>Yaw</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="ang_yaw_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_yaw_doubleSpinBox">
+                    <property name="maximum">
+                     <double>100.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -356,7 +406,11 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDoubleSpinBox" name="distance_doubleSpinBox"/>
+                 <widget class="QDoubleSpinBox" name="distance_doubleSpinBox">
+                  <property name="maximum">
+                   <double>120.000000000000000</double>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -371,6 +425,9 @@
                 </item>
                 <item>
                  <widget class="QSlider" name="fowHorizontalSlider">
+                  <property name="maximum">
+                   <number>120</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -384,6 +441,12 @@
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
                <widget class="QLabel" name="renderLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -391,6 +454,9 @@
                 </property>
                 <property name="text">
                  <string>Rendering</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -405,10 +471,13 @@
                 </item>
                 <item>
                  <layout class="QVBoxLayout" name="verticalLayout_23">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetFixedSize</enum>
+                  </property>
                   <item>
                    <widget class="QLabel" name="res_width_label">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
@@ -421,10 +490,13 @@
                   <item>
                    <widget class="QSpinBox" name="res_width_spinBox">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
+                    </property>
+                    <property name="maximum">
+                     <number>2800</number>
                     </property>
                    </widget>
                   </item>
@@ -432,8 +504,17 @@
                 </item>
                 <item>
                  <layout class="QVBoxLayout" name="verticalLayout_24">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetFixedSize</enum>
+                  </property>
                   <item>
                    <widget class="QLabel" name="res_height_label">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="text">
                      <string>Height</string>
                     </property>
@@ -442,10 +523,13 @@
                   <item>
                    <widget class="QSpinBox" name="res_height_spinBox">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
+                    </property>
+                    <property name="maximum">
+                     <number>2800</number>
                     </property>
                    </widget>
                   </item>
@@ -1170,9 +1254,27 @@
              <widget class="QGraphicsView" name="graphicsView_5">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
+                <horstretch>1</horstretch>
+                <verstretch>1</verstretch>
                </sizepolicy>
+              </property>
+              <property name="backgroundBrush">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foregroundBrush">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
               </property>
              </widget>
             </item>
