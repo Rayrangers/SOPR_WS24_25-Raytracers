@@ -23,6 +23,7 @@ import rayrangers.raytracer.world.Scene;
  */
 public class Worker {
 
+    // Variables for the results
     private static double renderTime;
     private static int objectCount;
     private static int lightSourceCount;
@@ -68,6 +69,7 @@ public class Worker {
         QImage result;
         long start = System.currentTimeMillis();
 
+        // Parse the scene from the JSON-file
         Scene scene = null;
         UUID cameraUUID = null;
         try {
@@ -86,6 +88,7 @@ public class Worker {
             renderTime = (end - start) / 1000.0;
             System.out.printf("Total runtime for rendering: %f s%n", renderTime);
 
+            // just for testing
             //objectCount = entities.size();
             //System.out.println("Number of objects: " + objectCount);
 
@@ -133,6 +136,7 @@ public class Worker {
         TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
         teapot.transform(tmTea);
 
+        // Add camera to the scene
         scene.addCamera(camera);
 
         // Add light sources to the scene
@@ -162,6 +166,7 @@ public class Worker {
             System.out.println("Teapot not added to the list of entities.");
         }
 
+        // Render the scene
         Renderer renderer = new Renderer(scene, camera.getUuid());
         ViewPane viewPane = camera.getViewPane();
         renderer.render();
@@ -179,6 +184,7 @@ public class Worker {
             }
         }
 
+        // Print out the results in console
         long end = System.currentTimeMillis();
         renderTime = (end - start) / 1000.0;
         System.out.printf("Total runtime for rendering: %f s%n", renderTime);

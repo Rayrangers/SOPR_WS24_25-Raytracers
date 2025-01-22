@@ -5,14 +5,12 @@ import io.qt.core.QFileInfo;
 import io.qt.core.QStringList;
 import io.qt.core.QStringListModel;
 import io.qt.core.QUrl;
-import io.qt.core.Qt;
 import io.qt.core.Qt.AspectRatioMode;
 import io.qt.gui.QAction;
 import io.qt.gui.QDesktopServices;
 import io.qt.gui.QFont;
 import io.qt.gui.QImage;
 import io.qt.gui.QPixmap;
-import io.qt.gui.QResizeEvent;
 import io.qt.widgets.QApplication;
 import io.qt.widgets.QComboBox;
 import io.qt.widgets.QDoubleSpinBox;
@@ -57,6 +55,7 @@ public class Loader extends QMainWindow {
     private QDoubleSpinBox cameraYaw;
     private QDoubleSpinBox cameraDistance;
     private QSlider cameraFov;
+    // Default values for the size of the image
     private int width = 2000;
     private int height = 2000;
 
@@ -79,10 +78,12 @@ public class Loader extends QMainWindow {
         ui = loader.load(uiFile, this);
         uiFile.close();
 
+        // Set the default font for the application
         QFont defaultFont = new QFont("Arial", 10);
         QApplication.setFont(defaultFont);
 
-        setFixedSize(960, 580); // Beispielwerte: Breite 800px, Höhe 600px
+        // Set the size of the window (fixed)
+        setFixedSize(960, 580);
 
 
         // Starting point to load all the different UI elements (main window) -----------------------------------------------------------------------
@@ -171,9 +172,9 @@ public class Loader extends QMainWindow {
         QComboBox renderingAntiAliasing = centralWidget.findChild(QComboBox.class, "comboBox_anti_aliasing");
         QComboBox renderingShading = centralWidget.findChild(QComboBox.class, "comboBox_shading");
 
-        // set renderingResWidth to 2000
+        // set renderingResWidth to configured value
         renderingResWidth.setValue(width);
-        // set renderingResHeight to 2000
+        // set renderingResHeight to configured value
         renderingResHeight.setValue(height);
 
         // Lock renderingResWidth and renderingResHeight
@@ -246,7 +247,6 @@ public class Loader extends QMainWindow {
         QLineEdit renderTime = centralWidget.findChild(QLineEdit.class, "renderTimeLineEdit_info");
         QLineEdit qualtiyInfo = centralWidget.findChild(QLineEdit.class, "qualityLineEdit_info");
         
-
         QToolButton deleteButton = centralWidget.findChild(QToolButton.class, "deleteButton");
         QPushButton exportButtonResult = centralWidget.findChild(QPushButton.class, "exportButton_result");
         QPushButton sceneButton = centralWidget.findChild(QPushButton.class, "sceneButton_result");
@@ -255,7 +255,27 @@ public class Loader extends QMainWindow {
         QGraphicsView resultGraphicsView = centralWidget.findChild(QGraphicsView.class, "graphicsView_5");
         QGraphicsScene scene = new QGraphicsScene(resultGraphicsView);
 
-        
+
+        // Add functionality to the UI elements of the light configuration window -------------------------------------------------------------------
+        // Saves the current configuration and switches to the main window
+        lightDoneButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(0);
+            setWindowTitle("Main Window");
+        });
+
+
+        // Add functionality to the UI elements of the result window --------------------------------------------------------------------------------
+        // Switches back to the main window
+        sceneButton.clicked.connect(() -> {
+            centralWidget.setCurrentIndex(0);
+            setWindowTitle("Main Window");
+        });
+
+        deleteButton.clicked.connect(() -> {
+            scene.clear();
+            resultGraphicsView.setScene(scene);
+        });
+
         // Add functionality to the UI elements of the main window ----------------------------------------------------------------------------------
         
         // Switches to the object configuration window and opens file picker
@@ -363,40 +383,12 @@ public class Loader extends QMainWindow {
                 progressBar.setFormat("Ready");
             }).start();
         });
-
-
-        // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
-        
-        objectPosX.valueChanged.connect(() -> {
-            System.out.println("Test");
-        });
         
         
         // Saves the current configuration and switches to the main window
         objectDoneButton.clicked.connect(() -> {
             centralWidget.setCurrentIndex(0);
             setWindowTitle("Main Window");
-        });
-
-
-        // Add functionality to the UI elements of the light configuration window -------------------------------------------------------------------
-        // Saves the current configuration and switches to the main window
-        lightDoneButton.clicked.connect(() -> {
-            centralWidget.setCurrentIndex(0);
-            setWindowTitle("Main Window");
-        });
-
-
-        // Add functionality to the UI elements of the result window --------------------------------------------------------------------------------
-        // Switches back to the main window
-        sceneButton.clicked.connect(() -> {
-            centralWidget.setCurrentIndex(0);
-            setWindowTitle("Main Window");
-        });
-
-        deleteButton.clicked.connect(() -> {
-            scene.clear();
-            resultGraphicsView.setScene(scene);
         });
 
         /**
@@ -437,39 +429,39 @@ public class Loader extends QMainWindow {
 
 
         // Add functionality to the UI elements of the menu bar -------------------------------------------------------------------------------------
-        // "File" -> "New Scene"
+        // "File" -> "New Scene" button
         newScene.triggered.connect(() -> {
             System.out.println("New Scene");
         });
 
-        // "File" -> "Import Scene"
+        // "File" -> "Import Scene" button
         importScene.triggered.connect(() -> {
             System.out.println("Import Scene is not yet implemented :(");
         });
 
-        // "File" -> "Export Scene"
+        // "File" -> "Export Scene" button
         saveScene.triggered.connect(() -> {
             System.out.println("Export Scene is not yet implemented :(");
         });
 
-        // "File" -> "Close App"
+        // "File" -> "Close App" button
         closeApp.triggered.connect(() -> {
             // Perform multiple actions
             System.out.println("Closing application");
             QApplication.quit();
         });
 
-        // "Edit" -> "Undo"
+        // "Edit" -> "Undo" button
         undo.triggered.connect(() -> {
             System.out.println("Undo is not yet implemented :(");
         });
 
-        // "Edit" -> "Redo"
+        // "Edit" -> "Redo" button
         redo.triggered.connect(() -> {
             System.out.println("Redo is not yet implemented :(");
         });
 
-        // "Help" -> "About"
+        // "Help" -> "About" button
         about.triggered.connect(() -> {
             QMessageBox aboutBox = new QMessageBox(this);
             aboutBox.setWindowTitle("About");
@@ -477,7 +469,7 @@ public class Loader extends QMainWindow {
             aboutBox.exec();
         });
 
-        // "Help" -> "Tutorial"
+        // "Help" -> "Tutorial" button
         help.triggered.connect(() -> {
             int answer = QMessageBox.question(
             this,
@@ -495,8 +487,10 @@ public class Loader extends QMainWindow {
         // Enable 'startButton'
         if (startButton != null) {
             startButton.clicked.connect(() -> {
+                // Start the progress bar and disable the start button
                 startProgressBar();
                 startButton.setEnabled(false);
+                // Create a new thread to start the rendering process
                 new Thread(() -> {
                     System.out.println("Starting Prototype main");
                     Camera camera = getCameraFromGUI();
@@ -507,35 +501,34 @@ public class Loader extends QMainWindow {
                     }
                     System.out.println("Prototype main finished");
 
+                    // Set render time
                     double renderTimeResult = Worker.getRenderTime();
                     renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
-
+                    // Set number of objects
                     int objects = Worker.getObjectsCount();
                     numberObjects.setText(String.valueOf(objects));
-
+                    // Set number of light sources
                     int lightSource = Worker.getLightSourcesCount();
                     numberLightSource.setText(String.valueOf(lightSource));
-
+                    // Set number of rays
                     int rays = Worker.getRaysCount();
                     numberRays.setText(String.valueOf(rays));
-                    
-
+                    // Set quality information
                     qualtiyInfo.setText(width + "x" + height);
 
                     QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
                     scene.clear();
                     scene.addItem(item);
-                    
+                    // Switch to the result window
                     centralWidget.setCurrentIndex(3);
-
                     // Set the scene to the graphics view
                     resultGraphicsView.setScene(scene);
-                    // Verwenden Sie die BoundingRect der Items
+                    // Fit the view to the image
                     resultGraphicsView.setSceneRect(scene.itemsBoundingRect());
-                    // Damit das Bild nicht verzerrt wird und vollständig sichtbar bleibt
+                    // Set the resize anchor to the center of the view
                     resultGraphicsView.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter);
                     resultGraphicsView.fitInView(scene.itemsBoundingRect(), AspectRatioMode.KeepAspectRatio);
-
+                    // Enable the start button again and stop the progress bar
                     startButton.setEnabled(true);
                     stopProgressBar();
                     progressBar.setTextVisible(true);
@@ -567,7 +560,7 @@ public class Loader extends QMainWindow {
     }
 
     /**
-     * Stops the progress bar and sets the text to "Ready".
+     * Stops the progress bar.
      */
 
      private void stopProgressBar() {
@@ -575,6 +568,11 @@ public class Loader extends QMainWindow {
         progressBar.setMaximum(100);
         progressBar.setValue(0);
     }
+
+    /**
+     * Returns the camera object with the entered values from the GUI, or default values.
+     * @return Camera
+     */
 
     private Camera getCameraFromGUI() {
         double roll = cameraRoll.value();
