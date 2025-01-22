@@ -303,6 +303,7 @@ public class Loader extends QMainWindow {
             startProgressBar();
             startButton.setEnabled(false);
             new Thread(() -> {
+                System.out.println(path.filePath());
                 Worker.renderJSON(path.filePath());
 
                 double renderTimeResult = Worker.getRenderTime();
@@ -409,8 +410,6 @@ public class Loader extends QMainWindow {
             }
         }
         });
-
-        
 
 
         // Add functionality to the UI elements of the menu bar -------------------------------------------------------------------------------------

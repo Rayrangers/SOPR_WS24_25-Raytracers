@@ -86,14 +86,14 @@ public class Worker {
             renderTime = (end - start) / 1000.0;
             System.out.printf("Total runtime for rendering: %f s%n", renderTime);
 
-            objectCount = entities.size();
-            System.out.println("Number of objects: " + objectCount);
+            //objectCount = entities.size();
+            //System.out.println("Number of objects: " + objectCount);
 
-            lightSourceCount = lightSources.size();
-            System.out.println("Number of light sources: " + lightSourceCount);
+            //lightSourceCount = lightSources.size();
+            //System.out.println("Number of light sources: " + lightSourceCount);
 
-            raysCount = Renderer.getRayCount();
-            System.out.println("Total number of rays: " + raysCount);
+            //raysCount = Renderer.getRayCount();
+            //System.out.println("Total number of rays: " + raysCount);
 
             // Create a QImage
             int width = viewPane.getResX();
