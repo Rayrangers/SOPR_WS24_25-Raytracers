@@ -577,9 +577,6 @@ public class Loader extends QMainWindow {
     }
 
     private Camera getCameraFromGUI() {
-        double posX = cameraPosX.value();
-        double posY = cameraPosY.value();
-        double posZ = cameraPosZ.value();
         double roll = cameraRoll.value();
         double pitch = cameraPitch.value();
         double yaw = cameraYaw.value();
@@ -590,13 +587,6 @@ public class Loader extends QMainWindow {
             cameraPosY.value(),
             cameraPosZ.value()
         );
-        // position to String
-        String positionString = position.toString();
-        System.out.println("Position as String: " + positionString);
-        System.out.println("Roll: " + roll);
-        System.out.println("Pitch: " + pitch);
-        System.out.println("Yaw: " + yaw);
-        System.out.println("Distance: " + distance);
 
         return new Camera(position, roll, pitch, yaw, distance, 100, 2000, 2000);
     }
