@@ -57,6 +57,8 @@ public class Loader extends QMainWindow {
     private QDoubleSpinBox cameraYaw;
     private QDoubleSpinBox cameraDistance;
     private QSlider cameraFov;
+    private int width = 2000;
+    private int height = 2000;
 
     /** 
      * List with file names of the objects. 
@@ -170,9 +172,9 @@ public class Loader extends QMainWindow {
         QComboBox renderingShading = centralWidget.findChild(QComboBox.class, "comboBox_shading");
 
         // set renderingResWidth to 2000
-        renderingResWidth.setValue(2000);
+        renderingResWidth.setValue(width);
         // set renderingResHeight to 2000
-        renderingResHeight.setValue(2000);
+        renderingResHeight.setValue(height);
 
         // Lock renderingResWidth and renderingResHeight
         renderingResWidth.setEnabled(false);
@@ -243,6 +245,7 @@ public class Loader extends QMainWindow {
         QLineEdit numberLightSource = centralWidget.findChild(QLineEdit.class, "lightSourceLineEdit_info");
         QLineEdit renderTime = centralWidget.findChild(QLineEdit.class, "renderTimeLineEdit_info");
         QLineEdit qualtiyInfo = centralWidget.findChild(QLineEdit.class, "qualityLineEdit_info");
+        
 
         QToolButton deleteButton = centralWidget.findChild(QToolButton.class, "deleteButton");
         QPushButton exportButtonResult = centralWidget.findChild(QPushButton.class, "exportButton_result");
@@ -515,10 +518,15 @@ public class Loader extends QMainWindow {
 
                     int rays = Worker.getRaysCount();
                     numberRays.setText(String.valueOf(rays));
+                    
+
+                    qualtiyInfo.setText(width + "x" + height);
 
                     QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
                     scene.clear();
                     scene.addItem(item);
+                    
+                    centralWidget.setCurrentIndex(3);
 
                     // Set the scene to the graphics view
                     resultGraphicsView.setScene(scene);
