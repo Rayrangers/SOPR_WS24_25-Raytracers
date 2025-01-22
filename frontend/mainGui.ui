@@ -272,7 +272,7 @@
                   <item>
                    <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox">
                     <property name="maximum">
-                     <double>500.000000000000000</double>
+                     <double>800.000000000000000</double>
                     </property>
                    </widget>
                   </item>
@@ -293,7 +293,7 @@
                   <item>
                    <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox">
                     <property name="maximum">
-                     <double>500.000000000000000</double>
+                     <double>200.000000000000000</double>
                     </property>
                    </widget>
                   </item>
@@ -314,7 +314,7 @@
                   <item>
                    <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox">
                     <property name="maximum">
-                     <double>500.000000000000000</double>
+                     <double>800.000000000000000</double>
                     </property>
                    </widget>
                   </item>
@@ -782,9 +782,6 @@
                 </item>
                 <item>
                  <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox_conf">
-                    <property name="maximum">
-                     <double>500.000000000000000</double>
-                    </property>
                   <property name="contextMenuPolicy">
                    <enum>Qt::NoContextMenu</enum>
                   </property>
