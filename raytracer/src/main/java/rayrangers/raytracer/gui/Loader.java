@@ -340,8 +340,6 @@ public class Loader extends QMainWindow {
         });
 
 
-
-
         // Add functionality to the UI elements of the object configuration window ------------------------------------------------------------------
         
         objectPosX.valueChanged.connect(() -> {
@@ -478,41 +476,45 @@ public class Loader extends QMainWindow {
                 startButton.setEnabled(false);
                 new Thread(() -> {
                     System.out.println("Starting Prototype main");
+                    Camera camera = getCameraFromGUI();
                     try {
-                        Camera camera = getCameraFromGUI();
                         image = Worker.invokePrototype(camera);
-                        System.out.println("Prototype main finished");
-
-                        double renderTimeResult = Worker.getRenderTime();
-                        renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
-
-                        int objects = Worker.getObjectsCount();
-                        numberObjects.setText(String.valueOf(objects));
-
-                        int lightSource = Worker.getLightSourcesCount();
-                        numberLightSource.setText(String.valueOf(lightSource));
-
-                        int rays = Worker.getRaysCount();
-                        numberRays.setText(String.valueOf(rays));
-
-                        QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
-                        scene.clear();
-                        scene.addItem(item);
-                        resultGraphicsView.setScene(scene);
-                        resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
-                        startButton.setEnabled(true);
-                        stopProgressBar();
-                        progressBar.setTextVisible(true);
-                        // Set text to "Rendering finished"
-                        progressBar.setFormat("Rendering finished");
-                        // Show message box that rendering is finished
-                        QMessageBox.information(this, "Finished", "Raytracing finished!");
-                        // Wait 5 seconds before setting text to "Ready" again
-                        Thread.sleep(5000);
-                        progressBar.setFormat("Ready");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    System.out.println("Prototype main finished");
+
+                    double renderTimeResult = Worker.getRenderTime();
+                    renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
+
+                    int objects = Worker.getObjectsCount();
+                    numberObjects.setText(String.valueOf(objects));
+
+                    int lightSource = Worker.getLightSourcesCount();
+                    numberLightSource.setText(String.valueOf(lightSource));
+
+                    int rays = Worker.getRaysCount();
+                    numberRays.setText(String.valueOf(rays));
+
+                    QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
+                    scene.clear();
+                    scene.addItem(item);
+                    resultGraphicsView.setScene(scene);
+                    resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
+                    startButton.setEnabled(true);
+                    stopProgressBar();
+                    progressBar.setTextVisible(true);
+                    // Set text to "Rendering finished"
+                    progressBar.setFormat("Rendering finished");
+                    // Show message box that rendering is finished
+                    QMessageBox.information(this, "Finished", "Raytracing finished!");
+                    // Wait 5 seconds before setting text to "Ready" again
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    progressBar.setFormat("Ready");
                 }).start();
             });
         } else {
