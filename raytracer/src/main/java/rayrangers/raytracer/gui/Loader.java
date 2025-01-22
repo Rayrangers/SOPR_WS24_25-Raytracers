@@ -298,7 +298,45 @@ public class Loader extends QMainWindow {
 
         // Imports a scene in JSON-format
         importButton.clicked.connect(() -> {
-            System.out.println("Import Button clicked");
+            Result<String> fileName = QFileDialog.getOpenFileName(centralWidget, tr("Open JSON-File"), "artifacts/", tr("JSON Files (*.json)"));
+            QFileInfo path = new QFileInfo(fileName.result);
+            startProgressBar();
+            startButton.setEnabled(false);
+            new Thread(() -> {
+                Worker.renderJSON(path.filePath());
+
+                double renderTimeResult = Worker.getRenderTime();
+                renderTime.setText(String.format("%.2f", renderTimeResult) + "s");
+
+                int objects = Worker.getObjectsCount();
+                numberObjects.setText(String.valueOf(objects));
+
+                int lightSource = Worker.getLightSourcesCount();
+                numberLightSource.setText(String.valueOf(lightSource));
+
+                int rays = Worker.getRaysCount();
+                numberRays.setText(String.valueOf(rays));
+
+                QGraphicsPixmapItem item = new QGraphicsPixmapItem(QPixmap.fromImage(image));
+                scene.clear();
+                scene.addItem(item);
+                resultGraphicsView.setScene(scene);
+                resultGraphicsView.fitInView(item, AspectRatioMode.KeepAspectRatioByExpanding);
+                startButton.setEnabled(true);
+                stopProgressBar();
+                progressBar.setTextVisible(true);
+                // Set text to "Rendering finished"
+                progressBar.setFormat("Rendering finished");
+                // Show message box that rendering is finished
+                QMessageBox.information(this, "Finished", "Raytracing finished!");
+                // Wait 5 seconds before setting text to "Ready" again
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressBar.setFormat("Ready");
+            }).start();
         });
 
 

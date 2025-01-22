@@ -3,6 +3,7 @@ package rayrangers.raytracer.gui;
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import io.qt.gui.QColor;
 import io.qt.gui.QImage;
@@ -10,6 +11,7 @@ import rayrangers.raytracer.algorithm.Renderer;
 import rayrangers.raytracer.math.TrafoMatrix;
 import rayrangers.raytracer.math.Vertex3D;
 import rayrangers.raytracer.parser.ObjParser;
+import rayrangers.raytracer.parser.SceneParser;
 import rayrangers.raytracer.view.ViewPane;
 import rayrangers.raytracer.world.Camera;
 import rayrangers.raytracer.world.Entity;
@@ -57,7 +59,57 @@ public class Worker {
         entities.addLast(entity);
     }
 
+    /**
+     * This method starts the rendering process with a custom scene from a JSON-file.
+     * 
+     * @param filePath to the JSON-file
+     */
+    public static QImage renderJSON(String filePath) {
+        QImage result;
+        long start = System.currentTimeMillis();
 
+        Scene scene = null;
+        UUID cameraUUID = null;
+        try {
+            scene = SceneParser.parseScene(filePath);
+            cameraUUID = scene.getCameras().keySet().iterator().next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (scene != null && cameraUUID != null) {
+            ViewPane viewPane = scene.getCameras().get(cameraUUID).getViewPane();
+            Renderer renderer = new Renderer(scene, cameraUUID);
+            renderer.render();
+
+            long end = System.currentTimeMillis();
+            renderTime = (end - start) / 1000.0;
+            System.out.printf("Total runtime for rendering: %f s%n", renderTime);
+
+            objectCount = entities.size();
+            System.out.println("Number of objects: " + objectCount);
+
+            lightSourceCount = lightSources.size();
+            System.out.println("Number of light sources: " + lightSourceCount);
+
+            raysCount = Renderer.getRayCount();
+            System.out.println("Total number of rays: " + raysCount);
+
+            // Create a QImage
+            int width = viewPane.getResX();
+            int height = viewPane.getResY();
+            result = new QImage(width, height, QImage.Format.Format_RGB32);
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int rgbColor = viewPane.getPixelAt(x, y).getColor().getRGB();
+                    QColor color = new QColor(rgbColor);
+                    result.setPixel(x, y, color.rgb());
+                }
+            }
+            return result;
+        }
+        return result = new QImage();
+    }
 
     /**
      * This method invokes the prototype for the GUI (only for testing).
@@ -126,6 +178,7 @@ public class Worker {
                 result.setPixel(x, y, color.rgb());
             }
         }
+
         long end = System.currentTimeMillis();
         renderTime = (end - start) / 1000.0;
         System.out.printf("Total runtime for rendering: %f s%n", renderTime);
@@ -142,20 +195,35 @@ public class Worker {
         return result;
     }
 
+    /**
+     * Returns the time it took to render a given scene.
+     * @return (double) renderTime
+     */
     public static double getRenderTime() {
         return renderTime;
     }
 
+    /**
+     * Returns the number of objects in the rendered scene.
+     * @return (int) objectCount
+     */
     public static int getObjectsCount() {
         return objectCount;
     }
 
+    /**
+     * Returns the number of light sources in the rendered scene.
+     * @return (int) lightSourceCount
+     */
     public static int getLightSourcesCount() {
         return lightSourceCount;
     }
 
+    /**
+     * Returns the number of rays.
+     * @return (int) raysCount
+     */
     public static int getRaysCount() {
         return raysCount;
     }
-
 }
