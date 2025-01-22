@@ -17,7 +17,7 @@ public class Shader {
     /**
      * Ambient color used if scene background color is completely black.
      */
-    private static final Color AMBIENT_COLOR = new Color(30, 30, 30);
+    private static final Color AMBIENT_COLOR = new Color(50, 50, 50);
 
     /**
      * Hash map of all light sources of the scene.
@@ -47,9 +47,10 @@ public class Shader {
      * Calculates the color of the associated pixel.
      * 
      * @param record hit record of the intersection between ray and hit object
+     * @param scene scene to be rendered
      * @return calculated color of the pixel
      */
-    public Color calculatePixelColor(HitRecord record) {
+    public Color calculatePixelColor(HitRecord record, Scene scene) {
 
         // get material, normal vector, view ray direction and hit point from hit record
         Material material = record.getMaterial();
@@ -75,6 +76,8 @@ public class Shader {
         Color finalColor = new Color(0, 0, 0);
         Color color = new Color(ambientColor.getRed(), ambientColor.getGreen(), ambientColor.getBlue());
 
+
+
         // iterate over all light sources
         for (LightSource lightSource : lightSources.values()) {
 
@@ -84,6 +87,14 @@ public class Shader {
             // calculate light vector
             Vector3D lightVector = lightSource.getPosition().getlocationVector().sub(hitPoint.getlocationVector())
                     .normalize();
+                
+                  
+             //shadow ray from hit point towards light source
+            Ray shadowRay = new Ray(hitPoint, lightVector);
+
+            // check if shadow ray intersects with any object
+            HitRecord shadowRecord =  new HitRecord();
+            boolean inShadow = scene.hit(shadowRay, 0.1, Double.POSITIVE_INFINITY, shadowRecord);
 
             // get coefficients from material
             Color diffuseColor = material.getDiffuse();
@@ -91,6 +102,7 @@ public class Shader {
             double specularExponent = material.getSpecularExp();
             double dissolve = material.getTransparency();
 
+            if (!inShadow) {
             // calculate diffuse color
             double diffuseIntensity = Math.max(0, interpolatedNormal.scalar(lightVector));
             Color diffuse = new Color((int) (lightColor.getRed() * (diffuseColor.getRed() / 255.0) * diffuseIntensity),
@@ -101,34 +113,33 @@ public class Shader {
                     Math.min(255, color.getGreen() + diffuse.getGreen()),
                     Math.min(255, color.getBlue() + diffuse.getBlue()));
 
-            // calculate specular color
-            Vector3D reflectionVector = interpolatedNormal.mult(2 * lightVector.scalar(interpolatedNormal))
-                    .sub(lightVector).normalize();
+                // calculate specular color using Blinn-Phong shading
             Vector3D viewVector = record.getViewRayDirection().mult(-1).normalize();
+            Vector3D halfwayVector = lightVector.add(viewVector).normalize();
             double specularIntensity = specularExponent > 0
-                    ? Math.pow(Math.max(0, reflectionVector.scalar(viewVector)), specularExponent)
-                    : 0.0;
+                ? Math.pow(Math.max(0, interpolatedNormal.scalar(halfwayVector)), specularExponent)
+                : 0.0;
             Color specular = new Color(
-                    (int) (lightColor.getRed() * (specularColor.getRed() / 255.0) * specularIntensity),
-                    (int) (lightColor.getGreen() * (specularColor.getGreen() / 255.0) * specularIntensity),
-                    (int) (lightColor.getBlue() * (specularColor.getBlue() / 255.0) * specularIntensity));
+                (int) (lightColor.getRed() * (specularColor.getRed() / 255.0) * specularIntensity),
+                (int) (lightColor.getGreen() * (specularColor.getGreen() / 255.0) * specularIntensity),
+                (int) (lightColor.getBlue() * (specularColor.getBlue() / 255.0) * specularIntensity));
 
             color = new Color(
-                    Math.min(255, color.getRed() + specular.getRed()),
-                    Math.min(255, color.getGreen() + specular.getGreen()),
-                    Math.min(255, color.getBlue() + specular.getBlue()));
+                Math.min(255, color.getRed() + specular.getRed()),
+                Math.min(255, color.getGreen() + specular.getGreen()),
+                Math.min(255, color.getBlue() + specular.getBlue()));
 
             // Dissolve - if entity is see-through
             if (dissolve < 1) {
                 color = mixColors(color, backgroundColor, dissolve);
+                }
             }
-
             finalColor = new Color(
                     Math.min(255, ambientColor.getRed() + color.getRed()),
                     Math.min(255, ambientColor.getGreen() + color.getGreen()),
                     Math.min(255, ambientColor.getBlue() + color.getBlue()));
-        }
-
+        
+    }
         return finalColor;
     }
 

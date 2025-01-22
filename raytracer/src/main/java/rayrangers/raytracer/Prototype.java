@@ -28,27 +28,34 @@ public class Prototype {
         long start = System.currentTimeMillis();
 
         Scene scene = new Scene(Color.BLACK);
+
         // Camera camera = new Camera(new Vertex3D(0, 25, 400), 0, 0, 0, 75, 100, 2000, 2000);
-        Camera camera = new Camera(new Vertex3D(400, 25, 0), 0, 90, 0, 75, 100, 2000, 2000);
+        Camera camera = new Camera(new Vertex3D(200, 150, 100), -30, 90, 0, 75, 100, 2000, 2000);
         ViewPane viewPane = camera.getViewPane();
 
         scene.addCamera(camera);
-        Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
-        Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
+        //Entity teapot = ObjParser.parseObjFile("examples/teapot/Teapot.obj");
+        //Entity tuna = ObjParser.parseObjFile("examples/tuna/tuna-low.obj");
+        //Entity water = ObjParser.parseObjFile("examples/water-molecule/water-molecule.obj");
+        Entity teapotChess = ObjParser.parseObjFile("examples/teapot-chess/teapotonchess.obj");
 
-        TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
-        teapot.transform(tmTea);
+        TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, 0, 0, 0, 1, 1, 1);
+        teapotChess.transform(tmTea);
 
-        TrafoMatrix tmTuna = new TrafoMatrix(0, 150, 0, -90, 0, 0, 1, 1, 1);
-        tuna.transform(tmTuna);
+        //TrafoMatrix tmTea = new TrafoMatrix(-50, -100, 10, -90, 10, -33, 1, 1, 1);
+        //teapot.transform(tmTea);
 
-        scene.addEntity(teapot);
-        scene.addEntity(tuna);
+        //TrafoMatrix tmTuna = new TrafoMatrix(80, 70, 100, -90, 0, 0, 1, 1, 1);
+        //tuna.transform(tmTuna);
 
-        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(300, 250, 200), Color.WHITE);
-        LightSource lightSource2 = new LightSource(0.15, new Vertex3D(300, 50, 0), Color.WHITE);
+        scene.addEntity(teapotChess);
+        //scene.addEntity(tuna);
+        scene.addEntity(teapotChess);
+
+        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(450, 250, 350), Color.WHITE);
+        //LightSource lightSource2 = new LightSource(0.35, new Vertex3D(400, 400, 400), Color.WHITE);
         scene.addLightSource(lightSource1);
-        scene.addLightSource(lightSource2);
+        //scene.addLightSource(lightSource2);
 
         Renderer renderer = new Renderer(scene, camera.getUuid());
         renderer.render();

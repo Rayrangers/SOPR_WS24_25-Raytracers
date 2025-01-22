@@ -110,7 +110,7 @@ public class Renderer {
         // Initial values for interval [t0,t1]: 
         // t0 = 0, t1 = infinity
         if (scene.hit(viewRay, 0, Double.MAX_VALUE, record))
-            return shader.calculatePixelColor(record);
+            return shader.calculatePixelColor(record, scene);
         return scene.getBackgroundColor();
     }
 
