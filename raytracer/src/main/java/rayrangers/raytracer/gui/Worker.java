@@ -92,7 +92,7 @@ public class Worker {
         lightSources.add(lightSource2);
 
         // Add entities to the scene
-        //scene.addEntity(tuna);
+        scene.addEntity(tuna);
         scene.addEntity(teapot);
 
         // Add entities to the list

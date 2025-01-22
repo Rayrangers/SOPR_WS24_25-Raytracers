@@ -234,6 +234,9 @@
                 <property name="text">
                  <string>Camera</string>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item>
@@ -242,6 +245,9 @@
                  <widget class="QLabel" name="positionLabel">
                   <property name="text">
                    <string>Position</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -252,12 +258,15 @@
                     <property name="text">
                      <string>x</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QDoubleSpinBox" name="pos_x_doubleSpinBox">
                     <property name="maximum">
-                     <double>800.000000000000000</double>
+                     <double>500.000000000000000</double>
                     </property>
                    </widget>
                   </item>
@@ -270,10 +279,17 @@
                     <property name="text">
                      <string>y</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_y_doubleSpinBox">
+                    <property name="maximum">
+                     <double>500.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -284,10 +300,17 @@
                     <property name="text">
                      <string>z</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="pos_z_doubleSpinBox">
+                    <property name="maximum">
+                     <double>500.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -309,10 +332,17 @@
                     <property name="text">
                      <string>Roll</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="ang_roll_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_roll_doubleSpinBox">
+                    <property name="maximum">
+                     <double>100.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -323,10 +353,17 @@
                     <property name="text">
                      <string>Pitch</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="ang_pitch_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_pitch_doubleSpinBox">
+                    <property name="maximum">
+                     <double>100.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -337,10 +374,17 @@
                     <property name="text">
                      <string>Yaw</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDoubleSpinBox" name="ang_yaw_doubleSpinBox"/>
+                   <widget class="QDoubleSpinBox" name="ang_yaw_doubleSpinBox">
+                    <property name="maximum">
+                     <double>100.000000000000000</double>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>

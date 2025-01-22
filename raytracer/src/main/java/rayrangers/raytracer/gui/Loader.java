@@ -267,6 +267,12 @@ public class Loader extends QMainWindow {
         renderingShading.addItem("Yes");
         renderingShading.addItem("No");
 
+        // TODO: Add functionality to the comboBoxes
+        renderingShading.setEnabled(false);
+        renderingAntiAliasing.setEnabled(false);
+        renderingPandeWidth.setEnabled(false);
+
+
         // Connect comboBoxes to functions
         renderingAntiAliasing.currentIndexChanged.connect((index) -> {
             if ("Yes".equals(renderingAntiAliasing.currentText())) {
@@ -461,6 +467,8 @@ public class Loader extends QMainWindow {
                         progressBar.setTextVisible(true);
                         // Set text to "Rendering finished"
                         progressBar.setFormat("Rendering finished");
+                        // Show message box that rendering is finished
+                        QMessageBox.information(this, "Finished", "Raytracing finished!");
                         // Wait 5 seconds before setting text to "Ready" again
                         Thread.sleep(5000);
                         progressBar.setFormat("Ready");
