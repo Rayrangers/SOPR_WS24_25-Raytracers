@@ -52,7 +52,7 @@ public class Prototype {
         //scene.addEntity(tuna);
         scene.addEntity(teapotChess);
 
-        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(450, 250, 300), Color.WHITE);
+        LightSource lightSource1 = new LightSource(0.15, new Vertex3D(450, 250, 350), Color.WHITE);
         //LightSource lightSource2 = new LightSource(0.35, new Vertex3D(400, 400, 400), Color.WHITE);
         scene.addLightSource(lightSource1);
         //scene.addLightSource(lightSource2);
